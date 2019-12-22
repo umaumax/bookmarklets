@@ -33,15 +33,22 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style
   * minifiedなcssがたまたまsingle quoteが使用されていない場合には，そのまま利用可能
     * そうではない場合には，base64を利用すればよいはず
 
-## links
+## tips
+下記を利用すれば，中途半端な状態のjavascriptでもブックマークレット化できるのでは?(未検証)
+* [Closure Compiler Service]( https://closure-compiler.appspot.com/home )
+  * [Communicating with the Closure Compiler Service API]( https://developers.google.com/closure/compiler/docs/api-tutorial1#how-to-communciate-with-the-api )
 
-[そろそろ本気でブックマークレットを作る \| Qrunch（クランチ）]( https://qrunch.net/@okayu/entries/oCXiY7zM7yBhjhV0 )
+## links
+* [Bookmarkletを作ろう\(準備編） \- Qiita]( https://qiita.com/kanaxx/items/63debe502aacd73c3cb8 )
+
+* [そろそろ本気でブックマークレットを作る \| Qrunch（クランチ）]( https://qrunch.net/@okayu/entries/oCXiY7zM7yBhjhV0 )
 
 > 手元のVSCodeで見たところ、57068文字ありました。
 > これをブックマークのURL欄に入力し、そのブックマークを実行してみるとどうでしょうか?
 > 少なくとも私の環境では、Google Chrome(Canary)でもFirefox(Developer Edition)でも実行できました。
 
 下記はあくまで`URL`だが参考程度に
-[各種OS/ブラウザでの長いフラグメント のあるURLの長さを調べてみました \- Qiita]( https://qiita.com/nwtgck/items/e83473dc63386d2da3e5 )
+
+* [各種OS/ブラウザでの長いフラグメント のあるURLの長さを調べてみました \- Qiita]( https://qiita.com/nwtgck/items/e83473dc63386d2da3e5 )
 
 > また、長さ100万のURLをGoogle Chromeでブックマークすることは可能でした。ブックマークしたあと、開いてもちゃんと長さ100万ありました。
