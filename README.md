@@ -17,6 +17,9 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style
 * `https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js`は`https://google-code-prettify.googlecode.com/svn/loader/prettify.css`に依存するので`Content Security Policy`に違反する
 </details>
 
+## markdownizer.js
+convert normal text to markdown text (now search query is `pre`)
+
 ----
 
 ## NOTE
@@ -26,6 +29,7 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style
 
 ## コード作成時の注意
 * javascriptの仕様上省略可能であるが，ブックマークレット化する際にはうまく処理されないようので，`;`は必ず入れること
+  * 特に，複数行の関数宣言のときに忘れがちなので注意(`function xxx(){};`)
   * コメントは`/**/`で記述すること
 * 理由は不明だが，minifiedなコードはなぜか直接動作しないケースがある
   * ただし，通常のdebug consoleでは問題ない
@@ -34,9 +38,17 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style
     * そうではない場合には，base64を利用すればよいはず
 
 ## tips
-下記を利用すれば，中途半端な状態のjavascriptでもブックマークレット化できるのでは?(未検証)
+下記を利用すれば，中途半端な状態のjavascriptでもブックマークレット化できるが，コードが多少わかりにくくなるので注意
 * [Closure Compiler Service]( https://closure-compiler.appspot.com/home )
   * [Communicating with the Closure Compiler Service API]( https://developers.google.com/closure/compiler/docs/api-tutorial1#how-to-communciate-with-the-api )
+
+```
+brew install closure-compiler
+```
+
+```
+closure-compiler $target_js_file
+```
 
 ## links
 * [Bookmarkletを作ろう\(準備編） \- Qiita]( https://qiita.com/kanaxx/items/63debe502aacd73c3cb8 )
