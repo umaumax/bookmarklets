@@ -16,14 +16,29 @@ function replace_itself(element, new_element_text) {
 };
 
 var js_onload = function() {
+    var renderer = new marked.Renderer();
+    /* markdown-body class is for github.css */
+    /* prettyprint class is for code-prettify.js */
+    renderer.code = function(code, language) {
+        return '<pre  class="markdown-body prettyprint linenums"><code>' + code + '</code></pre>';
+    };
+    renderer.table = function(header, body) {
+        if (body) body = '<tbody class="markdown-body">' + body + '</tbody>';
+        return '<table class="markdown-body table table-hover">' +
+            '<thead>' +
+            header +
+            '</thead>' +
+            body +
+            '</table>';
+    };
     marked.setOptions({
         gfm: true,
-        breaks: true
+        breaks: true,
+        langPrefix: '',
+        renderer: renderer,
     });
-    var content_query = 'div[class="user-content-block"]';
-    var comment_query = 'div[class="action-body flooded"]';
-    var target_query = [content_query, comment_query].join(', ');
-    Array.prototype.forEach.call(document.querySelectorAll(target_query), function(element) {
+    console.log('target_selector:', target_selector);
+    Array.prototype.forEach.call(document.querySelectorAll(target_selector), function(element) {
         var text = element.textContent || element.innerText;
         var markdown_html = marked(text);
         console.log('html to text');
@@ -34,7 +49,7 @@ var js_onload = function() {
     });
 };
 
-(function(urls) {
+function add_js(urls) {
     var script;
     for (i = 0; i < urls.length; i++) {
         script = document.createElement("script");
@@ -44,20 +59,36 @@ var js_onload = function() {
         };
         document.body.appendChild(script);
     };
-})(["https://cdn.jsdelivr.net/npm/marked/marked.min.js"]);
+};
 
-function add_css(urls) {
+function add_css(datas) {
     var head = document.getElementsByTagName('head')[0];
 
-    urls.forEach(function(url) {
-        console.log('add css from ', url);
-        var style = document.createElement('link');
-        style.href = url;
+    datas.forEach(function(data) {
+        var style;
+        if (data.startsWith('http')) {
+            style = document.createElement('link');
+            var url = data;
+            console.log('[log]: add css from ', url);
+            style.href = url;
+            style.rel = 'stylesheet';
+        } else {
+            style = document.createElement('style');
+            var raw_text = data;
+            console.log('[log]: add css text ', raw_text);
+            style.innerHTML = raw_text;
+        }
         style.type = 'text/css';
-        style.rel = 'stylesheet';
         head.append(style);
     });
 }
-add_css(["https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css"]);
 
+/* ---- ---- ---- */
+var content_query = 'div[class="user-content-block"]';
+var comment_query = 'div[class="action-body flooded"]';
+var target_selector = [content_query, comment_query].join(', ');
+add_js(["https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=desert", "https://cdn.jsdelivr.net/npm/marked/marked.min.js"]);
+/* NOTE: github.css load is lazy, so add !important option to overcome lazy load css */
+add_css(["https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css", '.linenums li { list-style-type: decimal !important; }']);
+/* ---- ---- ---- */
 void(0);
