@@ -50,6 +50,16 @@ brew install closure-compiler
 closure-compiler $target_js_file
 ```
 
+### css selector
+developer consoleで要素を取得できているかどうかの確認方法
+
+```
+var target_selector = 'div[class="xxx yyy"], div[class="abc def"]';
+Array.prototype.forEach.call(document.querySelectorAll(target_selector), function(element) {
+  console.log(element);
+});
+```
+
 ## links
 * [Bookmarkletを作ろう\(準備編） \- Qiita]( https://qiita.com/kanaxx/items/63debe502aacd73c3cb8 )
 
