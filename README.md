@@ -36,6 +36,14 @@ convert normal text to markdown text (now search query is `pre`)
 * cssの埋め込みに関して，cssをjavascriptの文字列に変更する必要がある
   * minifiedなcssがたまたまsingle quoteが使用されていない場合には，そのまま利用可能
     * そうではない場合には，base64を利用すればよいはず
+* cssを外部から取得する際にgithubのrawのURLを利用すると，`Refused to apply style from 'https://raw.githubusercontent.com/<user>/<repo>/master/xxx.css' because its MIME type ('text/plain') is not a supported stylesheet MIME type, and strict MIME checking is enabled.`となり，無効化されてしまう
+  * `https://cdn.jsdelivr.net/gh/$USER/$REPO@master/$FILEPATH`を指定すると自動的にgithubのファイルをMIME付きで配布してくれるCDNが存在するのでそれを利用すと良い
+  * [Migrate from GitHub to jsDelivr]( https://www.jsdelivr.com/github )
+    * `github.com`のファイルのURLでも`raw.githubusercontent.com`のURLでもOK
+* httpsのサイトにて，http経由のcssを利用する場合，下記のメッセージによって無効化される
+```
+VM1271:1 Mixed Content: The page at 'https://www.xxx.com/' was loaded over HTTPS, but requested an insecure stylesheet 'http://xxx.yyy.com/xxx.css'. This request has been blocked; the content must be served over HTTPS.
+```
 
 ## tips
 下記を利用すれば，中途半端な状態のjavascriptでもブックマークレット化できるが，コードが多少わかりにくくなるので注意
