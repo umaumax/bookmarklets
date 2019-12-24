@@ -24,6 +24,8 @@ convert normal text to markdown text
   * you can't try at [Markdown記法 サンプル集 \- Qiita]( https://qiita.com/tbpgr/items/989c6badefff69377da7 )
 * `markdownizer-jira.js`: for body content and comments
 
+FYI: [Markdownを「Marked\.js」を使ってHTMLに変換する方法 \- suzu6]( https://www.suzu6.net/posts/38/ )
+
 ----
 
 ## NOTE
