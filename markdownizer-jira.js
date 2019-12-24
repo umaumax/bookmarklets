@@ -20,7 +20,9 @@ var js_onload = function() {
         gfm: true,
         breaks: true
     });
-    var target_query = 'pre';
+    var content_query = 'div[class="user-content-block"]';
+    var comment_query = 'div[class="action-body flooded"]';
+    var target_query = [content_query, comment_query].join(', ');
     Array.prototype.forEach.call(document.querySelectorAll(target_query), function(element) {
         var text = element.textContent || element.innerText;
         var markdown_html = marked(text);
