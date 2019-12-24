@@ -18,7 +18,11 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style
 </details>
 
 ## markdownizer.js
-convert normal text to markdown text (now search query is `pre`)
+convert normal text to markdown text
+
+* `markdownizer-pre.js`: search css selector is `pre`
+  * you can't try at [Markdown記法 サンプル集 \- Qiita]( https://qiita.com/tbpgr/items/989c6badefff69377da7 )
+* `markdownizer-jira.js`: for body content and comments
 
 ----
 
