@@ -40,6 +40,8 @@ var js_onload = function() {
     console.log('target_selector:', target_selector);
     Array.prototype.forEach.call(document.querySelectorAll(target_selector), function(element) {
         var text = element.textContent || element.innerText;
+        /* jira text has duplicated new lines */
+        text = text.replace(/\n\n/g, '\n');
         var markdown_html = marked(text);
         console.log('html to text');
         console.log('[prev element]:', element);
