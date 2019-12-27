@@ -26,6 +26,12 @@ convert normal text to markdown text
 
 FYI: [Markdownを「Marked\.js」を使ってHTMLに変換する方法 \- suzu6]( https://www.suzu6.net/posts/38/ )
 
+## examples
+### gerrit: expand all comments
+```
+javascript: document.querySelectorAll("gr-message").forEach(e => e.click()); void(0);
+```
+
 ----
 
 ## NOTE
