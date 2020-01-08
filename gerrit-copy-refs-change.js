@@ -1,7 +1,7 @@
 javascript: ;
 
 var get_refs_change = function() {
-    /* "https://xxx.co.jp/changes/12345/revisions/3/patch?download" */
+    /* e.g. https://xxx.co.jp/changes/12345/revisions/3/patch?download */
     var url = document.querySelector("a#download").href;
     var regex = /\/changes\/([0-9]+)\/revisions\/([0-9]+)/g;
     var ret = regex.exec(url);
