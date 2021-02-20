@@ -1,10 +1,14 @@
 // ==UserScript==
-// @name         Syntax code highlighter for gitlab.com
+// @name         Syntax code highlighter for code block
 // @namespace    
 // @version      0.1
-// @description  enable syntax highlight mainly for wiki
+// @description  enable syntax highlight mainly for code block
 // @author       You
 // @match        https://gitlab.com/*
+// @match        https://github.com/*
+// @match        https://gist.github.com/*
+// @match        https://stackoverflow.com/*
+// @match        https://*.stackexchange.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -482,6 +486,9 @@
     content += 'code { background-color: #333 !important; }';
     content += 'code { color: #ffff11 !important; }';
     content += 'pre .pln { color: #ddd !important; }';
+
+    /* for stackoverflow.com */
+    content += '.s-prose pre:not(.s-code-block) { background-color: #333 !important; }';
 
     var style = document.createElement('style');
     style.type = 'text/css';
