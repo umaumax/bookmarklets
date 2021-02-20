@@ -14,9 +14,14 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style to any
 * `github.com`内だと，`Content Security Policy`の影響で外部javascriptやcssが読み込めない問題がある(許可されているURLは`github.githubassets.com`)
   * CDN(`https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js`),`https://raw.githubusercontent.com/google/code-prettify/master/src/prettify.js`,`https://raw.github.com/google/code-prettify/master/src/prettify.js`,`https://github.com/google/code-prettify/raw/master/src/prettify.js`などは利用できない
   * 結論: bookmarkletの中に埋め込めばよい
-* `run_prettify.js`を利用したときには自動的に適用されるが，`prettifyjs`と`prettify.css`を分割して読み込む場合には`PR.prettyPrint()`が必要
+* `run_prettify.js`を利用したときには自動的に適用されるが，`prettify.js`と`prettify.css`を分割して読み込む場合には`PR.prettyPrint()`が必要
 * `https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js`は`https://google-code-prettify.googlecode.com/svn/loader/prettify.css`に依存するので`Content Security Policy`に違反する
 </details>
+
+## code-prettify.user.js
+[Tampermonkey • Userscript Sources]( https://www.tampermonkey.net/scripts.php )向けのscript
+
+githubやgistの`raw`ボタンを押すとイントール可能な画面へ遷移する
 
 ## markdownizer.js
 convert normal text to markdown text
