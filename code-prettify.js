@@ -466,7 +466,10 @@ var content = '/* desert scheme ported from vim to google prettify */ pre.pretty
 /* FYI: [javascript \- How to add line numbers to all lines in Google Prettify? \- Stack Overflow]( https://stackoverflow.com/questions/8399547/how-to-add-line-numbers-to-all-lines-in-google-prettify ) */
 content += '.linenums li { list-style-type: decimal; }';
 
+/* for github.com */
 content += '.markdown-body pre { background-color: #333 !important; }';
+/* for gitlab.com */
+content += 'code { background-color: #333 !important; }';
 
 var style = document.createElement('style');
 style.type = 'text/css';
