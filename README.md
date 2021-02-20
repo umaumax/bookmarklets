@@ -1,9 +1,10 @@
 # bookmarklets
 
 ## code-prettify.js
-adopt google `code-prettify.js` with `linenums` option and `desert` style
+adopt google `code-prettify.js` with `linenums` option and `desert` style to any code block
 
 * `github.com`の`README.md`での動作は確認済み
+* `qiita.com`, `zenn.dev`: ok
 
 [bookmarklets/code\-prettify\.js at master · umaumax/bookmarklets]( https://github.com/umaumax/bookmarklets/blob/master/code-prettify.js )
 
@@ -21,14 +22,14 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style
 convert normal text to markdown text
 
 * `markdownizer-pre.js`: search css selector is `pre`
-  * you can't try at [Markdown記法 サンプル集 \- Qiita]( https://qiita.com/tbpgr/items/989c6badefff69377da7 )
+  * you can try this bookmarklet at [Markdown記法 サンプル集 \- Qiita]( https://qiita.com/tbpgr/items/989c6badefff69377da7 )
 * `markdownizer-jira.js`: for body content and comments
 
 FYI: [Markdownを「Marked\.js」を使ってHTMLに変換する方法 \- suzu6]( https://www.suzu6.net/posts/38/ )
 
 ## examples
 ### gerrit: expand all comments
-```
+``` js
 javascript: document.querySelectorAll("gr-message").forEach(e => e.click()); void(0);
 ```
 
@@ -62,18 +63,18 @@ VM1271:1 Mixed Content: The page at 'https://www.xxx.com/' was loaded over HTTPS
 * [Closure Compiler Service]( https://closure-compiler.appspot.com/home )
   * [Communicating with the Closure Compiler Service API]( https://developers.google.com/closure/compiler/docs/api-tutorial1#how-to-communciate-with-the-api )
 
-```
+``` bash
 brew install closure-compiler
 ```
 
-```
+``` bash
 closure-compiler $target_js_file
 ```
 
 ### css selector
 developer consoleで要素を取得できているかどうかの確認方法
 
-```
+``` js
 var target_selector = 'div[class="xxx yyy"], div[class="abc def"]';
 Array.prototype.forEach.call(document.querySelectorAll(target_selector), function(element) {
   console.log(element);
