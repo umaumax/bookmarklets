@@ -490,7 +490,7 @@
 
     Array.prototype.forEach.call(document.querySelectorAll("pre"), function(pre_element) {
         console.log('set class="prettyprint" at <pre>', pre_element);
-        pre_element.setAttribute("class", "prettyprint linenums");
+        pre_element.setAttribute("class", "code highlight prettyprint linenums");
     });
 
     PR.prettyPrint();
