@@ -470,6 +470,8 @@ content += '.linenums li { list-style-type: decimal; }';
 content += '.markdown-body pre { background-color: #333 !important; }';
 /* for gitlab.com */
 content += 'code { background-color: #333 !important; }';
+content += 'code { color: #ffff11 !important; }';
+content += 'pre .pln { color: #ddd !important; }';
 
 var style = document.createElement('style');
 style.type = 'text/css';
