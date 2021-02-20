@@ -18,12 +18,12 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style to any
 * `https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js`は`https://google-code-prettify.googlecode.com/svn/loader/prettify.css`に依存するので`Content Security Policy`に違反する
 </details>
 
-## code-prettify.user.js
+## [code-prettify.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/code-prettify.user.js )
 [Tampermonkey • Userscript Sources]( https://www.tampermonkey.net/scripts.php )向けのscript
 
 githubやgistの`raw`ボタンを押すとイントール可能な画面へ遷移する
 
-## niconico-adblocker.user.js
+## [niconico-adblocker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.user.js )
 
 ニコニコ動画の広告を自動的にskipする
 
