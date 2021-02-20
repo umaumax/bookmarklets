@@ -23,6 +23,10 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style to any
 
 githubやgistの`raw`ボタンを押すとイントール可能な画面へ遷移する
 
+## niconico-adblocker.user.js
+
+ニコニコ動画の広告を自動的にskipする
+
 ## markdownizer.js
 convert normal text to markdown text
 
