@@ -6,6 +6,8 @@
 // @author       You
 // @match        https://gitlab.com/*
 // @match        https://github.com/*
+// @exclude      https://github.com/
+// @exclude      https://github.com/*/pull/*
 // @match        https://gist.github.com/*
 // @match        https://stackoverflow.com/*
 // @match        https://*.stackexchange.com/*
