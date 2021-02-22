@@ -27,6 +27,9 @@ githubやgistの`raw`ボタンを押すとイントール可能な画面へ遷�
 
 ニコニコ動画の広告を自動的にskipする
 
+## [navigator.platform-switcher.user.js]( https://github.com/umaumax/bookmarklets/raw/master/navigator.platform-switcher.user.js )
+特定のプラットフォームに偽造する(インストーラーのダウンロードサイト向け)
+
 ## markdownizer.js
 convert normal text to markdown text
 
