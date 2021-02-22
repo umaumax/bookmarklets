@@ -483,10 +483,11 @@
     content += '.linenums li { list-style-type: decimal; }';
 
     /* for github.com */
-    content += '.markdown-body pre { background-color: #333 !important; }';
+    content += '.markdown-body pre { background-color: #333 !important; font-size: 100%; line-height: 1.0; }';
+
     /* for gitlab.com */
     content += 'code { background-color: #333 !important; }';
-    content += 'code { color: #ffff11 !important; }';
+    content += 'code { color: #ffffaa !important; font-size: 100%; margin-left: 2px; margin-right:2px; }';
     content += 'pre .pln { color: #ddd !important; }';
 
     /* for stackoverflow.com */
