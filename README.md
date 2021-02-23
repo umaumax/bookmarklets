@@ -30,6 +30,9 @@ githubやgistの`raw`ボタンを押すとイントール可能な画面へ遷�
 ## [navigator.platform-switcher.user.js]( https://github.com/umaumax/bookmarklets/raw/master/navigator.platform-switcher.user.js )
 特定のプラットフォームに偽造する(インストーラーのダウンロードサイト向け)
 
+## [gitlab-wiki-sidebar-expander.user.js]( https://github.com/umaumax/bookmarklets/raw/master/gitlab-wiki-sidebar-expander.user.js )
+gitlabのwikiの右側のサイドバーを隠す(クリック or ctrl+fで出現)
+
 ## markdownizer.js
 convert normal text to markdown text
 
