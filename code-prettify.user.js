@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Syntax code highlighter for code block
-// @namespace    
+// @namespace
 // @version      0.1
 // @description  enable syntax highlight mainly for code block
 // @author       You
@@ -11,6 +11,7 @@
 // @match        https://gist.github.com/*
 // @match        https://stackoverflow.com/*
 // @match        https://*.stackexchange.com/*
+// @match        https://superuser.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -483,15 +484,25 @@
     content += '.linenums li { list-style-type: decimal; }';
 
     /* for github.com */
-    content += '.markdown-body pre { background-color: #333 !important; font-size: 100%; line-height: 1.0; }';
+    if (document.URL.match(/https:\/\/github.com\/.*/)) {
+      content += '.markdown-body pre { background-color: #333 !important; font-size: 100%; line-height: 1.0; }';
+    }
 
     /* for gitlab.com */
     content += 'code { background-color: #333 !important; }';
-    content += 'code { color: #ffffaa !important; font-size: 100%; margin-left: 2px; margin-right:2px; }';
     content += 'pre .pln { color: #ddd !important; }';
+    content += 'code { color: #ffffaa !important; }';
+    if (document.URL.match(/https:\/\/gitlab.com\/.*/)) {
+      content += 'code { font-size: 100%; margin-left: 2px; margin-right:2px; }';
+    }
 
     /* for stackoverflow.com */
     content += '.s-prose pre:not(.s-code-block) { background-color: #333 !important; }';
+
+    /* for unix.stackexchange.com/, superuser.com */
+    if (document.URL.match(/https:\/\/unix.stackexchange.com\/.*/) || document.URL.match(/https:\/\/superuser.com\/.*/)) {
+      content += '.s-prose { --s-prose-spacing: 0.0em; }';
+    }
 
     var style = document.createElement('style');
     style.type = 'text/css';
