@@ -14,7 +14,7 @@
     var content = '';
     content += '.right-sidebar-expanded .content-wrapper { padding-right: 30px; }';
     content += '.container-limited.limit-container-width { max-width: 100%; }';
-    content += '.right-sidebar.wiki-sidebar { transform: translate(90%, 0px); transition: all 0.5s; }';
+    content += '.right-sidebar.wiki-sidebar { transform: translate(95%, 0px); transition: all 0.5s; }';
     content += '.right-sidebar.wiki-sidebar:hover, .right-sidebar.wiki-sidebar:focus, .right-sidebar.wiki-sidebar.focus { transform: translate(0%, 0px); transition: all 0.5s; }';
 
     var style = document.createElement('style');
@@ -28,7 +28,9 @@
 
     // [events \- Is there a way to detect find on the page searches in javascript \- Stack Overflow]( https://stackoverflow.com/questions/6680213/is-there-a-way-to-detect-find-on-the-page-searches-in-javascript )
     document.addEventListener('keydown', function(e) {
-        if ((e.keyCode == 70 && (e.ctrlKey || e.metaKey)) || (e.keyCode == 191)) {
+        // 70: f
+        // 191: ?/
+        if ((e.ctrlKey || e.metaKey) || (e.keyCode == 70 && (e.ctrlKey || e.metaKey)) || (e.keyCode == 191)) {
             console.log("ctrl+f: focus");
             sidebar.classList.add("focus");
         }
