@@ -17,10 +17,18 @@
     content += '.right-sidebar.wiki-sidebar { transform: translate(95%, 0px); transition: all 0.5s; }';
     content += '.right-sidebar.wiki-sidebar:hover, .right-sidebar.wiki-sidebar:focus, .right-sidebar.wiki-sidebar.focus { transform: translate(0%, 0px); transition: all 0.5s; }';
 
+    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*\/edit/)) {
+        content += '.col-sm-2 { flex: 0 0 0.0% !important; }'
+    }
+
     var style = document.createElement('style');
     style.type = 'text/css';
     style.innerHTML = content;
     document.getElementsByTagName('head')[0].appendChild(style);
+
+    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*\/edit/)) {
+        return;
+    }
 
     var sidebar = document.querySelectorAll('.right-sidebar.wiki-sidebar')[0];
     // NOTE: enable focus() event
