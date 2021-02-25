@@ -485,7 +485,7 @@
 
     /* for github.com */
     if (document.URL.match(/https:\/\/github.com\/.*/)) {
-      content += '.markdown-body pre { background-color: #333 !important; font-size: 100%; line-height: 1.0; }';
+        content += '.markdown-body pre { background-color: #333 !important; font-size: 100%; line-height: 1.0; }';
     }
 
     /* for gitlab.com */
@@ -493,7 +493,7 @@
     content += 'pre .pln { color: #ddd !important; }';
     content += 'code { color: #ffffaa !important; }';
     if (document.URL.match(/https:\/\/gitlab.com\/.*/)) {
-      content += 'code { font-size: 100%; margin-left: 2px; margin-right:2px; }';
+        content += 'code { font-size: 100%; margin-left: 2px; margin-right:2px; }';
     }
 
     /* for stackoverflow.com */
