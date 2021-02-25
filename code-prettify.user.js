@@ -499,9 +499,9 @@
     /* for stackoverflow.com */
     content += '.s-prose pre:not(.s-code-block) { background-color: #333 !important; }';
 
-    /* for unix.stackexchange.com/, superuser.com */
-    if (document.URL.match(/https:\/\/unix.stackexchange.com\/.*/) || document.URL.match(/https:\/\/superuser.com\/.*/)) {
-      content += '.s-prose { --s-prose-spacing: 0.0em; }';
+    /* for unix.stackexchange.com/, superuser.com, stackoverflow.com */
+    if (document.URL.match(/https:\/\/unix.stackexchange.com\/.*/) || document.URL.match(/https:\/\/superuser.com\/.*/) || document.URL.match(/https:\/\/stackoverflow.com\/.*/)) {
+        content += '.s-prose { --s-prose-spacing: 0.0em; }';
     }
 
     var style = document.createElement('style');
