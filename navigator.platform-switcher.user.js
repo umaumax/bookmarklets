@@ -5,6 +5,7 @@
 // @description  override navigator platform
 // @author       You
 // @match        https://hogehoge.com/
+// @run-at       document-start
 // @grant        none
 // ==/UserScript==
 
