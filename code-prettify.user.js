@@ -483,6 +483,9 @@
     /* FYI: [javascript \- How to add line numbers to all lines in Google Prettify? \- Stack Overflow]( https://stackoverflow.com/questions/8399547/how-to-add-line-numbers-to-all-lines-in-google-prettify ) */
     content += '.linenums li { list-style-type: decimal; }';
 
+    /* for diff */
+    content += ':root { --color-prettylights-syntax-markup-deleted-bg: #b31d28 !important; --color-prettylights-syntax-markup-inserted-bg: #216e39 !important; }'
+
     /* for github.com */
     if (document.URL.match(/https:\/\/github.com\/.*/)) {
         content += '.markdown-body pre { background-color: #333 !important; font-size: 100%; line-height: 1.0; }';
