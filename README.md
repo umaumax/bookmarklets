@@ -39,6 +39,9 @@ redditのgoogle account loginのpopupを抑制する
 ## [github-wiki-edit.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-wiki-edit.user.js )
 githubのwikiのeditのショートカットキーを定義する(gitlabと同じ)
 
+## [clipboard-copy.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clipboard-copy.user.js )
+* githubのpull requestの特定のcommitのshaをコピーするボタンを追加する
+
 ## markdownizer.js
 convert normal text to markdown text
 
