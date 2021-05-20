@@ -8,6 +8,7 @@
 // @match        https://github.com/*
 // @exclude      https://github.com/
 // @exclude      https://github.com/*/pull/*
+// @exclude      https://github.com/*/issues/*
 // @match        https://gist.github.com/*
 // @match        https://stackoverflow.com/*
 // @match        https://*.stackexchange.com/*
