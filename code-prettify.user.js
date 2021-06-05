@@ -492,11 +492,11 @@
         content += '.markdown-body pre { background-color: #333 !important; font-size: 100%; line-height: 1.0; }';
     }
 
-    /* for gitlab.com */
-    content += 'code { background-color: #333 !important; }';
-    content += 'pre .pln { color: #ddd !important; }';
-    content += 'code { color: #ffffaa !important; }';
-    if (document.URL.match(/https:\/\/gitlab.com\/.*/)) {
+    /* for only gitlab.com wikis */
+    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*/)) {
+        content += 'code { background-color: #333 !important; }';
+        content += 'pre .pln { color: #ddd !important; }';
+        content += 'code { color: #ffffaa !important; }';
         content += 'code { font-size: 100%; margin-left: 2px; margin-right:2px; }';
     }
 
