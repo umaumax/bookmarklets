@@ -33,6 +33,9 @@
     var sidebar = document.querySelectorAll('.right-sidebar.wiki-sidebar')[0];
     // NOTE: enable focus() event
     sidebar.setAttribute('tabindex', '-1');
+    // force enable sidebar even small window size
+    sidebar.classList.remove('right-sidebar-collapsed');
+    sidebar.classList.add('right-sidebar-expanded');
 
     // [events \- Is there a way to detect find on the page searches in javascript \- Stack Overflow]( https://stackoverflow.com/questions/6680213/is-there-a-way-to-detect-find-on-the-page-searches-in-javascript )
     document.addEventListener('keydown', function(e) {
