@@ -513,7 +513,7 @@
     style.innerHTML = content;
     document.getElementsByTagName('head')[0].appendChild(style);
 
-    Array.prototype.forEach.call(document.querySelectorAll("pre:not([lang='mermaid'])"), function(pre_element) {
+    Array.prototype.forEach.call(document.querySelectorAll("pre:not([lang='mermaid']):not([lang='uml']):not([lang='puml']):not([lang='plantuml'])"), function(pre_element) {
         console.log('set class="prettyprint" at <pre>', pre_element);
         pre_element.setAttribute("class", "code highlight prettyprint linenums");
     });
