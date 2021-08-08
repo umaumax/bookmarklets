@@ -22,7 +22,7 @@ function auto_scroll_to_link_tag_id() {
     if (matches && matches.length >= 2) {
         link_tag_id = decodeURI(matches[1]);
     } else {
-        done_flag = ture;
+        done_flag = true;
         return;
     }
 
