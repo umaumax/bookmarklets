@@ -42,6 +42,17 @@ githubのwikiのeditのショートカットキーを定義する(gitlabと同�
 ## [clipboard-copy.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clipboard-copy.user.js )
 * githubのpull requestの特定のcommitのshaをコピーするボタンを追加する
 
+## [auto-scroll-extension-in-page.user.js]( https://github.com/umaumax/bookmarklets/raw/master/auto-scroll-extension-in-page.user.js )
+`#id`のリンクスクロールをjQueryのセレクタ表記にも対応する拡張
+
+ついでに、gitlabのwikiをeditする際に、現在のビュー位置に自動的に遷移する機能を付加している(なお、この機能は独立したuser scriptとして分離可能である)
+
+e.g. [GitHub \- Wikipedia - GitHub Actions]( https://ja.wikipedia.org/wiki/GitHub?key=value#h3:contains(%22GitHub%20Actions%22) )
+
+``` markdown
+[GitHub \- Wikipedia - GitHub Actions]( https://ja.wikipedia.org/wiki/GitHub?key=value#h3:contains(%22GitHub%20Actions%22) )
+```
+
 ## markdownizer.js
 convert normal text to markdown text
 
