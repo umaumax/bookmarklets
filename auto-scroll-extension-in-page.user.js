@@ -5,14 +5,15 @@
 // @description  auto scroll extension in a page
 // @author       You
 // @match        https://*/*
+// @exclude      https://www.slideshare.net/*
 // @grant        none
 // @require http://code.jquery.com/jquery-3.6.0.min.js
 // ==/UserScript==
 
-var scrolled_flag = false;
+var done_flag = false;
 
 function auto_scroll_to_link_tag_id() {
-    if (scrolled_flag) {
+    if (done_flag) {
         return;
     }
 
@@ -21,6 +22,7 @@ function auto_scroll_to_link_tag_id() {
     if (matches && matches.length >= 2) {
         link_tag_id = decodeURI(matches[1]);
     } else {
+        done_flag = ture;
         return;
     }
 
@@ -40,7 +42,7 @@ function auto_scroll_to_link_tag_id() {
     }
     var target = $(elements[0]);
     $(window).scrollTop(target.offset().top - target.outerHeight());
-    scrolled_flag = true;
+    done_flag = true;
 }
 
 var timer;
