@@ -59,7 +59,8 @@ var timer;
 
     /* for only gitlab.com wikis */
     // override 'e' edit shortcut key
-    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*/)) {
+    var new_page = document.URL.includes('?random_title=true');
+    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*/) && !document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*\/edit/) && !new_page) {
         document.addEventListener('keydown', function(e) {
             // e: 69
             if (e.keyCode == 69) {
