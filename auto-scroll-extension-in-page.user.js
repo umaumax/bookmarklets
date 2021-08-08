@@ -53,7 +53,7 @@ var timer;
     // 10sec
     setTimeout(function(timer) {
         clearInterval(timer)
-    }, 10000, 'timer');
+    }, 10000, timer);
 
     /* for only gitlab.com wikis */
     // override 'e' edit shortcut key
