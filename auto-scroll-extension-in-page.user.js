@@ -61,12 +61,13 @@ var timer;
         document.addEventListener('keydown', function(e) {
             // e: 69
             if (e.keyCode == 69) {
-                var target_text = $('.js-wiki-page-content>h2,.js-wiki-page-content>h3').filter(function(i, e) {
+                var target_query = $.map($('.js-wiki-page-content>h2,.js-wiki-page-content>h3').filter(function(i, e) {
                     return $(e).text().trim().length > 0 && $(window).scrollTop() <= $(e).offset().top + $(e).outerHeight() && $(e).offset().top <= $(window).scrollTop() + $(window).height();
-                }).first().text().trim();
+                }), function(v, i) {
+                    return "pre:contains('# " + $(v).text().trim() + "')";
+                }).join(',');
                 var edit_query = 'edit';
-                if (target_text != '') {
-                    var target_query = "pre:contains('# " + target_text + "')";
+                if (target_query != '') {
                     edit_query = "edit#" + target_query;
                 }
                 document.location.href = location.protocol + '//' + location.host + location.pathname + '/' + edit_query;
