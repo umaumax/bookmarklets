@@ -62,6 +62,13 @@ var timer;
     var new_page = document.URL.includes('?random_title=true');
     if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*/) && !document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*\/edit/) && !new_page) {
         document.addEventListener('keydown', function(e) {
+            // ignore while typing something at input
+            var focus_elements = $(':focus');
+            if (focus_elements.length != 0) {
+                if (focus_elements.first().is("input")) {
+                    return true;
+                }
+            }
             // e: 69
             if (e.keyCode == 69) {
                 var target_query = $.map($('.js-wiki-page-content>h2,.js-wiki-page-content>h3').filter(function(i, e) {
