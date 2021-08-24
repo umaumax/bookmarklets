@@ -6,6 +6,8 @@
 // @author       You
 // @match        https://*/*
 // @exclude      https://www.slideshare.net/*
+// @exclude      https://wandbox.org/*
+// @exclude      https://web-ace.jp/youngaceup/*
 // @grant        none
 // @require http://code.jquery.com/jquery-3.6.0.min.js
 // ==/UserScript==
