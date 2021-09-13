@@ -20,7 +20,7 @@ function auto_scroll_to_link_tag_id() {
     }
 
     var link_tag_id = '';
-    var matches = location.href.match(/#(.*)/);
+    var matches = location.href.match(/#(.+)/);
     if (matches && matches.length >= 2) {
         link_tag_id = decodeURI(matches[1]);
     } else {
