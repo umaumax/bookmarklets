@@ -4,11 +4,7 @@
 // @version      0.1
 // @description  auto scroll extension in a page
 // @author       You
-// @match        https://*/*
-// @exclude      https://www.slideshare.net/*
-// @exclude      https://wandbox.org/*
-// @exclude      https://web-ace.jp/youngaceup/*
-// @exclude      https://www.yodobashi.com/*
+// @match        https://gitlab.com/*
 // @grant        none
 // @require http://code.jquery.com/jquery-3.6.0.min.js
 // ==/UserScript==
