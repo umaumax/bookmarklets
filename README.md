@@ -40,7 +40,7 @@ redditのgoogle account loginのpopupを抑制する
 githubのwikiのeditのショートカットキーを定義する(gitlabと同じ)
 
 ## [clipboard-copy.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clipboard-copy.user.js )
-* githubのpull requestの特定のcommitのshaをコピーするボタンを追加する
+githubのpull requestの特定のcommitのshaをコピーするボタンを追加する
 
 ## [auto-scroll-extension-in-page.user.js]( https://github.com/umaumax/bookmarklets/raw/master/auto-scroll-extension-in-page.user.js )
 `#id`のリンクスクロールをjQueryのセレクタ表記にも対応する拡張
