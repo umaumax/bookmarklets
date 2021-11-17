@@ -53,6 +53,9 @@ e.g. [GitHub \- Wikipedia - GitHub Actions]( https://ja.wikipedia.org/wiki/GitHu
 [GitHub \- Wikipedia - GitHub Actions]( https://ja.wikipedia.org/wiki/GitHub?key=value#h3:contains(%22GitHub%20Actions%22) )
 ```
 
+## [qiita-trend.user.js]( https://github.com/umaumax/bookmarklets/raw/master/qiita-trend.user.js )
+qiitaのtrendの表示を昨日の日付のみにフィルターする
+
 ## markdownizer.js
 convert normal text to markdown text
 
