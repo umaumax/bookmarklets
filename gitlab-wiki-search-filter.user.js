@@ -28,24 +28,42 @@ function escapeHtml(str) {
     return str;
 }
 
+String.prototype.enhanceAll = function(keyword) {
+    return this.replaceAll(keyword, "<mark><span style='font-weight: bold'>" + keyword + "</span></mark>");
+}
+
 function query_oninput(event) {
     const top_n = 30;
     const max_content_length = 256;
 
-    let innerHTML = '<br/>';
-    let queries = event.target.value.split(' ');
+    let queries = event.target.value.split(/\s+/);
     if (!database) {
         return;
     }
-    // check last query length
+    // last query length
     if (queries.length == 0 || (queries.length > 0 && queries[queries.length - 1].length <= 2)) {
         return;
     }
-    let count = 0;
 
     const start_time = (new Date()).getTime();
 
-    database.some(function(filedata, i) {
+    // set high priority if hits wiki page title
+    let high_priority_order = [];
+    let low_priority_order = [];
+    database.forEach(function(filedata, i) {
+        if (queries.some(query => {
+                return filedata.filepath.indexOf(query) != -1 || filedata.filepath.toLowerCase().indexOf(query) != -1;
+            })) {
+            high_priority_order.push(filedata);
+        } else {
+            low_priority_order.push(filedata);
+        }
+    });
+    let priority_order = high_priority_order.concat(low_priority_order);
+
+    let count = 0;
+    let innerHTML = '<br/>';
+    priority_order.some(function(filedata, i) {
         let pre_count = count;
         let result = filedata.items.some(function(itemdata, j) {
             let link = itemdata.link;
@@ -56,11 +74,11 @@ function query_oninput(event) {
                 // Idea: show before and after range of search hits
                 let content = escapeHtml(full_content.trimEllip(max_content_length));
                 queries.forEach(query => {
-                    content = content.replaceAll(query, "<mark>" + query + "</mark>");
+                    content = content.enhanceAll(query);
                 });
                 let link_text = escapeHtml(link.replace("#", ": "));
                 queries.forEach(query => {
-                    link_text = link_text.replaceAll(query, "<mark>" + query + "</mark>");
+                    link_text = link_text.enhanceAll(query);
                 });
                 innerHTML += '<div><a href=' + escapeHtml(link) + '> ● ' + link_text + '</a><br/><p>' + content + '</p></div>';
                 count++;
