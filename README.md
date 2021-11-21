@@ -33,6 +33,10 @@ githubやgistの`raw`ボタンを押すとイントール可能な画面へ遷�
 ## [gitlab-wiki-sidebar-expander.user.js]( https://github.com/umaumax/bookmarklets/raw/master/gitlab-wiki-sidebar-expander.user.js )
 gitlabのwikiの右側のサイドバーを隠す(クリック or command or ctrl or ctrl+fで出現)
 
+## [gitlab-wiki-search-filter.user.js]( https://github.com/umaumax/bookmarklets/raw/master/gitlab-wiki-search-filter.user.js )
+* インクリメンタルに検索ができる
+* 直接、各トピックへジャンプできる
+
 ## [disable-google-account-popup.user.js]( https://github.com/umaumax/bookmarklets/raw/master/disable-google-account-popup.user.js )
 redditのgoogle account loginのpopupを抑制する
 
