@@ -135,6 +135,9 @@ function query_oninput(event) {
         });
 
     document.body.onclick = function(event) {
+        if (event.target.tagName == 'A') {
+            return;
+        }
         input.value = '';
         input.focus();
     }
