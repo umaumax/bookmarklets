@@ -5,6 +5,7 @@
 // @description  define keyboard shortcut
 // @author       You
 // @match        https://github.com/*/*/wiki/*
+// @exclude      https://github.com/*/*/wiki/*/_edit
 // @grant        none
 // ==/UserScript==
 
@@ -25,6 +26,10 @@ function get_edit_button_element() {
     'use strict';
 
     document.addEventListener('keydown', function(e) {
+        let focus_element = document.activeElement;
+        if (focus_element && focus_element.tagName == 'INPUT') {
+            return;
+        }
         if (event.key === 'e' && !event.ctrlKey) {
             let edit_button_element = get_edit_button_element();
             if (edit_button_element) {
