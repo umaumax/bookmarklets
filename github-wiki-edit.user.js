@@ -9,10 +9,10 @@
 // ==/UserScript==
 
 function get_edit_button_element() {
-    var a_tags = document.getElementsByTagName("a");
-    var search_text = "Edit";
-    var element = null;
-    for (var i = 0; i < a_tags.length; i++) {
+    let a_tags = document.getElementsByTagName("a");
+    let search_text = "Edit";
+    let element = null;
+    for (let i = 0; i < a_tags.length; i++) {
         if (a_tags[i].textContent.trim() == search_text) {
             element = a_tags[i];
             break;
@@ -25,9 +25,8 @@ function get_edit_button_element() {
     'use strict';
 
     document.addEventListener('keydown', function(e) {
-        // e: 69
-        if (e.keyCode == 69) {
-            var edit_button_element = get_edit_button_element();
+        if (event.key === 'e' && !event.ctrlKey) {
+            let edit_button_element = get_edit_button_element();
             if (edit_button_element) {
                 edit_button_element.click();
             }
