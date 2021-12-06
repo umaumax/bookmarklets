@@ -4,8 +4,8 @@
 // @version      0.1
 // @description  define keyboard shortcut
 // @author       You
-// @match        https://github.com/*/*/wiki/*
 // @exclude      https://github.com/*/*/wiki/*/_edit
+// @match        https://github.com/*/*/wiki/*
 // @grant        none
 // ==/UserScript==
 
