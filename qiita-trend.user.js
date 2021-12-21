@@ -12,7 +12,7 @@
 (function() {
     'use strict';
 
-    let header = document.getElementsByClassName('st-NewHeader_navigationTabContainer')[1];
+    let header = document.getElementsByClassName('st-NewHeader_subNavigationTabContainer')[0];
     let a = document.createElement("a");
     a.href = '#';
     a.appendChild(document.createTextNode("最新"));
