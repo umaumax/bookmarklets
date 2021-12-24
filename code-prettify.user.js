@@ -5,7 +5,7 @@
 // @description  enable syntax highlight mainly for code block
 // @author       You
 // @match        https://gitlab.com/*
-// @match        https://github.com/*
+//// @match        https://github.com/*
 // @exclude      https://github.com/
 // @exclude      https://github.com/*/pull/*
 // @exclude      https://github.com/*/issues/*
