@@ -1,5 +1,8 @@
 # bookmarklets
 
+## [url-to-clipboard.user.js]( https://github.com/umaumax/bookmarklets/raw/master/url-to-clipboard.user.js )
+URLをクリップボードへコピーする(トースト通知あり)
+
 ## code-prettify.js
 adopt google `code-prettify.js` with `linenums` option and `desert` style to any code block
 
