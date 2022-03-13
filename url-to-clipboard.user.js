@@ -9,6 +9,7 @@
 // @match        *://*/*
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAARdQTFRFAAAAVme9hJTQdILQSFm4P1G0PlC0eIbTV2a/QVK0OkupOkuoGyNOGiJNTl+6TV66TV66TV66TV66XW3Df4zWSFm4Q1S2Xm7FdoTRdIHQP1C0PlC0dYPRdILQPlC0dILQdYPRe4jWbHrIZ3XETF26QVKvQVK0OkuoPU+xPU+xEBUvMD6MM0GTMkGSMD6LDBEkAAAAAAAAQVK1QFK1PlC0PVC0Xm3EdYPQdILQXm7FdYPRXWzDdoPRSVmzaHbEbHrIPU6xP0+sQVGtPU+0PU+zgo7Ps7risbnhsrnhbXvHPE6zo6vZ7e706uvz6+zzhZDOO02zUF+yRVazgY3OsrnisLfhsbjhbXrGUWCyUmCyRlezbHrG////L/L5TgAAADJ0Uk5TAAAAAAAAAAAAAAAAAABFkpeWmGsKFtH3gQge4feBHveACPd+Bd4cGNTTAlGCgU4CAQK7LD33AAAAAWJLR0Rc6tgAlwAAAAlwSFlzAAB2HAAAdhwBp8J46gAAAOFJREFUOMtjYKAPYGTi4xcQhAIhYRFmdAUsomJGcGAsLiGJroJVStoEDkzNZGTRVbDJISkwMTOXR1eBrsACXQWqAksrC3QVqAqsbczNzWUUFNlxKDC1tbMHAiVlFQ4cJjg4OoGAqhonDgVQIC3HhqbA2cUZClxMsSlwdnVzhwIPTy9sCrx9fKHAzz8AmxW2gXAQhNWK4JBQKAgLH/RWRERERuGzIiw6wBl7SEKtAJuPNS5sIyNAAGw+9siCAlNMBVzqGpjRranODVfAo6Wto4sGdPT0eZFSpYEhBjAgKXPiAQCnN3mFOTUjDAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wMy0yM1QxODoyNDowMiswMTowMCQwhr8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDMtMjNUMTg6MjQ6MDIrMDE6MDBVbT4DAAAARnRFWHRzb2Z0d2FyZQBJbWFnZU1hZ2ljayA2LjcuOC05IDIwMTYtMDYtMTYgUTE2IGh0dHA6Ly93d3cuaW1hZ2VtYWdpY2sub3Jn5r80tgAAABh0RVh0VGh1bWI6OkRvY3VtZW50OjpQYWdlcwAxp/+7LwAAABh0RVh0VGh1bWI6OkltYWdlOjpoZWlnaHQANTEywNBQUQAAABd0RVh0VGh1bWI6OkltYWdlOjpXaWR0aAA1MTIcfAPcAAAAGXRFWHRUaHVtYjo6TWltZXR5cGUAaW1hZ2UvcG5nP7JWTgAAABd0RVh0VGh1bWI6Ok1UaW1lADE1MjE4MjU4NDL67JvAAAAAE3RFWHRUaHVtYjo6U2l6ZQA0LjY2S0JCjHIFagAAAEV0RVh0VGh1bWI6OlVSSQBmaWxlOi8vLi91cGxvYWRzLzU2L0dnYzc5QWUvMTM3Ny94b2ZmaWNlZG9jdW1lbnRfOTI3NzUucG5nbHrDMgAAAABJRU5ErkJggg==
 // @grant        GM_setClipboard
+// @grant        GM_registerMenuCommand
 // ==/UserScript==
 
 // FYI: https://cdn.rawgit.com/kamranahmedse/jquery-toast-plugin/bd761d335919369ed5a27d1899e306df81de44b8/dist/jquery.toast.min.css
@@ -45,8 +46,33 @@ function is_macintosh() {
     return navigator.platform.indexOf('Mac') > -1
 }
 
+function url_to_clipboard() {
+    var url = location.href;
+    var title = document.title || url;
+    var encoded_title = title.replaceAll(/([\[\]<>])/g, '\\$1');
+    var content = `[${encoded_title}]( ${url} )`;
+    GM_setClipboard(content);
+    console.log("content:", content);
+
+    $.toast({
+        text: content,
+        //                heading: '📗[Clipboard]', // Optional heading to be shown on the toast
+        loader: true,
+        loaderBg: '#9EC600',
+        showHideTransition: 'slide', // fade, slide or plain
+        allowToastClose: true, // Boolean value true or false
+        hideAfter: 1500, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+        stack: 3, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+        position: 'top-center',
+        bgColor: '#2f4f4f',
+        textColor: '#fffacd'
+    });
+}
+
 (function() {
     'use strict';
+
+    GM_registerMenuCommand("📗: COPY URL TO CLIPBOARD", url_to_clipboard, "e");
 
     add_css([jquery_toast_plugin_css_content, custom_css_content]);
 
@@ -55,26 +81,7 @@ function is_macintosh() {
         // others: ctrl + shift + c
         if ((is_macintosh() && event.ctrlKey && event.metaKey && event.key === 'c') ||
             (!is_macintosh() && event.ctrlKey && event.shiftKey && event.key === 'c')) {
-            var title = document.title;
-            var encoded_title = title.replaceAll(/([\[\]<>])/g, '\\$1');
-            var url = location.href;
-            var content = `[${encoded_title}]( ${url} )`;
-            GM_setClipboard(content);
-            console.log("content:", content);
-
-            $.toast({
-                text: content,
-                //                heading: '📗[Clipboard]', // Optional heading to be shown on the toast
-                loader: true,
-                loaderBg: '#9EC600',
-                showHideTransition: 'slide', // fade, slide or plain
-                allowToastClose: true, // Boolean value true or false
-                hideAfter: 1500, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
-                stack: 3, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
-                position: 'top-center',
-                bgColor: '#2f4f4f',
-                textColor: '#fffacd'
-            });
+            url_to_clipboard();
         }
         return true;
     });
