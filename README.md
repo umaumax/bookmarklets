@@ -1,15 +1,12 @@
 # bookmarklets
 
-## [url-to-clipboard.user.js]( https://github.com/umaumax/bookmarklets/raw/master/url-to-clipboard.user.js )
-URLをクリップボードへコピーする(トースト通知あり)
+`*.user.js` files are for [Tampermonkey • Userscript Sources]( https://www.tampermonkey.net/scripts.php ).
 
-## code-prettify.js
-adopt google `code-prettify.js` with `linenums` option and `desert` style to any code block
+## ⭐[url-to-clipboard.user.js]( https://github.com/umaumax/bookmarklets/raw/master/url-to-clipboard.user.js )
+This copy url to clibpboard as markdown style with toast notification.
 
-* `github.com`の`README.md`での動作は確認済み
-* `qiita.com`, `zenn.dev`: ok
-
-[bookmarklets/code\-prettify\.js at master · umaumax/bookmarklets]( https://github.com/umaumax/bookmarklets/blob/master/code-prettify.js )
+## [code-prettify.js]( https://github.com/umaumax/bookmarklets/blob/master/code-prettify.js )
+This adopts google `code-prettify.js` with `linenums` option and `desert` style to any code blocks.
 
 <details>
 <summary>FMI</summary>
@@ -22,13 +19,9 @@ adopt google `code-prettify.js` with `linenums` option and `desert` style to any
 </details>
 
 ## [code-prettify.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/code-prettify.user.js )
-[Tampermonkey • Userscript Sources]( https://www.tampermonkey.net/scripts.php )向けのscript
 
-githubやgistの`raw`ボタンを押すとイントール可能な画面へ遷移する
-
-## [niconico-adblocker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.user.js )
-
-ニコニコ動画の広告を自動的にskipする
+## 🔧[niconico-adblocker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.user.js )
+This skips ads of Niconico movie site.(Under Maintenance)
 
 ## [navigator.platform-switcher.user.js]( https://github.com/umaumax/bookmarklets/raw/master/navigator.platform-switcher.user.js )
 特定のプラットフォームに偽造する(インストーラーのダウンロードサイト向け)
@@ -78,12 +71,10 @@ FYI: [Markdownを「Marked\.js」を使ってHTMLに変換する方法 \- suzu6]
 javascript: document.querySelectorAll("gr-message").forEach(e => e.click()); void(0);
 ```
 
-----
-
 ## NOTE
 
-## ブックマークレットの登録方法
-  * macの場合`cmd-D`->`More`->`URL`にコードをそのまま貼り付ける
+## How to add bookmarklets
+* mac: `cmd-D`->`More`->`URL`(paste here)
 
 ## コード作成時の注意
 * javascriptの仕様上省略可能であるが，ブックマークレット化する際にはうまく処理されないようので，`;`は必ず入れること
