@@ -46,6 +46,10 @@ function is_macintosh() {
     return navigator.platform.indexOf('Mac') > -1
 }
 
+function is_windows() {
+    return navigator.platform.indexOf('Win') > -1
+}
+
 function url_to_clipboard() {
     var url = location.href;
     var title = document.title || url;
@@ -76,12 +80,14 @@ function url_to_clipboard() {
 
     add_css([jquery_toast_plugin_css_content, custom_css_content]);
 
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function(event) {
         // mac: ctrl + command + c
         // others: ctrl + shift + c
         if ((is_macintosh() && event.ctrlKey && event.metaKey && event.key === 'c') ||
-            (!is_macintosh() && event.ctrlKey && event.shiftKey && event.key === 'c')) {
+            (!is_macintosh() && event.ctrlKey && event.shiftKey && event.key === 'C')) {
             url_to_clipboard();
+            event.preventDefault();
+            return false;
         }
         return true;
     });
