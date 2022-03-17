@@ -36,6 +36,9 @@ gitlabのwikiの右側のサイドバーを隠す(クリック or command or ctr
 ## [disable-google-account-popup.user.js]( https://github.com/umaumax/bookmarklets/raw/master/disable-google-account-popup.user.js )
 redditのgoogle account loginのpopupを抑制する
 
+## [github-issue-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-issue-extension.user.js )
+Add `Edit` button to edit an issue comment in one operation.
+
 ## [github-wiki-edit.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-wiki-edit.user.js )
 githubのwikiのeditのショートカットキーを定義する(gitlabと同じ)
 
