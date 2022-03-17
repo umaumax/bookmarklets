@@ -25,12 +25,18 @@ $(function() {
                 return;
             }
             three_dots_icon.click();
-            setTimeout(function() {
+
+            var click_edit_button_loop = function() {
                 var real_edit_button = top_elem.find('button.js-comment-edit-button');
-                real_edit_button.each(function() {
-                    $(this).click();
-                });
-            }, 300);
+                if (real_edit_button && real_edit_button.is(":visible")) {
+                    console.log("GitHub Edit Button Found");
+                    real_edit_button.click();
+                } else {
+                    console.log("GitHub Edit Button Not Found");
+                    setTimeout(click_edit_button_loop, 100);
+                }
+            }
+            click_edit_button_loop();
         });
         $(this).append(edit_button_elem);
     });
