@@ -12,13 +12,13 @@
 (function() {
     'use strict';
 
-    let header = document.getElementsByClassName('st-Header_subNavigationTabContainer')[0];
+    let header = document.getElementsByClassName('st-NewHeader_subNavigationTabContainer')[0];
     let a = document.createElement("a");
     a.href = '#';
     a.appendChild(document.createTextNode("⭐最新(昨日の日付)"));
-    a.classList.add('st-Header_subNavigationItem');
+    a.classList.add('st-NewHeader_subNavigationItem');
     a.onclick = function filter_lateset() {
-        document.getElementsByClassName('st-Header_subNavigationItem').forEach(function(e) {
+        document.getElementsByClassName('st-NewHeader_subNavigationItem').forEach(function(e) {
             e.classList.remove('is-active');
         });
         a.classList.add('is-active');
