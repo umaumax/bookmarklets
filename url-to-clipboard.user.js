@@ -28,13 +28,11 @@ function add_css(datas) {
         if (data.startsWith('http')) {
             style = document.createElement('link');
             var url = data;
-            console.log('[log]: add css from ', url);
             style.href = url;
             style.rel = 'stylesheet';
         } else {
             style = document.createElement('style');
             var raw_text = data;
-            console.log('[log]: add css text ', raw_text);
             style.innerHTML = raw_text;
         }
         style.type = 'text/css';
@@ -56,7 +54,6 @@ function url_to_clipboard() {
     var encoded_title = title.replaceAll(/([\[\]<>])/g, '\\$1');
     var content = `[${encoded_title}]( ${url} )`;
     GM_setClipboard(content);
-    console.log("content:", content);
 
     $.toast({
         text: content,
