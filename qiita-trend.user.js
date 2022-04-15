@@ -18,10 +18,10 @@
     a.appendChild(document.createTextNode("⭐最新(昨日の日付)"));
     a.classList.add('st-NewHeader_subNavigationItem');
     a.onclick = function filter_lateset() {
-        document.getElementsByClassName('st-NewHeader_subNavigationItem').forEach(function(e) {
-            e.classList.remove('is-active');
-        });
-        a.classList.add('is-active');
+        // document.getElementsByClassName('st-NewHeader_subNavigationItem').forEach(function(e) {
+        // e.classList.remove('is-active');
+        // });
+        // a.classList.add('is-active');
 
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
         document.querySelectorAll('article header time').forEach(function(e) {
