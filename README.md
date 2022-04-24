@@ -23,6 +23,9 @@ This adopts google `code-prettify.js` with `linenums` option and `desert` style 
 ## 🔧[niconico-adblocker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.user.js )
 This skips ads of Niconico movie site.(Under Maintenance)
 
+## [niconico-adblocker.us]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.us )
+This skips ads of TVer site.
+
 ## [navigator.platform-switcher.user.js]( https://github.com/umaumax/bookmarklets/raw/master/navigator.platform-switcher.user.js )
 特定のプラットフォームに偽造する(インストーラーのダウンロードサイト向け)
 
