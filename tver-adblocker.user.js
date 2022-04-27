@@ -27,7 +27,9 @@ function is_ad_video(video) {
 }
 
 function skip_ad_video(video) {
-    video.currentTime = video.duration;
+    if (video.currentTime < video.duration) {
+        video.currentTime = video.duration;
+    }
 }
 
 function find_ad_videos(video) {
