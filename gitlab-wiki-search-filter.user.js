@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Wiki Searcher
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  interactive wiki search and go to item position directly
 // @author       You
 // @match        https://gitlab.com/umaumax/memo/-/wikis/home*
@@ -100,9 +100,24 @@ function query_oninput(event) {
     search_result.innerHTML = innerHTML;
 }
 
-(function() {
-    'use strict';
+function waitForElement(selector, callback, intervalMs, timeoutMs) {
+    const startTimeInMs = Date.now();
+    findLoop();
 
+    function findLoop() {
+        if (document.querySelector(selector) != null) {
+            callback();
+            return;
+        } else {
+            setTimeout(() => {
+                if (timeoutMs && Date.now() - startTimeInMs > timeoutMs) return;
+                findLoop();
+            }, intervalMs);
+        }
+    }
+}
+
+function main() {
     let container = document.getElementsByClassName('js-wiki-page-content')[0];
     search_result = document.createElement("div");
     container.prepend(search_result);
@@ -141,4 +156,11 @@ function query_oninput(event) {
         input.value = '';
         input.focus();
     }
+}
+
+(function() {
+    'use strict';
+
+    let container = document.getElementsByClassName('')[0];
+    waitForElement('.js-wiki-page-content', main, 100, 5 * 1000);
 })();
