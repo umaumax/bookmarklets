@@ -161,6 +161,5 @@ function main() {
 (function() {
     'use strict';
 
-    let container = document.getElementsByClassName('')[0];
     waitForElement('.js-wiki-page-content', main, 100, 5 * 1000);
 })();
