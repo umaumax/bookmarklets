@@ -48,6 +48,9 @@ githubのwikiのeditのショートカットキーを定義する(gitlabと同�
 ## [clipboard-copy.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clipboard-copy.user.js )
 githubのpull requestの特定のcommitのshaをコピーするボタンを追加する
 
+## [filtering-sony-books.js]( https://github.com/umaumax/bookmarklets/raw/master/filtering-sony-books.js )
+Sony Readerの無料本のランキングのフィルタリングをする(アイコンメニューから実行する)
+
 ## [auto-scroll-extension-in-page.user.js]( https://github.com/umaumax/bookmarklets/raw/master/auto-scroll-extension-in-page.user.js )
 `#id`のリンクスクロールをjQueryのセレクタ表記にも対応する拡張
 
