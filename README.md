@@ -129,13 +129,7 @@ Array.prototype.forEach.call(document.querySelectorAll(target_selector), functio
 ## links
 * [Bookmarkletを作ろう\(準備編） \- Qiita]( https://qiita.com/kanaxx/items/63debe502aacd73c3cb8 )
 
-* [そろそろ本気でブックマークレットを作る \| Qrunch（クランチ）]( https://qrunch.net/@okayu/entries/oCXiY7zM7yBhjhV0 )
-
-> 手元のVSCodeで見たところ、57068文字ありました。
-> これをブックマークのURL欄に入力し、そのブックマークを実行してみるとどうでしょうか?
-> 少なくとも私の環境では、Google Chrome(Canary)でもFirefox(Developer Edition)でも実行できました。
-
-下記はあくまで`URL`だが参考程度に
+下記はあくまで`URL`だが、ブックマークレットの長さの参考程度に
 
 * [各種OS/ブラウザでの長いフラグメント のあるURLの長さを調べてみました \- Qiita]( https://qiita.com/nwtgck/items/e83473dc63386d2da3e5 )
 
