@@ -3,7 +3,10 @@
 `*.user.js` files are for [Tampermonkey • Userscript Sources]( https://www.tampermonkey.net/scripts.php ).
 
 ## ⭐[url-to-clipboard.user.js]( https://github.com/umaumax/bookmarklets/raw/master/url-to-clipboard.user.js )
-This copy url to clibpboard as markdown style with toast notification.
+This copies url to clibpboard as markdown style with toast notification.
+
+## ⭐[copy-css-background-img-url.user.js]( https://github.com/umaumax/bookmarklets/raw/master/copy-css-background-img-url.user.js )
+This copy css background image url to clibpboard with toast notification.
 
 ## [code-prettify.js]( https://github.com/umaumax/bookmarklets/blob/master/code-prettify.js )
 This adopts google `code-prettify.js` with `linenums` option and `desert` style to any code blocks.
