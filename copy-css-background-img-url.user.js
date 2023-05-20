@@ -67,6 +67,7 @@ function copy_to_clipboard(content) {
             var background = $(this).css('background-image');
             if (/url\(([^\)]+)\)/.test(background)) {
                 var url = /url\(([^\)]+)\)/.exec(background)[1];
+                url = url.replace(/^"(.*)"$/, '$1'); // remove the head and last "
                 console.log('css background image url:', url);
                 copy_to_clipboard(url);
                 event.preventDefault();
