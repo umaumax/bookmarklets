@@ -7,6 +7,7 @@ This copies url to clibpboard as markdown style with toast notification.
 
 ## ⭐[copy-css-background-img-url.user.js]( https://github.com/umaumax/bookmarklets/raw/master/copy-css-background-img-url.user.js )
 This copy css background image url to clibpboard with toast notification.
+You can test this user script at https://store.line.me/stickershop/product/1435895/en .
 
 ## [code-prettify.js]( https://github.com/umaumax/bookmarklets/blob/master/code-prettify.js )
 This adopts google `code-prettify.js` with `linenums` option and `desert` style to any code blocks.
