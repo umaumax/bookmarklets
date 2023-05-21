@@ -70,10 +70,8 @@ function copy_to_clipboard(content) {
                 url = url.replace(/^"(.*)"$/, '$1'); // remove the head and last "
                 console.log('css background image url:', url);
                 copy_to_clipboard(url);
-                event.preventDefault();
-                return false;
+                this.oncontextmenu = function () {return false;}
             }
         }
-        return true;
     });
 })();
