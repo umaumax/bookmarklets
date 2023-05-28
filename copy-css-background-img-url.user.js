@@ -62,6 +62,13 @@ function copy_to_clipboard(content) {
     'use strict';
     add_css([jquery_toast_plugin_css_content, custom_css_content]);
 
+    // When img and css are overlapping, disable the latter's own event processing in order to judge img first and enable right-click.
+    $('img').mousedown(function(event) {
+        if (event.which == 3) { // detect right click event
+            return false;
+        }
+    });
+
     $('*').mousedown(function(event) {
         if (event.which == 3) { // detect right click event
             var background = $(this).css('background-image');
@@ -70,7 +77,9 @@ function copy_to_clipboard(content) {
                 url = url.replace(/^"(.*)"$/, '$1'); // remove the head and last "
                 console.log('css background image url:', url);
                 copy_to_clipboard(url);
-                this.oncontextmenu = function () {return false;}
+                this.oncontextmenu = function() {
+                    return false;
+                }
             }
         }
     });
