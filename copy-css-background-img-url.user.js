@@ -6,7 +6,7 @@
 // @author       You
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
 // @require      https://raw.githubusercontent.com/kamranahmedse/jquery-toast-plugin/bd761d335919369ed5a27d1899e306df81de44b8/dist/jquery.toast.min.js
-// @match        *://*/*
+// @match        https://store.line.me/stickershop/product/*
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAARdQTFRFAAAAVme9hJTQdILQSFm4P1G0PlC0eIbTV2a/QVK0OkupOkuoGyNOGiJNTl+6TV66TV66TV66TV66XW3Df4zWSFm4Q1S2Xm7FdoTRdIHQP1C0PlC0dYPRdILQPlC0dILQdYPRe4jWbHrIZ3XETF26QVKvQVK0OkuoPU+xPU+xEBUvMD6MM0GTMkGSMD6LDBEkAAAAAAAAQVK1QFK1PlC0PVC0Xm3EdYPQdILQXm7FdYPRXWzDdoPRSVmzaHbEbHrIPU6xP0+sQVGtPU+0PU+zgo7Ps7risbnhsrnhbXvHPE6zo6vZ7e706uvz6+zzhZDOO02zUF+yRVazgY3OsrnisLfhsbjhbXrGUWCyUmCyRlezbHrG////L/L5TgAAADJ0Uk5TAAAAAAAAAAAAAAAAAABFkpeWmGsKFtH3gQge4feBHveACPd+Bd4cGNTTAlGCgU4CAQK7LD33AAAAAWJLR0Rc6tgAlwAAAAlwSFlzAAB2HAAAdhwBp8J46gAAAOFJREFUOMtjYKAPYGTi4xcQhAIhYRFmdAUsomJGcGAsLiGJroJVStoEDkzNZGTRVbDJISkwMTOXR1eBrsACXQWqAksrC3QVqAqsbczNzWUUFNlxKDC1tbMHAiVlFQ4cJjg4OoGAqhonDgVQIC3HhqbA2cUZClxMsSlwdnVzhwIPTy9sCrx9fKHAzz8AmxW2gXAQhNWK4JBQKAgLH/RWRERERuGzIiw6wBl7SEKtAJuPNS5sIyNAAGw+9siCAlNMBVzqGpjRranODVfAo6Wto4sGdPT0eZFSpYEhBjAgKXPiAQCnN3mFOTUjDAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wMy0yM1QxODoyNDowMiswMTowMCQwhr8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDMtMjNUMTg6MjQ6MDIrMDE6MDBVbT4DAAAARnRFWHRzb2Z0d2FyZQBJbWFnZU1hZ2ljayA2LjcuOC05IDIwMTYtMDYtMTYgUTE2IGh0dHA6Ly93d3cuaW1hZ2VtYWdpY2sub3Jn5r80tgAAABh0RVh0VGh1bWI6OkRvY3VtZW50OjpQYWdlcwAxp/+7LwAAABh0RVh0VGh1bWI6OkltYWdlOjpoZWlnaHQANTEywNBQUQAAABd0RVh0VGh1bWI6OkltYWdlOjpXaWR0aAA1MTIcfAPcAAAAGXRFWHRUaHVtYjo6TWltZXR5cGUAaW1hZ2UvcG5nP7JWTgAAABd0RVh0VGh1bWI6Ok1UaW1lADE1MjE4MjU4NDL67JvAAAAAE3RFWHRUaHVtYjo6U2l6ZQA0LjY2S0JCjHIFagAAAEV0RVh0VGh1bWI6OlVSSQBmaWxlOi8vLi91cGxvYWRzLzU2L0dnYzc5QWUvMTM3Ny94b2ZmaWNlZG9jdW1lbnRfOTI3NzUucG5nbHrDMgAAAABJRU5ErkJggg==
 // @grant        GM_setClipboard
 // @grant        GM_registerMenuCommand
@@ -40,8 +40,23 @@ function add_css(datas) {
     });
 }
 
+const setToClipboard = async blob => {
+    const data = [new ClipboardItem({
+        [blob.type]: blob
+    })]
+    await navigator.clipboard.write(data);
+}
+
 function copy_to_clipboard(content) {
-    GM_setClipboard(content);
+    // just copy url text
+    // GM_setClipboard(content);
+
+    // copy image of the url
+    (async function() {
+        const response = await fetch(content)
+        const blob = await response.blob()
+        await setToClipboard(blob)
+    })();
 
     $.toast({
         text: content,
