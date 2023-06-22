@@ -9,6 +9,9 @@ This copies url to clibpboard as markdown style with toast notification.
 This copy css background image url to clibpboard with toast notification.
 You can test this user script at https://store.line.me/stickershop/product/1435895/en .
 
+## ⭐[google-search-enhancer.user.js]( https://github.com/umaumax/bookmarklets/raw/master/google-search-enhancer.user.js )
+This adds one click search bottons(`日本語のみ`,`Only English`, `1年以内`, `アメリカ版`).
+
 ## [code-prettify.js]( https://github.com/umaumax/bookmarklets/blob/master/code-prettify.js )
 This adopts google `code-prettify.js` with `linenums` option and `desert` style to any code blocks.
 
