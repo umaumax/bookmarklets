@@ -31,11 +31,13 @@
         }
     ]
 
-    var e = $('.nfdoRb');
+    var e = document.querySelector('div[role="navigation"] div[role="navigation"]>div[data-st-tgt="mode"]>div>div');
+    console.log(e)
+    var base_bode = e.querySelector('a');
     inputs.forEach(v => {
-        e.prepend('' +
-            '<a class="zItAnd FOU1zf" href="' + location.href + v.query + '">' +
-            '<div class="O3S9Rb">' + v.label + '</div>' +
-            '</a>');
+        var new_node = base_bode.cloneNode(true);
+        new_node.href = location.href + v.query;
+        new_node.querySelector('span').textContent = v.label;
+        e.prepend(new_node);
     });
 })();
