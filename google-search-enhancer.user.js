@@ -31,7 +31,7 @@
         }
     ]
 
-    var e = document.querySelector('div[role="navigation"] div[role="navigation"]>div[data-st-tgt="mode"]>div>div');
+    var e = document.querySelector('div[role="navigation"] div[role="navigation"]>div[data-st-tgt="mode"]>div>div>div');
     console.log(e)
     var base_bode = e.querySelector('a');
     inputs.forEach(v => {
