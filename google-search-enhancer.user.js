@@ -31,19 +31,21 @@
         }
     ]
 
-    var search_bar_box_query = 'div[role="navigation"]';
-    var e = document.querySelector(search_bar_box_query);
-    if (e == null) {
+    const firstHitSearchButtonElements = document.querySelectorAll('span');
+    const firstHitSearchButton = Array.from(firstHitSearchButtonElements).find((element) => {
+        return ['画像', '動画', 'ショッピング', 'ニュース', '地図'].includes(element.textContent);
+    });
+    if (firstHitSearchButton == null) {
         // for telling error status to user
         document.body.style.backgroundColor = "#faf0f0";
-        console.log("[google search feature enhancer] There is no element!:" + search_bar_box_query)
+        console.log("[google search feature enhancer] There is no element!")
         return
     }
-    var base_node = e.querySelector('a');
+    const base_node = firstHitSearchButton.closest('a')
     if (base_node == null) {
         // for telling error status to user
         document.body.style.backgroundColor = "#f0faf0";
-        console.log("[google search feature enhancer] There is no element!:" + search_bar_box_query + ' a')
+        console.log("[google search feature enhancer] There is no parent element!:")
         return
     }
     inputs.forEach(v => {
