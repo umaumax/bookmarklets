@@ -78,9 +78,11 @@ function findCommonAncestor(elements) {
         }
     ]
 
-    const base_node = findCommonAncestor(Array.from(document.querySelectorAll('div,span')).filter((element) => {
+    const base_node = Array.from(findCommonAncestor(Array.from(document.querySelectorAll('div,span')).filter((element) => {
         return ['画像', '動画', 'ショッピング', 'ニュース', '地図'].includes(element.textContent);
-    }))?.firstElementChild;
+    }))?.children)?.find((element) => {
+        return element.tagName == 'A' || element.querySelector('a') != null;
+    });
     if (base_node == null) {
         // for telling error status to user
         document.body.style.backgroundColor = "#faf0f0";
@@ -94,6 +96,9 @@ function findCommonAncestor(elements) {
         var text_node = findDeepestChildMatchingCondition(new_node, (element) => {
             return ['画像', '動画', 'ショッピング', 'ニュース', '地図'].includes(element.textContent);
         });
+        if (text_node == null) {
+            text_node = new_node;
+        }
         text_node.textContent = v.label;
         base_node.parentNode.prepend(new_node);
     });
