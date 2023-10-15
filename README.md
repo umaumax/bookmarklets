@@ -52,6 +52,14 @@ Add `Edit` button to edit an issue comment in one operation.
 ## 🌟[github-pr-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-pr-extension.user.js )
 Add `Expand line` button to entire files and each files.
 
+## 🌟[github-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-extension.user.js )
+* GitHubをwebでアクセスしている間に、ファイルのコンテンツをブランチごとにローカルに保存する
+  * プライベートなリポジトリに対しても機能する
+  * READMEはデフォルトで`Preview`となり、`textarea`ではない表示のためキャッシュされないが、`Code`を表示するとキャッシュされる
+* GitHubのファイルが他のサイトからリンクされたときにモーダルウィンドウで表示する
+  * CSSを遅延読み込みする際に、本来のページのcode blockへの影響がある
+    * CSSを適用する範囲を限定する手法はあるのかどうか
+
 ## [github-wiki-edit.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-wiki-edit.user.js )
 githubのwikiのeditのショートカットキーを定義する(gitlabと同じ)
 
