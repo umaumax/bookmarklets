@@ -53,6 +53,8 @@ Add `Edit` button to edit an issue comment in one operation.
 * Add `Expand line` button to entire files and each files.
 * Add a commit diff link to each commits.
 
+ref: [umaumax/giiiithub-extension]( https://github.com/umaumax/giiiithub-extension )
+
 ## 🌟[github-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-extension.user.js )
 * GitHubをwebでアクセスしている間に、ファイルのコンテンツをブランチごとにローカルに保存する
   * プライベートなリポジトリに対しても機能する
