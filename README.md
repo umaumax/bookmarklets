@@ -50,7 +50,8 @@ redditのgoogle account loginのpopupを抑制する
 Add `Edit` button to edit an issue comment in one operation.
 
 ## 🌟[github-pr-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-pr-extension.user.js )
-Add `Expand line` button to entire files and each files.
+* Add `Expand line` button to entire files and each files.
+* Add a commit diff link to each commits.
 
 ## 🌟[github-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-extension.user.js )
 * GitHubをwebでアクセスしている間に、ファイルのコンテンツをブランチごとにローカルに保存する
