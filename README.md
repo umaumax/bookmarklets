@@ -60,10 +60,10 @@ Add `Expand line` button to entire files and each files.
   * CSSを遅延読み込みする際に、本来のページのcode blockへの影響がある
     * CSSを適用する範囲を限定する手法はあるのかどうか
 
-## [github-wiki-edit.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-wiki-edit.user.js )
+## 🌟[github-wiki-edit.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-wiki-edit.user.js )
 githubのwikiのeditのショートカットキーを定義する(gitlabと同じ)
 
-## [clipboard-copy.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clipboard-copy.user.js )
+## 🌟[clipboard-copy.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clipboard-copy.user.js )
 githubのpull requestの特定のcommitのshaをコピーするボタンを追加する
 
 ## [filtering-sony-books.js]( https://github.com/umaumax/bookmarklets/raw/master/filtering-sony-books.js )
