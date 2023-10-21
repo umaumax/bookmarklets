@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         GitHub PR: line expander!
+// @name         GitHub PR Extension
 // @namespace
 // @version      0.5
-// @description  try to expand PR lines
+// @description  try to expand PR lines and generate diff links
 // @author
 // @license      MIT
 // @match        https://github.com/*/*/pull/*
@@ -10,9 +10,7 @@
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // ==/UserScript==
 
-(function() {
-    'use strict';
-
+function GitHubPRLineExpander() {
     console.log('Started to exapnd lines!');
 
     var fileboxes = $(".file-actions");
@@ -20,7 +18,6 @@
     $('.ex_file_expand_btn').on('click', function() {
         expandExpand($(this).closest('[data-details-container-group="file"]'))
     });
-
 
     var box = $(".pr-review-tools").first();
     box.prepend('<div class="js-reviews-container diffbar-item mr-3"><a id="_ex_expand_btn" class="btn btn-sm">💡Expand All lines!</a></div>');
@@ -44,4 +41,36 @@
 
         console.log('Completed to exapnad lines!');
     }
+}
+
+function GitHubPRDiffLinkGenerator() {
+    var commit_hash_hrefs = document.querySelectorAll('code > a.Link--secondary');
+    if (commit_hash_hrefs.length == 0) {
+        console.errror("[clipboard copy button generater] This extension can not find git hash href elements.")
+    }
+
+    var prev_elem = null;
+    for (var i = 0; i < commit_hash_hrefs.length; i++) {
+        var elem = commit_hash_hrefs[i];
+        let text = elem.innerText;
+        if (!text.match(/[0-9a-f]{7}/)) continue;
+
+        var diff_url = null;
+        if (prev_elem == null) {
+            var url = elem.href;
+            diff_url = url.replace(/\/commits\/.*/, '/files/')
+        } else {
+            var url = prev_elem.href;
+            diff_url = url.replace(/\/commits\//, '/files/') + '..HEAD'
+        }
+        prev_elem = elem
+        $(elem).parent().append('<a href="' + diff_url + '"class="link-gray">' + '🎯DIFF' + '</a>');
+    }
+}
+
+(function() {
+    'use strict';
+
+    GitHubPRLineExpander()
+    GitHubPRDiffLinkGenerator()
 })();
