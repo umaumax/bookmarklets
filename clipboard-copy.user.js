@@ -26,7 +26,7 @@ function clipboard_handler(e) {
 };
 
 function append_icon_to_href(elem, css) {
-    var clipboard_button = document.createElement('p');
+    var clipboard_button = document.createElement('span');
     clipboard_button.innerHTML = '📋';
     clipboard_button.setAttribute("style", css);
     clipboard_button.setAttribute("class", 'clipboard-copy-user-script-icon');
@@ -42,14 +42,18 @@ function append_icon_to_href(elem, css) {
 
     /* for github.com */
     if (document.URL.match(/https:\/\/github.com\/.*/)) {
-        var commit_hash_hrefs = document.querySelectorAll('div.js-commit-group-commits .js-commit .text-right.ml-1 a:first-child');
+        var commit_hash_hrefs = document.querySelectorAll('code > a.Link--secondary');
+        if (commit_hash_hrefs.length == 0) {
+            console.errror("[clipboard copy button generater] This extension can not find git hash href elements.")
+        }
         for (var i = 0; i < commit_hash_hrefs.length; i++) {
             var elem = commit_hash_hrefs[i];
-            var css = 'float: left; position: relative; left: 115px; top: 0px; cursor: pointer;';
+            let text = elem.innerText;
+            if (!text.match(/[0-9a-f]{7}/)) continue;
+            var css = ''
             append_icon_to_href(elem, css);
         }
     }
-
 
     /* for JIRA */
     if (document.URL.match(/https:\/\/.*\/.*jira.*/)) {
