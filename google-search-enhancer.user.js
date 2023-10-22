@@ -78,9 +78,13 @@ function findCommonAncestor(elements) {
         }
     ]
 
-    const base_node = Array.from(findCommonAncestor(Array.from(document.querySelectorAll('div,span')).filter((element) => {
-        return ['画像', '動画', 'ショッピング', 'ニュース', '地図'].includes(element.textContent);
-    }))?.children)?.find((element) => {
+    const base_node = Array.from(
+        findCommonAncestor(
+            Array.from(document.querySelectorAll('div[role=navigation] a div,span a')).filter((element) => {
+                var ret = ['画像', '動画', 'ショッピング', 'ニュース', '地図'].includes(element.textContent);
+                // if (ret) console.log(element.textContent, element)
+                return ret
+            }))?.children)?.find((element) => {
         return element.tagName == 'A' || element.querySelector('a') != null;
     });
     if (base_node == null) {
@@ -89,6 +93,7 @@ function findCommonAncestor(elements) {
         console.log("[google search feature enhancer] There is no element!")
         return
     }
+    console.log("[Google Ex]", base_node)
     inputs.forEach(v => {
         var new_node = base_node.cloneNode(true);
         var a_node = new_node.tagName == 'A' ? new_node : new_node.querySelector('a')
