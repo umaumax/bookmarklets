@@ -42,23 +42,23 @@ function append_icon_to_href(elem, css) {
 
     /* for github.com */
     if (document.URL.match(/https:\/\/github.com\/.*/)) {
-        var commit_hash_hrefs = document.querySelectorAll('code > a.Link--secondary');
+        let commit_hash_hrefs = document.querySelectorAll('code > a.Link--secondary');
         if (commit_hash_hrefs.length == 0) {
             console.errror("[clipboard copy button generater] This extension can not find git hash href elements.")
         }
         for (var i = 0; i < commit_hash_hrefs.length; i++) {
-            var elem = commit_hash_hrefs[i];
+            let elem = commit_hash_hrefs[i];
             let text = elem.innerText;
             if (!text.match(/[0-9a-f]{7}/)) continue;
-            var css = ''
-            append_icon_to_href(elem, css);
+            let style = ''
+            append_icon_to_href(elem, style);
         }
     }
 
     /* for JIRA */
     if (document.URL.match(/https:\/\/.*\/.*jira.*/)) {
-        var ticket_id_href = document.querySelector('#key-val');
-        var css = 'float: left; position: relative; left: 245px; top: -10px; cursor: pointer;';
-        append_icon_to_href(ticket_id_href, css);
+        let ticket_id_href = document.querySelector('#key-val');
+        let style = 'float: left; position: relative; left: 245px; top: -10px; cursor: pointer;';
+        append_icon_to_href(ticket_id_href, style);
     }
 })();
