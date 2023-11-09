@@ -60,5 +60,7 @@ function append_icon_to_href(elem, css) {
         let ticket_id_href = document.querySelector('#key-val');
         let style = 'float: left; position: relative; left: 245px; top: -10px; cursor: pointer;';
         append_icon_to_href(ticket_id_href, style);
+        let ticket_title_href = document.querySelector('#summary-val');
+        append_icon_to_href(ticket_title_href, style);
     }
 })();
