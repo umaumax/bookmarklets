@@ -78,33 +78,26 @@ function findCommonAncestor(elements) {
         }
     ]
 
-    const base_node = Array.from(
-        findCommonAncestor(
-            Array.from(document.querySelectorAll('div[role=navigation] a div,span a')).filter((element) => {
-                var ret = ['画像', '動画', 'ショッピング', 'ニュース', '地図'].includes(element.textContent);
-                // if (ret) console.log(element.textContent, element)
-                return ret
-            }))?.children)?.find((element) => {
-        return element.tagName == 'A' || element.querySelector('a') != null;
-    });
-    if (base_node == null) {
-        // for telling error status to user
-        document.body.style.backgroundColor = "#faf0f0";
-        console.log("[google search feature enhancer] There is no element!")
-        return
-    }
-    console.log("[Google Ex]", base_node)
+    var base_node = document.createElement("div");
+    base_node.style['z-index'] = 9999;
+    base_node.style.position = 'fixed';
+    base_node.style.top = '64px';
+    base_node.style.left = '20px';
+    document.body.appendChild(base_node);
     inputs.forEach(v => {
-        var new_node = base_node.cloneNode(true);
-        var a_node = new_node.tagName == 'A' ? new_node : new_node.querySelector('a')
+        var a_node = document.createElement("a");
         a_node.href = location.href + v.query;
-        var text_node = findDeepestChildMatchingCondition(new_node, (element) => {
-            return ['画像', '動画', 'ショッピング', 'ニュース', '地図'].includes(element.textContent);
-        });
-        if (text_node == null) {
-            text_node = new_node;
-        }
-        text_node.textContent = v.label;
-        base_node.parentNode.prepend(new_node);
+        a_node.textContent = v.label;
+        var outer_node = document.createElement("div");
+        outer_node.style.height = '30px';
+        outer_node.style.margin = '4px 0';
+        outer_node.style.padding = '0 8px';
+        outer_node.style['align-items'] = 'center';
+        outer_node.style.display = 'flex';
+        outer_node.style['justify-content'] = 'center';
+        outer_node.style['border-radius'] = '20px';
+        outer_node.style.border = '1px solid #dadce0';
+        outer_node.appendChild(a_node);
+        base_node.appendChild(outer_node);
     });
 })();
