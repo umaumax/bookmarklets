@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  google search feature enhancer
 // @author       You
-// @match        https://www.google.com/*
+// @match        https://www.google.com/search*
 // @grant        none
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @require      http://code.jquery.com/jquery-3.6.0.min.js
