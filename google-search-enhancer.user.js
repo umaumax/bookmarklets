@@ -94,6 +94,7 @@ function findCommonAncestor(elements) {
         outer_node.style.padding = '0 8px';
         outer_node.style['align-items'] = 'center';
         outer_node.style.display = 'flex';
+        outer_node.style.background = '#f7f7ff';
         outer_node.style['justify-content'] = 'center';
         outer_node.style['border-radius'] = '20px';
         outer_node.style.border = '1px solid #dadce0';
