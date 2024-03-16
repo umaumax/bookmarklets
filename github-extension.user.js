@@ -14,6 +14,7 @@
 // @grant        GM_getValue
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @grant        GM_registerMenuCommand
 // ==/UserScript==
 
 GM_addStyle(GM_getResourceText("jquery.modal.min.css"));
@@ -55,10 +56,28 @@ function pollingHighlightPlugin() {
     setTimeout(pollingHighlightPlugin, 1000)
 }
 
+function compareCurrentBranch(base_branch) {
+    var urlParts = window.location.pathname.split("/");
+    var owner = urlParts[1];
+    var repo = urlParts[2];
+    var tree = urlParts[3]; // NOTE: This value must be "tree"
+    var branch = urlParts.slice(4).join("/");
+
+    var compareURL = "https://github.com/" + owner + "/" + repo + "/compare/" + base_branch + "..." + branch;
+    window.open(compareURL, '_blank');
+}
+
+function addCreateCompareURLSettings() {
+    GM_registerMenuCommand("📗: COMPARE current branch and main branch", () => compareCurrentBranch("main"));
+    GM_registerMenuCommand("📗: COMPARE current branch and master branch", () => compareCurrentBranch("master"));
+}
+
 var cssInitFlag = false;
 
 $(function() {
     'use strict';
+
+    addCreateCompareURLSettings();
 
     // NOTE: [highlight.js not detected! · Issue #78 · wcoder/highlightjs-line-numbers.js]( https://github.com/wcoder/highlightjs-line-numbers.js/issues/78 )
     $('body').prepend(`<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>`);
