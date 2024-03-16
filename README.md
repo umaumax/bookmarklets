@@ -56,6 +56,9 @@ Add `Edit` button to edit an issue comment in one operation.
 ref: [umaumax/giiiithub-extension]( https://github.com/umaumax/giiiithub-extension )
 
 ## 🌟[github-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-extension.user.js )
+* Tampermonkeyのメニューに現在のブランチを`main`や`master`と比較するURLを新しいタブで開くメニューを追加する
+
+## 🌟[github-cache-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-cache-extension.user.js )
 * GitHubをwebでアクセスしている間に、ファイルのコンテンツをブランチごとにローカルに保存する
   * プライベートなリポジトリに対しても機能する
   * READMEはデフォルトで`Preview`となり、`textarea`ではない表示のためキャッシュされないが、`Code`を表示するとキャッシュされる

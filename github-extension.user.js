@@ -4,57 +4,10 @@
 // @version      0.1
 // @description  extend GitHub features
 // @author       You
-// @require      https://code.jquery.com/jquery-3.6.0.min.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js
-// @resource     jquery.modal.min.css https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css
-// @resource     github-dark.min.css https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css
-// @match        *://*/*
+// @match        https://github.com/*/*/tree/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
-// @grant        GM_setValue
-// @grant        GM_getValue
-// @grant        GM_addStyle
-// @grant        GM_getResourceText
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
-
-GM_addStyle(GM_getResourceText("jquery.modal.min.css"));
-
-function IsGitHubURL(url) {
-    return url.match(/https:\/\/github.com\/.*/)
-}
-
-function getCurrentURL() {
-    return location.protocol + '//' + location.host + location.pathname
-}
-
-var fileContentCache = null
-
-function cacheCurrentGitHubPageFile() {
-    var url = getCurrentURL()
-    var textarea = $('textarea#read-only-cursor-text-area.react-blob-print-hide').first()
-    var fileContent = textarea.text()
-    if (fileContent == "" || fileContentCache == fileContent) {
-        return;
-    }
-    fileContentCache = fileContent
-
-    GM_setValue(url, fileContent);
-
-    console.log("Cache ", url, fileContent.length / 1024.0, "KB");
-    return true;
-}
-
-function getGitHubPageFile(url) {
-    return GM_getValue(url, null);
-}
-
-function pollingHighlightPlugin() {
-    if (typeof hljs !== "undefined") {
-        $('body').prepend(`<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>`);
-        return
-    }
-    setTimeout(pollingHighlightPlugin, 1000)
-}
 
 function compareCurrentBranch(base_branch) {
     var urlParts = window.location.pathname.split("/");
@@ -72,91 +25,8 @@ function addCreateCompareURLSettings() {
     GM_registerMenuCommand("📗: COMPARE current branch and master branch", () => compareCurrentBranch("master"));
 }
 
-var cssInitFlag = false;
-
-$(function() {
+(function() {
     'use strict';
 
     addCreateCompareURLSettings();
-
-    // NOTE: [highlight.js not detected! · Issue #78 · wcoder/highlightjs-line-numbers.js]( https://github.com/wcoder/highlightjs-line-numbers.js/issues/78 )
-    $('body').prepend(`<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>`);
-    pollingHighlightPlugin()
-
-    if (IsGitHubURL(document.URL)) {
-        setInterval(() => {
-            cacheCurrentGitHubPageFile()
-        }, 1000);
-    }
-
-    var body = $("body").first();
-    body.prepend('<div id="_ex_code_modal" class="modal" style="max-width:100%; padding:64px 16px"><pre><code id="_ex_code_modal_code" style="width:auto; height:640px;"></code></pre><a href="#" rel="modal:close">Close</a></div>');
-    $('body').prepend('<style>.hljs { white-space: pre; word-wrap: normal; overflow-wrap: normal; }<style/>');
-
-    document.addEventListener('mouseover', function(event) {
-        setTimeout(function() {
-            var hoveredEl = event.target;
-            if (hoveredEl.tagName !== 'A') {
-                return;
-            }
-            var url = hoveredEl.protocol + '//' + hoveredEl.host + hoveredEl.pathname
-            var hash = hoveredEl.hash
-            // console.log(url)
-            if (!IsGitHubURL(url)) {
-                return
-            }
-            var currentURL = getCurrentURL()
-            // console.log(currentURL)
-            if (url == currentURL) {
-                return
-            }
-
-            var fileContent = getGitHubPageFile(url)
-            // console.log("GET", fileContent)
-
-            if (fileContent == null) {
-                return
-            }
-
-            var modalCode = document.getElementById('_ex_code_modal_code');
-            modalCode.innerHTML = fileContent
-            hljs.highlightAll();
-            hljs.lineNumbersBlock(modalCode, {
-                singleLine: true
-            });
-
-            var modal = $('#_ex_code_modal');
-            modal.modal();
-
-            if (!cssInitFlag) {
-                // WARN: This css conflicts original css of current page.
-                GM_addStyle(GM_getResourceText("github-dark.min.css"));
-                cssInitFlag = true;
-            }
-
-            setTimeout(() => {
-                var startLineNo = 0
-                var endLineNo = -1
-                var oneLineMatch = hash.match(/^#L([0-9]+)$/)
-                if (oneLineMatch) {
-                    startLineNo = Number(oneLineMatch[1])
-                    endLineNo = Number(oneLineMatch[1])
-                }
-                var multiLineMatch = hash.match(/^#L([0-9]+)-L([0-9]+)$/)
-                if (multiLineMatch) {
-                    startLineNo = Number(multiLineMatch[1])
-                    endLineNo = Number(multiLineMatch[2])
-                }
-                for (var lineNo = startLineNo; lineNo <= endLineNo; lineNo++) {
-                    var line = document.querySelector(
-                        '.hljs-ln-line[data-line-number="' + lineNo + '"]');
-                    line.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                    })
-                    $(line).css('color', '#F0F090');
-                }
-            }, 100)
-        }, 500)
-    });
-});
+})();
