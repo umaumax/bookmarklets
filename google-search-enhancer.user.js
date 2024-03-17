@@ -82,7 +82,9 @@ function findCommonAncestor(elements) {
     base_node.style['z-index'] = 9999;
     base_node.style.position = 'fixed';
     base_node.style.top = '64px';
-    base_node.style.left = '20px';
+    base_node.style.left = '10px';
+    base_node.style['padding-right'] = '100px';
+    base_node.id = 'google-search-feature-enhancer';
     document.body.appendChild(base_node);
     inputs.forEach(v => {
         var a_node = document.createElement("a");
@@ -101,4 +103,13 @@ function findCommonAncestor(elements) {
         outer_node.appendChild(a_node);
         base_node.appendChild(outer_node);
     });
+
+    var content = '';
+    content += '#google-search-feature-enhancer { transform: translate(-50%, 0px); transition: all 0.1s; }';
+    content += '#google-search-feature-enhancer:hover { transform: translate(0%, 0px); transition: all 0.1s; }';
+
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = content;
+    document.getElementsByTagName('head')[0].appendChild(style);
 })();
