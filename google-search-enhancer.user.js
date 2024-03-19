@@ -81,7 +81,7 @@ function findCommonAncestor(elements) {
     var base_node = document.createElement("div");
     base_node.style['z-index'] = 9999;
     base_node.style.position = 'fixed';
-    base_node.style.top = '64px';
+    base_node.style.top = '192px';
     base_node.style.left = '10px';
     base_node.style['padding-right'] = '100px';
     base_node.id = 'google-search-feature-enhancer';
@@ -105,8 +105,8 @@ function findCommonAncestor(elements) {
     });
 
     var content = '';
-    content += '#google-search-feature-enhancer { transform: translate(-50%, 0px); transition: all 0.1s; }';
-    content += '#google-search-feature-enhancer:hover { transform: translate(0%, 0px); transition: all 0.1s; }';
+    content += '#google-search-feature-enhancer { transform: translate(-50%, 0px); transition: all 0.2s; }';
+    content += '#google-search-feature-enhancer:hover { transform: translate(0%, 0px); transition: all 0.2s; }';
 
     var style = document.createElement('style');
     style.type = 'text/css';
