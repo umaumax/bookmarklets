@@ -55,7 +55,61 @@ function pollingHighlightPlugin() {
     setTimeout(pollingHighlightPlugin, 1000)
 }
 
+let activeKeyEvent = null;
+
+document.addEventListener('keydown', (event) => {
+    activeKeyEvent = event;
+});
+
+document.addEventListener('keyup', (event) => {
+    activeKeyEvent = event;
+});
+
+function showModalWindow(fileContent, hash) {
+    var modalCode = document.getElementById('_ex_code_modal_code');
+    modalCode.innerHTML = fileContent
+    hljs.highlightAll();
+    hljs.lineNumbersBlock(modalCode, {
+        singleLine: true
+    });
+
+    var modal = $('#_ex_code_modal');
+    modal.modal();
+
+    if (!cssInitFlag) {
+        // WARN: This css conflicts original css of current page.
+        GM_addStyle(GM_getResourceText("github-dark.min.css"));
+        cssInitFlag = true;
+    }
+
+    setTimeout(() => {
+        var startLineNo = 0
+        var endLineNo = -1
+        var oneLineMatch = hash.match(/^#L([0-9]+)$/)
+        if (oneLineMatch) {
+            startLineNo = Number(oneLineMatch[1])
+            endLineNo = Number(oneLineMatch[1])
+        }
+        var multiLineMatch = hash.match(/^#L([0-9]+)-L([0-9]+)$/)
+        if (multiLineMatch) {
+            startLineNo = Number(multiLineMatch[1])
+            endLineNo = Number(multiLineMatch[2])
+        }
+        for (var lineNo = startLineNo; lineNo <= endLineNo; lineNo++) {
+            var line = document.querySelector(
+                '.hljs-ln-line[data-line-number="' + lineNo + '"]');
+            line.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            })
+            $(line).css('color', '#F0F090');
+        }
+    }, 100)
+}
+
 var cssInitFlag = false;
+
+let currentHoveredEl = null;
 
 $(function() {
     'use strict';
@@ -75,69 +129,46 @@ $(function() {
     $('body').prepend('<style>.hljs { white-space: pre; word-wrap: normal; overflow-wrap: normal; }<style/>');
 
     document.addEventListener('mouseover', function(event) {
-        setTimeout(function() {
-            var hoveredEl = event.target;
-            if (hoveredEl.tagName !== 'A') {
-                return;
+        var hoveredEl = event.target
+        currentHoveredEl = hoveredEl
+        if (hoveredEl.tagName !== 'A') {
+            return;
+        }
+
+        var url = hoveredEl.protocol + '//' + hoveredEl.host + hoveredEl.pathname
+        var hash = hoveredEl.hash
+        if (!IsGitHubURL(url)) {
+            return
+        }
+        var currentURL = getCurrentURL()
+        if (url == currentURL) {
+            return
+        }
+
+        var fileContent = getGitHubPageFile(url)
+        if (fileContent == null) {
+            return
+        }
+        hoveredEl.setAttribute('title', 'alt: show this link content');
+
+        const mouseover_time_ms = 100
+        let intervalId = undefined
+        let f = function() {
+            if (intervalId && currentHoveredEl != hoveredEl) {
+                clearInterval(intervalId)
+                return false
             }
-            var url = hoveredEl.protocol + '//' + hoveredEl.host + hoveredEl.pathname
-            var hash = hoveredEl.hash
-            // console.log(url)
-            if (!IsGitHubURL(url)) {
-                return
-            }
-            var currentURL = getCurrentURL()
-            // console.log(currentURL)
-            if (url == currentURL) {
-                return
-            }
-
-            var fileContent = getGitHubPageFile(url)
-            // console.log("GET", fileContent)
-
-            if (fileContent == null) {
-                return
-            }
-
-            var modalCode = document.getElementById('_ex_code_modal_code');
-            modalCode.innerHTML = fileContent
-            hljs.highlightAll();
-            hljs.lineNumbersBlock(modalCode, {
-                singleLine: true
-            });
-
-            var modal = $('#_ex_code_modal');
-            modal.modal();
-
-            if (!cssInitFlag) {
-                // WARN: This css conflicts original css of current page.
-                GM_addStyle(GM_getResourceText("github-dark.min.css"));
-                cssInitFlag = true;
-            }
-
-            setTimeout(() => {
-                var startLineNo = 0
-                var endLineNo = -1
-                var oneLineMatch = hash.match(/^#L([0-9]+)$/)
-                if (oneLineMatch) {
-                    startLineNo = Number(oneLineMatch[1])
-                    endLineNo = Number(oneLineMatch[1])
+            if (activeKeyEvent && activeKeyEvent.altKey) {
+                showModalWindow(fileContent, hash)
+                if (intervalId) {
+                    clearInterval(intervalId)
                 }
-                var multiLineMatch = hash.match(/^#L([0-9]+)-L([0-9]+)$/)
-                if (multiLineMatch) {
-                    startLineNo = Number(multiLineMatch[1])
-                    endLineNo = Number(multiLineMatch[2])
-                }
-                for (var lineNo = startLineNo; lineNo <= endLineNo; lineNo++) {
-                    var line = document.querySelector(
-                        '.hljs-ln-line[data-line-number="' + lineNo + '"]');
-                    line.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                    })
-                    $(line).css('color', '#F0F090');
-                }
-            }, 100)
-        }, 500)
+                return true
+            }
+            return false
+        };
+        if (!f()) {
+            intervalId = setInterval(f, mouseover_time_ms)
+        }
     });
 });
