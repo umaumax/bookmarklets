@@ -42,7 +42,7 @@ function check_auto_login() {
     }
 
     if (document.URL.match('https://ctrl.kp-net.com/settingcontrol/login.*')) {
-        if (document.referrer == session_timeout_url || document.referrer == 'https://ctrl.kp-net.com/settingcontrol/login?') {
+        if (document.referrer == session_timeout_url || document.referrer.match('https://ctrl.kp-net.com/settingcontrol/login.*')) {
             let button = searchTextContent('button', 'ログイン');
             console.log(button)
             if (button) {
