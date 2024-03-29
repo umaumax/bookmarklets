@@ -12,6 +12,11 @@ You can test this user script at https://store.line.me/stickershop/product/14358
 ## ⭐[google-search-enhancer.user.js]( https://github.com/umaumax/bookmarklets/raw/master/google-search-enhancer.user.js )
 This adds one click search bottons(`日本語のみ`,`Only English`, `1年以内`, `アメリカ版`).
 
+## [jira-extensions.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/jira-extensions.user.js )
+for JIRA
+
+* Make labels easier to see on backlog and active sprint screens.
+
 ## [code-prettify.js]( https://github.com/umaumax/bookmarklets/blob/master/code-prettify.js )
 This adopts google `code-prettify.js` with `linenums` option and `desert` style to any code blocks.
 
