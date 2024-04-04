@@ -12,15 +12,10 @@
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
 
 String.prototype.hashCode = function() {
-    var hash = 0,
-        i, chr;
-    if (this.length === 0) return hash;
-    for (i = 0; i < this.length; i++) {
-        chr = this.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
+    return [...this].reduce(
+        (hash, c) => (Math.imul(31, hash) + c.charCodeAt(0)) | 0,
+        0
+    );
 }
 
 function get_hash_color(text) {
@@ -60,7 +55,7 @@ function get_hash_color(text) {
                     label.style.padding = "6px"
                     label.style.margin = "4px"
                     label.style.color = "black"
-                    label.style.background = get_hash_color(text)
+                    label.style.background = get_hash_color(text.trim())
                     label.textContent = text
                     ticket.querySelector('.ghx-summary').after(label)
                 })
