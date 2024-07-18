@@ -41,7 +41,7 @@ function auto_scroll_to_link_tag_id() {
     if (elements.length > 0) {
         var element = elements[0];
         element.scrollIntoView({
-            behavior: 'smooth'
+            behavior: 'auto'
         });
         done_flag = true;
         return;
