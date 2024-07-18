@@ -30,22 +30,38 @@ function auto_scroll_to_link_tag_id() {
     }
 
     var element = document.getElementById(link_tag_id);
+    console.log('💡', link_tag_id)
     if (element != null) {
         // do nothing
         return;
     }
 
-    var elements = $(link_tag_id);
-    if (elements.length < 1) {
+    var elements = Array.from(document.querySelectorAll('span,h1,h2,h3,h4,h5,h6'))
+    .filter((element)=> element.textContent.includes(link_tag_id));
+    if (elements.length > 0) {
+        var element = elements[0];
+        element.scrollIntoView({ behavior: 'smooth' });
+        done_flag = true;
         return;
     }
-    // disable reload auto scrolling
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
+
+    // NOTE: 上記の条件に合致する要素がロード中の場合に備えてエラーを無視する
+    try {
+        var elements = $(link_tag_id);
+        if (elements.length < 1) {
+            return;
+        }
+
+        // disable reload auto scrolling
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        var target = $(elements[0]);
+        $(window).scrollTop(target.offset().top - target.outerHeight());
+        done_flag = true;
+    } catch (error) {
+        console.error(error);
     }
-    var target = $(elements[0]);
-    $(window).scrollTop(target.offset().top - target.outerHeight());
-    done_flag = true;
 }
 
 var timer;
@@ -76,8 +92,9 @@ var timer;
             if (e.keyCode == 69) {
                 var target_query = $.map($('.js-wiki-page-content>h2,.js-wiki-page-content>h3').filter(function(i, e) {
                     return $(e).text().trim().length > 0 && $(window).scrollTop() <= $(e).offset().top + $(e).outerHeight() && $(e).offset().top <= $(window).scrollTop() + $(window).height();
-                }), function(v, i) {
-                    return "pre:contains('# " + $(v).text().trim() + "')";
+                }).filter(function(i,e){ return i==0 }), function(v, i) {
+//                    return "pre:contains('" + $(v).text().trim() + "')"; # for jquery
+                    return $(v).text().trim();
                 }).join(',');
                 var edit_query = 'edit';
                 if (target_query != '') {
