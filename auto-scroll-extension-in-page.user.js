@@ -92,7 +92,7 @@ var timer;
             }
             // e: 69
             if (e.keyCode == 69) {
-                var target_query = $.map($('.js-wiki-page-content>h2,.js-wiki-page-content>h3').filter(function(i, e) {
+                var target_query = $.map($('.js-wiki-page-content>h3,.js-wiki-page-content>h2').filter(function(i, e) {
                     return $(e).text().trim().length > 0 && $(window).scrollTop() <= $(e).offset().top + $(e).outerHeight() && $(e).offset().top <= $(window).scrollTop() + $(window).height();
                 }).filter(function(i, e) {
                     return i == 0
