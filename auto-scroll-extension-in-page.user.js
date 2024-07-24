@@ -43,6 +43,8 @@ function auto_scroll_to_link_tag_id() {
         element.scrollIntoView({
             behavior: 'auto'
         });
+        // textareaのtop位置と合わせるために上へスクロール調整をする
+        window.scrollBy(0, -40);
         done_flag = true;
         return;
     }
@@ -92,7 +94,7 @@ var timer;
             }
             // e: 69
             if (e.keyCode == 69) {
-                var target_query = $.map($('.js-wiki-page-content>h3,.js-wiki-page-content>h2').filter(function(i, e) {
+                var target_query = $.map($('.js-wiki-page-content>h3,.js-wiki-page-content>h2,.js-wiki-page-content>h1').filter(function(i, e) {
                     return $(e).text().trim().length > 0 && $(window).scrollTop() <= $(e).offset().top + $(e).outerHeight() && $(e).offset().top <= $(window).scrollTop() + $(window).height();
                 }).filter(function(i, e) {
                     return i == 0
