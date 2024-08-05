@@ -94,6 +94,10 @@ e.g. [GitHub \- Wikipedia - GitHub Actions]( https://ja.wikipedia.org/wiki/GitHu
 ## [qiita-trend.user.js]( https://github.com/umaumax/bookmarklets/raw/master/qiita-trend.user.js )
 qiitaのtrendの表示を昨日の日付のみにフィルターする
 
+## [clean-links.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clean-links.user.js )
+* `🔗✅: Mark All Links as Visited`: リンクを訪問済みとしてローカルストレージへ保存する
+* `🔗🗑️🧹: Clean Visited Links`: ローカルストレージから訪問済みリンク情報を読み取り、その要素を削除する(ページロード時に自動実行される)
+
 ## markdownizer.js
 convert normal text to markdown text
 
