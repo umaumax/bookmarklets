@@ -12,11 +12,11 @@ You can test this user script at https://store.line.me/stickershop/product/14358
 ## ⭐[google-search-enhancer.user.js]( https://github.com/umaumax/bookmarklets/raw/master/google-search-enhancer.user.js )
 This adds one click search bottons(`日本語のみ`,`Only English`, `1年以内`, `アメリカ版`).
 
-## [jira-extensions.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/jira-extensions.user.js )
 ## ⭐[highlight-keywords.user.js]( https://github.com/umaumax/bookmarklets/raw/master/highlight-keywords.user.js )
 * マウスで選択 or ダブルクリックしてテキストをハイライトする
   * 空文字を選択(空のクリック)すると変更・追加されたテキストに対しても再度処理が適用される
 
+## ⭐[jira-extensions.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/jira-extensions.user.js )
 for JIRA
 
 * Make labels easier to see on backlog and active sprint screens.
@@ -37,9 +37,9 @@ This adopts google `code-prettify.js` with `linenums` option and `desert` style 
 ## [code-prettify.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/code-prettify.user.js )
 
 ## 🔧[niconico-adblocker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.user.js )
-This skips ads of Niconico movie site.(Under Maintenance)
+This skips ads of Niconico movie site. (Under Maintenance)
 
-## [niconico-adblocker.us]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.us )
+## 🔧[niconico-adblocker.us]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.us )
 This skips ads of TVer site.
 
 ## [navigator.platform-switcher.user.js]( https://github.com/umaumax/bookmarklets/raw/master/navigator.platform-switcher.user.js )
@@ -52,7 +52,7 @@ gitlabのwikiの右側のサイドバーを隠す(クリック or command or ctr
 * インクリメンタルに検索ができる
 * 直接、各トピックへジャンプできる
 
-## [disable-google-account-popup.user.js]( https://github.com/umaumax/bookmarklets/raw/master/disable-google-account-popup.user.js )
+## 🔧[disable-google-account-popup.user.js]( https://github.com/umaumax/bookmarklets/raw/master/disable-google-account-popup.user.js )
 redditのgoogle account loginのpopupを抑制する
 
 ## 🌟[github-issue-extension.user.js]( https://github.com/umaumax/bookmarklets/raw/master/github-issue-extension.user.js )
