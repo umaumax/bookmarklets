@@ -14,12 +14,10 @@ function add_wiki_events() {
 
         if (event.key === '`') {
             const selectedText = window.getSelection().toString();
-            console.log("aaa", selectedText);
             if (selectedText) {
                 const button = document.querySelector('button[aria-label="Code"][title="Code"][data-testid="code"]');
                 if (button) {
                     button.click();
-                    console.log('!!');
                     event.preventDefault();
                 }
             }
