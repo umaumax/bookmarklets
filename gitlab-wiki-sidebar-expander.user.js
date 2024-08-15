@@ -69,24 +69,67 @@ function add_wiki_events() {
         })
     }, 100);
 
-    Array.from(document.querySelectorAll('[contenteditable="true"]')).forEach(e => e.addEventListener('keydown', function(event) {
-        const range = document.createRange();
-        const selection = window.getSelection();
+    setInterval(() => {
+        if (!is_gitlab_wiki) return;
 
-        if (event.metaKey && event.key === 'ArrowUp') {
-            range.setStart(event.target, 0);
-            range.collapse(true);
-        } else if (event.metaKey && event.key === 'ArrowDown') {
-            range.selectNodeContents(event.target);
-            range.collapse(false);
-        } else {
-            return;
+        function applyDetails(targets, text) {
+            const target = targets[0];
+            if (target.closest('details')) return;
+            const details = document.createElement('details');
+            const summary = document.createElement('summary');
+            summary.textContent = text;
+            details.appendChild(summary);
+            target.parentNode.insertBefore(details, target);
+            targets.forEach(e => details.appendChild(e));
         }
 
-        selection.removeAllRanges();
-        selection.addRange(range);
-        event.preventDefault();
-    }))
+
+        let header_targets = [document.querySelector('div.row:has(* label[for="wiki_title"])'), document.querySelector('div.row:has(* label[for="wiki_format"])')];
+        applyDetails(header_targets, "title and format");
+
+        let fotter_targets = [document.querySelector('div.row:has(* input#wiki_message)'), document.querySelector('div[data-testid="wiki-form-actions"]')];
+        applyDetails(fotter_targets, "wiki form actions");
+
+
+        Array.from(document.querySelectorAll('[contenteditable="true"]:not(.scroll-key-event)')).forEach(e => {
+            e.addEventListener('keydown', function(event) {
+                const range = document.createRange();
+                const selection = window.getSelection();
+
+                if (event.metaKey && event.key === 'ArrowUp') {
+                    range.setStart(event.target, 0);
+                    range.collapse(true);
+                } else if (event.metaKey && event.key === 'ArrowDown') {
+                    range.selectNodeContents(event.target);
+                    range.collapse(false);
+                } else {
+                    return;
+                }
+
+                selection.removeAllRanges();
+                selection.addRange(range);
+                event.preventDefault();
+            })
+            e.classList.add('scroll-key-event');
+        })
+
+        Array.from(document.querySelectorAll('ul.table-of-contents li a:not(.scroll-event)')).forEach(e => {
+            e.addEventListener('click', function(event) {
+                let elements = Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,h6,span'))
+                    .filter((element) => element.textContent.startsWith(event.target.innerText));
+                if (elements.length > 0) {
+                    let element = elements[0];
+                    element.scrollIntoView({
+                        behavior: 'auto'
+                    });
+                    // textareaのtop位置と合わせるために上へスクロール調整をする
+                    window.scrollBy(0, -40);
+                }
+                event.preventDefault();
+            })
+            e.classList.add('scroll-event');
+        })
+    }, 1000);
 }
 
 function is_gitlab_wiki() {
@@ -143,9 +186,13 @@ async function updateCodeBlockLanguage(language) {
     content += '.right-sidebar.wiki-sidebar { transform: translate(95%, 0px); transition: all 0.5s; }';
     content += '.right-sidebar.wiki-sidebar:hover, .right-sidebar.wiki-sidebar:focus, .right-sidebar.wiki-sidebar.focus { transform: translate(0%, 0px); transition: all 0.5s; }';
 
+    /*
     if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*edit=true/)) {
         content += '.col-sm-2 { flex: 0 0 0.0% !important; }'
     }
+    */
+    // for wiki textarea
+    content += '.content-wrapper { padding-right: 0 !important; padding-bottom: 0 !important; } .wiki-form .markdown-area, .wiki-form .ProseMirror { max-height: 75vh !important; }';
 
     var style = document.createElement('style');
     style.type = 'text/css';
