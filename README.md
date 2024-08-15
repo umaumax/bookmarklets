@@ -13,6 +13,10 @@ You can test this user script at https://store.line.me/stickershop/product/14358
 This adds one click search bottons(`日本語のみ`,`Only English`, `1年以内`, `アメリカ版`).
 
 ## [jira-extensions.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/jira-extensions.user.js )
+## ⭐[highlight-keywords.user.js]( https://github.com/umaumax/bookmarklets/raw/master/highlight-keywords.user.js )
+* マウスで選択 or ダブルクリックしてテキストをハイライトする
+  * 空文字を選択(空のクリック)すると変更・追加されたテキストに対しても再度処理が適用される
+
 for JIRA
 
 * Make labels easier to see on backlog and active sprint screens.
