@@ -20,26 +20,30 @@ function auto_scroll_to_link_tag_id() {
         return;
     }
 
-    var link_tag_id = '';
-    var matches = location.href.match(/#(.+)/);
-    if (matches && matches.length >= 2) {
-        link_tag_id = decodeURI(matches[1]);
+    let link_tag_id = '';
+    const hyperlink = localStorage.getItem('hyperlink');
+    let matches = location.href.match(/#(.+)/);
+    if (hyperlink) {
+        link_tag_id = hyperlink;
     } else {
-        done_flag = true;
-        return;
+        if (matches && matches.length >= 2) {
+            link_tag_id = decodeURI(matches[1]);
+        } else {
+            done_flag = true;
+            return;
+        }
     }
 
-    var element = document.getElementById(link_tag_id);
-    console.log('💡', link_tag_id)
+    let element = document.getElementById(link_tag_id);
     if (element != null) {
         // do nothing
         return;
     }
 
-    var elements = Array.from(document.querySelectorAll('span,h1,h2,h3,h4,h5,h6'))
-        .filter((element) => element.textContent.includes(link_tag_id));
+    let elements = Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,h6,span'))
+        .filter((element) => element.textContent.startsWith(link_tag_id));
     if (elements.length > 0) {
-        var element = elements[0];
+        let element = elements[0];
         element.scrollIntoView({
             behavior: 'auto'
         });
@@ -51,7 +55,7 @@ function auto_scroll_to_link_tag_id() {
 
     // NOTE: 上記の条件に合致する要素がロード中の場合に備えてエラーを無視する
     try {
-        var elements = $(link_tag_id);
+        let elements = $(link_tag_id);
         if (elements.length < 1) {
             return;
         }
@@ -60,7 +64,7 @@ function auto_scroll_to_link_tag_id() {
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-        var target = $(elements[0]);
+        let target = $(elements[0]);
         $(window).scrollTop(target.offset().top - target.outerHeight());
         done_flag = true;
     } catch (error) {
@@ -76,9 +80,9 @@ var timer;
     // 500ms
     timer = setInterval(auto_scroll_to_link_tag_id, 500);
     // 10sec
-    setTimeout(function(timer) {
-        clearInterval(timer)
-    }, 10000, timer);
+    setTimeout(function() {
+        done_flag = true;
+    }, 10000);
 
     /* for only gitlab.com wikis */
     // override 'e' edit shortcut key
@@ -99,15 +103,11 @@ var timer;
                 }).filter(function(i, e) {
                     return i == 0
                 }), function(v, i) {
-                    //                    return "pre:contains('" + $(v).text().trim() + "')"; # for jquery
                     return $(v).text().trim();
                 }).join(',');
-                var edit_query = 'edit';
-                if (target_query != '') {
-                    edit_query = "edit#" + target_query;
-                }
-                document.location.href = location.protocol + '//' + location.host + location.pathname + '/' + edit_query;
-                event.preventDefault();
+                localStorage.setItem('hyperlink', target_query);
+                done_flag = false;
+                // event.preventDefault();
             }
             return true;
         });
