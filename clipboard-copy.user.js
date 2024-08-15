@@ -44,7 +44,7 @@ function append_icon_to_href(elem, css) {
     if (document.URL.match(/https:\/\/github.com\/.*/)) {
         let commit_hash_hrefs = document.querySelectorAll('code > a.Link--secondary');
         if (commit_hash_hrefs.length == 0) {
-            console.errror("[clipboard copy button generater] This extension can not find git hash href elements.")
+            console.error("[clipboard copy button generater] This extension can not find git hash href elements.")
         }
         for (var i = 0; i < commit_hash_hrefs.length; i++) {
             let elem = commit_hash_hrefs[i];

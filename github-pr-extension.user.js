@@ -46,7 +46,7 @@ function GitHubPRLineExpander() {
 function GitHubPRDiffLinkGenerator() {
     var commit_hash_hrefs = document.querySelectorAll('code > a.Link--secondary');
     if (commit_hash_hrefs.length == 0) {
-        console.errror("[clipboard copy button generater] This extension can not find git hash href elements.")
+        console.error("[clipboard copy button generater] This extension can not find git hash href elements.")
     }
 
     var prev_elem = null;
