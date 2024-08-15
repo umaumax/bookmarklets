@@ -68,6 +68,25 @@ function add_wiki_events() {
             button_group.prepend(button);
         })
     }, 100);
+
+    Array.from(document.querySelectorAll('[contenteditable="true"]')).forEach(e => e.addEventListener('keydown', function(event) {
+        const range = document.createRange();
+        const selection = window.getSelection();
+
+        if (event.metaKey && event.key === 'ArrowUp') {
+            range.setStart(event.target, 0);
+            range.collapse(true);
+        } else if (event.metaKey && event.key === 'ArrowDown') {
+            range.selectNodeContents(event.target);
+            range.collapse(false);
+        } else {
+            return;
+        }
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+        event.preventDefault();
+    }))
 }
 
 function is_gitlab_wiki() {

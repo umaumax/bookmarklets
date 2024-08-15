@@ -48,6 +48,7 @@ This skips ads of TVer site.
 ## [gitlab-wiki-sidebar-expander.user.js]( https://github.com/umaumax/bookmarklets/raw/master/gitlab-wiki-sidebar-expander.user.js )
 * gitlabのwikiの右側のサイドバーを隠す(クリック or command or ctrl or ctrl+fで出現)
 * wikiの編集時にテキストを選択している状態で「\`」キーを押すと、コードブロックのトグルとなる
+* wikiの編集時にcommand+↑/↓でページの上と下へ飛ぶ機能
 
 ## [gitlab-wiki-search-filter.user.js]( https://github.com/umaumax/bookmarklets/raw/master/gitlab-wiki-search-filter.user.js )
 * インクリメンタルに検索ができる
