@@ -8,6 +8,29 @@
 // @grant        none
 // ==/UserScript==
 
+function add_wiki_events() {
+    document.addEventListener('keydown', function(event) {
+        if (!is_gitlab_wiki) return;
+
+        if (event.key === '`') {
+            const selectedText = window.getSelection().toString();
+            console.log("aaa", selectedText);
+            if (selectedText) {
+                const button = document.querySelector('button[aria-label="Code"][title="Code"][data-testid="code"]');
+                if (button) {
+                    button.click();
+                    console.log('!!');
+                    event.preventDefault();
+                }
+            }
+        }
+    });
+}
+
+function is_gitlab_wiki() {
+    return document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*edit=true/);
+}
+
 (function() {
     'use strict';
 
@@ -17,7 +40,7 @@
     content += '.right-sidebar.wiki-sidebar { transform: translate(95%, 0px); transition: all 0.5s; }';
     content += '.right-sidebar.wiki-sidebar:hover, .right-sidebar.wiki-sidebar:focus, .right-sidebar.wiki-sidebar.focus { transform: translate(0%, 0px); transition: all 0.5s; }';
 
-    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*\/edit/)) {
+    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*edit=true/)) {
         content += '.col-sm-2 { flex: 0 0 0.0% !important; }'
     }
 
@@ -26,7 +49,9 @@
     style.innerHTML = content;
     document.getElementsByTagName('head')[0].appendChild(style);
 
-    if (document.URL.match(/https:\/\/gitlab.com\/.*\/wikis\/.*\/edit/)) {
+    // NOTE: 通常期のviewのwikiからeditへ遷移するときにシームレスに遷移する可能性があるためイベントは事前に登録しておく
+    add_wiki_events();
+    if (is_gitlab_wiki()) {
         return;
     }
 
