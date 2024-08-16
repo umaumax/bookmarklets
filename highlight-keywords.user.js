@@ -53,6 +53,34 @@ function textNodesUnder(el) {
     return children
 }
 
+/**
+ * Converts a hex color string to an RGB object.
+ * @param {string} hex - The hex color string (e.g., "#123456").
+ * @returns {object} - An object with properties r, g, and b.
+ */
+function hexToRGB(hex) {
+    // Remove the hash at the start if it's there
+    hex = hex.replace(/^#/, '');
+
+    // Parse the hex string into RGB components
+    let r, g, b;
+    if (hex.length === 6) {
+        // 6 digits (e.g., "RRGGBB")
+        r = parseInt(hex.substring(0, 2), 16);
+        g = parseInt(hex.substring(2, 4), 16);
+        b = parseInt(hex.substring(4, 6), 16);
+    } else if (hex.length === 3) {
+        // 3 digits (e.g., "RGB")
+        r = parseInt(hex.charAt(0) + hex.charAt(0), 16);
+        g = parseInt(hex.charAt(1) + hex.charAt(1), 16);
+        b = parseInt(hex.charAt(2) + hex.charAt(2), 16);
+    } else {
+        throw new Error('Invalid hex color format');
+    }
+
+    return { r, g, b };
+}
+
 let color_index = 0;
 // NOTE: 20 colors x 5 = 100
 const colors = Array(5).fill([
@@ -66,7 +94,7 @@ const colors = Array(5).fill([
     '#ffccbc', // Light orange
     '#ffe0b2', // Light amber
     '#e0f7fa', // Light teal
-    '#d1c4e9', // Light violet
+    '#e6e6fa', // Light lavender
     '#fce4ec', // Light pinkish
     '#cfd8dc', // Light blue-grey
     '#e8f5e9', // Light greenish
@@ -82,11 +110,16 @@ let color_index_stack = []
 for (let i = 0; i < colors.length; i++) {
     color_index_stack.push(i);
 }
-const custom_css_content = colors.map((c, i) => `
+const custom_css_content = colors.map((hex_color, i) => {
+    const c = hexToRGB(hex_color);
+    return `
 ::highlight(c${i}) {
-    background-color: ${c};
+    text-decoration: underline overline;
+    text-decoration-color: rgb(${c.r} ${c.g} ${c.b} / 1.0);
+    background-color: rgb(${c.r} ${c.g} ${c.b} / 0.5);
 }
-`).join('\n');
+`
+}).join('\n');
 const highlight_map = new Map();
 
 (function() {
