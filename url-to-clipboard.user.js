@@ -13,7 +13,7 @@
 const custom_css_content = `
 #toast-container {
     position: fixed;
-    z-index: 1000;
+    z-index: 10000;
     width: 100%;
     display: flex;
     flex-direction: column-reverse;
