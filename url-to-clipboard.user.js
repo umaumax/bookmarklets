@@ -12,6 +12,7 @@
 
 const custom_css_content = `
 #toast-container {
+    font-size: 80%;
     position: fixed;
     z-index: 10000;
     width: 100%;
@@ -158,7 +159,7 @@ function url_to_clipboard() {
 
     showToast(content, {
         bgColor: '#2f4f4f',
-        duration: 3000,
+        duration: 2000,
     });
 }
 
