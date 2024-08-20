@@ -19,8 +19,15 @@ function add_wiki_events() {
                 if (button) {
                     button.click();
                     event.preventDefault();
+                    return;
                 }
             }
+        }
+        if (event.metaKey && event.key === 'Enter') {
+            // click `Save changes`
+            document.querySelector('button[data-testid="wiki-submit-button"][type="submit"]').click();
+            event.preventDefault();
+            return;
         }
     });
 
@@ -84,11 +91,11 @@ function add_wiki_events() {
         }
 
 
-        let header_targets = [document.querySelector('div.row:has(* label[for="wiki_title"])'), document.querySelector('div.row:has(* label[for="wiki_format"])')];
-        applyDetails(header_targets, "title and format");
+        let header_targets = [document.querySelector('div.row:has(* label[for="wiki_title"])'), document.querySelector('div.row:has(* label[for="wiki_format"])')].filter(x => x);;
+        if (header_targets.length > 0) applyDetails(header_targets, "title and format");
 
-        let fotter_targets = [document.querySelector('div.row:has(* input#wiki_message)'), document.querySelector('div[data-testid="wiki-form-actions"]')];
-        applyDetails(fotter_targets, "wiki form actions");
+        let footer_targets = [document.querySelector('div.row:has(* input#wiki_message)'), document.querySelector('div[data-testid="wiki-form-actions"]')].filter(x => x);;
+        if (footer_targets.length > 0) applyDetails(footer_targets, "wiki form actions");
 
 
         Array.from(document.querySelectorAll('[contenteditable="true"]:not(.scroll-key-event)')).forEach(e => {
