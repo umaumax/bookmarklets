@@ -153,7 +153,8 @@ function get_selection_text() {
 function url_to_clipboard() {
     var url = location.href;
     var title = get_selection_text() || document.title || url;
-    var encoded_title = title.replaceAll(/([\[\]<>])/g, '\\$1');
+    // var encoded_title = title.replaceAll(/([\[\]<>])/g, '\\$1');
+    var encoded_title = title.replaceAll('[', '(').replaceAll(']', ')').replaceAll(/([\[\]<>])/g, '\\$1');
     var content = `[${encoded_title}]( ${url} )`;
     GM_setClipboard(content);
 
