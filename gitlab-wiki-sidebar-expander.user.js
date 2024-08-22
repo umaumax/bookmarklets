@@ -8,6 +8,19 @@
 // @grant        none
 // ==/UserScript==
 
+function moveCursorToStart(element) {
+  const range = document.createRange();
+  const selection = window.getSelection();
+
+  range.setStart(element, 0);
+  range.collapse(true);
+
+  selection.removeAllRanges();
+  selection.addRange(range);
+
+    element.focus();
+}
+
 function add_wiki_events() {
     document.addEventListener('keydown', function(event) {
         if (!is_gitlab_wiki) return;
@@ -129,6 +142,7 @@ function add_wiki_events() {
                     element.scrollIntoView({
                         behavior: 'auto'
                     });
+                    moveCursorToStart(element);
                     // textareaのtop位置と合わせるために上へスクロール調整をする
                     window.scrollBy(0, -40);
                 }
