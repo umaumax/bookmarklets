@@ -9,6 +9,28 @@
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
+function add_css(datas) {
+    var head = document.getElementsByTagName('head')[0];
+
+    datas.forEach(function(data) {
+        var style;
+        if (data.startsWith('http')) {
+            style = document.createElement('link');
+            var url = data;
+            console.log('[log]: add css from ', url);
+            style.href = url;
+            style.rel = 'stylesheet';
+        } else {
+            style = document.createElement('style');
+            var raw_text = data;
+            console.log('[log]: add css text ', raw_text);
+            style.innerHTML = raw_text;
+        }
+        style.type = 'text/css';
+        head.append(style);
+    });
+}
+
 (function() {
     'use strict';
 
@@ -118,10 +140,13 @@
         button.style.top = '10px';
         button.style.padding = '2px 4px';
         button.style['border-radius'] = '4px';
-        button.style['background-color'] = '#333';
-        button.style['color'] = '#eee';
+        button.style['background-color'] = '#777';
+        button.style.color = '#eee';
         button.onclick = markLinksVisited;
+        button.className = 'mark-action';
         document.body.appendChild(button);
+
+        add_css(['button.mark-action { border: 2px solid transparent; transition: border 0.3s ease; } button.mark-action:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.6); border: 2px solid #333; }']);
     }
     appendButton();
 })();
