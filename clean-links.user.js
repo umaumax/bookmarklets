@@ -108,4 +108,20 @@
     // Add menu commands to trigger the functions
     GM_registerMenuCommand("🔗✅: Mark All Links as Visited", markLinksVisited);
     GM_registerMenuCommand("🔗🗑️🧹: Clean Visited Links", cleanVisitedLinks);
+
+    function appendButton() {
+        var button = document.createElement("button");
+        button.textContent = "🔗✅: Mark All Links as Visited";
+        button.style['z-index'] = 9999;
+        button.style.position = 'fixed';
+        button.style.left = '50%';
+        button.style.top = '10px';
+        button.style.padding = '2px 4px';
+        button.style['border-radius'] = '4px';
+        button.style['background-color'] = '#333';
+        button.style['color'] = '#eee';
+        button.onclick = markLinksVisited;
+        document.body.appendChild(button);
+    }
+    appendButton();
 })();
