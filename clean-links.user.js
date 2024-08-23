@@ -75,19 +75,38 @@ function add_css(datas) {
     // Function to clean visited links from localStorage
     function cleanVisitedLinks() {
         // localStorage.removeItem(VISITED_LINKS_KEY);
-        const links = document.querySelectorAll('a.visited');
+        const links = document.querySelectorAll('a.visited:not([style*="display: none"])');
         links.forEach(link => {
             const isWhitelisted = whitelistPatterns.some(pattern => pattern.test(link));
             if (isWhitelisted) return;
-            link.remove();
+            link.style.display = 'none';
+            console.log('clean:', link);
+            // link.remove();
         });
+        // for qiita.com
         document.querySelectorAll('article').forEach(article => {
-            if (!article.querySelector('a')) {
-                article.remove();
+            if (!article.querySelector('a:not([style*="display: none"])')) {
+                article.style.display = 'none';
+                // article.remove();
             }
         });
-        const emptyDivs = document.querySelectorAll('div:empty');
-        emptyDivs.forEach(div => div.remove());
+        // for tver.jp
+        document.querySelectorAll('div[class^="result-list_content__"]').forEach(e => {
+            if (!e.querySelector('a:not([style*="display: none"])')) {
+                e.style.display = 'none';
+                // e.remove();
+            }
+        });
+        // for zenn.com
+        const emptyDivs = Array.from(document.querySelectorAll('div:not([style*="display: none"])')).filter(div => {
+            const children = Array.from(div.children);
+            return children.length > 0 && children.every(child => window.getComputedStyle(child).display === 'none');
+        });
+        // const emptyDivs = document.querySelectorAll('div:empty');
+        emptyDivs.forEach(div => {
+            div.style.display = 'none';
+        });
+        // emptyDivs.forEach(div => div.remove());
     }
 
     // Function to apply the visited style to visited links
@@ -114,6 +133,13 @@ function add_css(datas) {
     // Apply visited style on page load
     window.addEventListener('load', applyVisitedStyle);
     window.addEventListener('load', cleanVisitedLinks);
+
+    if ((new RegExp('^https://tver.jp/*')).test(window.location.href)) {
+        setInterval(() => {
+            applyVisitedStyle();
+            cleanVisitedLinks();
+        }, 500);
+    }
 
     var prevURL = location.href;
     const observer = new MutationObserver(() => {
