@@ -6,6 +6,7 @@
 // @author       Your Name
 // @match        https://qiita.com/
 // @match        https://zenn.dev/articles*
+// @match        https://2chmm.com/*
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
@@ -49,6 +50,7 @@ function add_css(datas) {
 
     const whitelistPatterns = [
         /^https:\/\/zenn\.dev\/articles.*$/,
+        /^https:\/\/2chmm\.com\/.*$/,
     ];
 
     // Function to mark all links as visited
