@@ -162,6 +162,11 @@ function url_to_clipboard() {
         bgColor: '#2f4f4f',
         duration: 2000,
     });
+
+    // for GitHub web page at Windows
+    setTimeout(() => {
+        GM_setClipboard(content);
+    }, 500);
 }
 
 (function() {
