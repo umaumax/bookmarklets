@@ -78,7 +78,11 @@ function hexToRGB(hex) {
         throw new Error('Invalid hex color format');
     }
 
-    return { r, g, b };
+    return {
+        r,
+        g,
+        b
+    };
 }
 
 let color_index = 0;
