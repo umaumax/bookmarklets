@@ -78,7 +78,7 @@ function add_css(datas) {
             style = document.createElement('style');
             var raw_text = data;
             console.log('[log]: add css text ', raw_text);
-            style.innerHTML = raw_text;
+            style.insertAdjacentHTML('beforeend', raw_text);
         }
         style.type = 'text/css';
         head.append(style);
