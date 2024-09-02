@@ -120,7 +120,7 @@ const custom_css_content = colors.map((hex_color, i) => {
 ::highlight(c${i}) {
     text-decoration: underline overline;
     text-decoration-color: rgb(${c.r} ${c.g} ${c.b} / 1.0);
-    background-color: rgb(${c.r} ${c.g} ${c.b} / 0.5);
+    background-color: rgb(${c.r*0.9} ${c.g*0.9} ${c.b*0.9} / 0.9);
 }
 `
 }).join('\n');
