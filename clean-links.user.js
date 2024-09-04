@@ -8,6 +8,7 @@
 // @match        https://zenn.dev/articles*
 // @match        https://2chmm.com/*
 // @match        https://tver.jp/tags/*
+// @match        https://setusoku.com/*
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
@@ -53,6 +54,8 @@ function add_css(datas) {
         /^https:\/\/zenn\.dev\/articles.*$/,
         /^https:\/\/2chmm\.com\/.*$/,
         /^https:\/\/tver\.jp\/(?!episodes\/).*$/,
+        new RegExp('^https://setusoku.com/$'),
+        new RegExp('^https://setusoku.com/page/.*$'),
     ];
 
     // Function to mark all links as visited
