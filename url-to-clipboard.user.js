@@ -167,6 +167,12 @@ function url_to_clipboard() {
     setTimeout(() => {
         GM_setClipboard(content);
     }, 500);
+    setTimeout(() => {
+        GM_setClipboard(content);
+    }, 1000);
+    setTimeout(() => {
+        GM_setClipboard(content);
+    }, 1500);
 }
 
 (function() {
