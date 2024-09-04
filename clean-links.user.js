@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Manage Visited Links with LocalStorage
+// @name         Clean Visited Links
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Mark all links on the page as visited and manage visited links using localStorage
@@ -73,6 +73,11 @@ function add_css(datas) {
 
         saveVisitedLinks(visitedLinks);
         cleanVisitedLinks();
+        // scroll to top
+        window.scroll({
+            top: 0,
+            behavior: "smooth",
+        });
     }
 
     // Function to clean visited links from localStorage
