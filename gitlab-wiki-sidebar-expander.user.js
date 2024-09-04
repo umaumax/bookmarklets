@@ -10,14 +10,14 @@
 // ==/UserScript==
 
 function moveCursorToStart(element) {
-  const range = document.createRange();
-  const selection = window.getSelection();
+    const range = document.createRange();
+    const selection = window.getSelection();
 
-  range.setStart(element, 0);
-  range.collapse(true);
+    range.setStart(element, 0);
+    range.collapse(true);
 
-  selection.removeAllRanges();
-  selection.addRange(range);
+    selection.removeAllRanges();
+    selection.addRange(range);
 
     element.focus();
 }
@@ -218,28 +218,28 @@ async function updateCodeBlockLanguage(language) {
 
     content += `
     h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
-    content: "";
-    position: absolute;
-    top: -16px;
-    left: 0px;
-    background-color: #ff6347;
-    color: white;
-    font-size: 10px;
-    padding: 1px 2px;
-    border-radius: 2px;
-    white-space: nowrap;
-}
+        content: "";
+        position: absolute;
+        top: -16px;
+        left: 0px;
+        background-color: #000;
+        color: white;
+        font-size: 10px;
+        padding: 1px 2px;
+        border-radius: 2px;
+        white-space: nowrap;
+    }
 
-h1, h2, h3, h4, h5, h6 {
-    position: relative;
-}
+    h1, h2, h3, h4, h5, h6 {
+        position: relative;
+    }
 
-h1::before { content: "H1"; background: #ff6347; }
-h2::before { content: "H2"; background: #1e90ff; }
-h3::before { content: "H3"; background: #228b22; }
-h4::before { content: "H4"; background: #c71585; }
-h5::before { content: "H5"; background: #8a2be2; }
-h6::before { content: "H6"; background: #666666; }
+    h1::before { content: "H1"; background: #ff6347; }
+    h2::before { content: "H2"; background: #1e90ff; }
+    h3::before { content: "H3"; background: #228b22; }
+    h4::before { content: "H4"; background: #c71585; }
+    h5::before { content: "H5"; background: #8a2be2; }
+    h6::before { content: "H6"; background: #666666; }
     `
 
     var style = document.createElement('style');
