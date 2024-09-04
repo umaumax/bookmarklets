@@ -5,6 +5,7 @@
 // @description  expand gitlab wiki sidebar
 // @author       You
 // @match        https://gitlab.com/*/wikis/*
+// @icon         https://www.google.com/s2/favicons?domain=gitlab.com
 // @grant        none
 // ==/UserScript==
 
@@ -214,6 +215,32 @@ async function updateCodeBlockLanguage(language) {
     */
     // for wiki textarea
     content += '.content-wrapper { padding-right: 0 !important; padding-bottom: 0 !important; } .wiki-form .markdown-area, .wiki-form .ProseMirror { max-height: 75vh !important; }';
+
+    content += `
+    h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+    content: "";
+    position: absolute;
+    top: -16px;
+    left: 0px;
+    background-color: #ff6347;
+    color: white;
+    font-size: 10px;
+    padding: 1px 2px;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    position: relative;
+}
+
+h1::before { content: "H1"; background: #ff6347; }
+h2::before { content: "H2"; background: #1e90ff; }
+h3::before { content: "H3"; background: #228b22; }
+h4::before { content: "H4"; background: #c71585; }
+h5::before { content: "H5"; background: #8a2be2; }
+h6::before { content: "H6"; background: #666666; }
+    `
 
     var style = document.createElement('style');
     style.type = 'text/css';
