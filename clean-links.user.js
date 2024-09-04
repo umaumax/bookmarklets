@@ -134,7 +134,7 @@ function add_css(datas) {
     window.addEventListener('load', applyVisitedStyle);
     window.addEventListener('load', cleanVisitedLinks);
 
-    if ((new RegExp('^https://tver.jp/*')).test(window.location.href)) {
+    if ((new RegExp('^https://tver.jp/.*')).test(window.location.href)) {
         setInterval(() => {
             applyVisitedStyle();
             cleanVisitedLinks();
