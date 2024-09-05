@@ -265,6 +265,9 @@ async function updateCodeBlockLanguage(language) {
         // 70: f
         // 191: ?/
         if ((e.ctrlKey || e.metaKey) || (e.keyCode == 70 && (e.ctrlKey || e.metaKey)) || (e.keyCode == 191)) {
+            if (is_gitlab_wiki()) {
+                return;
+            }
             console.log("ctrl+f: focus");
             sidebar.classList.add("focus");
         }
