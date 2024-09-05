@@ -34,6 +34,9 @@ This adopts google `code-prettify.js` with `linenums` option and `desert` style 
 * `https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js`は`https://google-code-prettify.googlecode.com/svn/loader/prettify.css`に依存するので`Content Security Policy`に違反する
 </details>
 
+## ⭐[auto-scroll-to-article-header.user.js]( https://github.com/umaumax/bookmarklets/raw/master/auto-scroll-to-article-header.user.js )
+Webページのタイトルだと思われる要素まで自動的にスクロールする
+
 ## [code-prettify.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/code-prettify.user.js )
 
 ## 🔧[niconico-adblocker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.user.js )
