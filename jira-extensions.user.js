@@ -48,14 +48,19 @@ function get_hash_color(text) {
 
         // create labels of elements
         Array.from(document.querySelectorAll('.ghx-issue-content')).forEach((ticket) => {
+            Array.from(ticket.querySelectorAll('.ghx-summary .ext-label')).forEach((e) => {
+                e.remove();
+            });
             let extra_line = ticket.querySelector('.ghx-extra-field-content')
             if (extra_line != null && extra_line.innerText != "None") {
                 extra_line.innerText.split(',').forEach((text) => {
                     let label = document.createElement("aui-badge")
+                    label.classList.add("ext-label");
                     label.style.padding = "6px"
                     label.style.margin = "4px"
                     label.style.color = "black"
                     label.style.background = get_hash_color(text.trim())
+                    console.log(text.trim(), get_hash_color(text.trim()))
                     label.textContent = text
                     ticket.querySelector('.ghx-summary').after(label)
                 })
