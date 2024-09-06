@@ -35,6 +35,23 @@ function get_hash_color(text) {
         }
     }
 
+    // If you press ctrl + enter to creat a ticket, you will get 405 page.
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && event.ctrlKey) {
+            event.stopPropagation();
+            // trigger Enter key event at focused element
+            const enterEvent = new KeyboardEvent('keydown', {
+                key: 'Enter',
+                code: 'Enter',
+                keyCode: 13,
+                which: 13,
+                bubbles: true,
+                cancelable: true
+            });
+            document.activeElement.dispatchEvent(enterEvent);
+        }
+    }, true);
+
     while (true) {
         while (document.querySelectorAll('.ghx-issue-content .ghx-extra-field-content').length == 0) {
             await sleep(100);
