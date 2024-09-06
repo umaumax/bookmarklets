@@ -25,6 +25,16 @@ function get_hash_color(text) {
 (async function() {
     'use strict';
 
+    // デフォルトでバックログのチケットの表示数が100なので、全てとするためにURLのGETパラメータを書き換えてリダイレクトする
+    let url = new URL(window.location.href);
+    if (url.searchParams.has('issueLimit')) {
+        var issueLimit = url.searchParams.get('issueLimit');
+        if (issueLimit == '100') {
+            url.searchParams.set('issueLimit', '-1');
+            window.location.replace(url.toString());
+        }
+    }
+
     while (true) {
         while (document.querySelectorAll('.ghx-issue-content .ghx-extra-field-content').length == 0) {
             await sleep(100);
