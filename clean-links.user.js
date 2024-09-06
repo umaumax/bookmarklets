@@ -54,8 +54,8 @@ function add_css(datas) {
         /^https:\/\/zenn\.dev\/articles.*$/,
         /^https:\/\/2chmm\.com\/.*$/,
         /^https:\/\/tver\.jp\/(?!episodes\/).*$/,
-        new RegExp('^https://setusoku.com/$'),
-        new RegExp('^https://setusoku.com/page/.*$'),
+        new RegExp('^https://setusoku\.com/[^/]$'),
+        new RegExp('^https://setusoku\.com/page/.*$'),
     ];
 
     // Function to mark all links as visited
@@ -85,10 +85,13 @@ function add_css(datas) {
         // localStorage.removeItem(VISITED_LINKS_KEY);
         const links = document.querySelectorAll('a.visited:not([style*="display: none"])');
         links.forEach(link => {
-            const isWhitelisted = whitelistPatterns.some(pattern => pattern.test(link));
-            if (isWhitelisted) return;
+            const isWhitelisted = whitelistPatterns.some(pattern => pattern.test(link.href));
+            if (isWhitelisted) {
+                console.log('🔒 keep:', link.href);
+                return;
+            }
+            console.log('🗑 clean:', link.href);
             link.style.display = 'none';
-            console.log('clean:', link);
             // link.remove();
         });
         // for qiita.com
