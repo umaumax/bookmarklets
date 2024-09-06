@@ -86,18 +86,17 @@ function hexToRGB(hex) {
 }
 
 let color_index = 0;
-// NOTE: 20 colors x 5 = 100
-const colors = Array(5).fill([
+// NOTE: 20 colors x 1 = 20
+const colors = Array(1).fill([
     '#bbdefb', // Light blue
     '#e1bee7', // Light purple
     '#ffcdd2', // Light red
-    '#b2ebf2', // Light cyan
+    '#d3d3d3', // Light gray
     '#f8bbd0', // Light pink
     '#d1c4e9', // Light indigo
-    '#b3e5fc', // Light sky blue
+    '#e5e5e5', // Light white
     '#ffccbc', // Light orange
     '#ffe0b2', // Light amber
-    '#e0f7fa', // Light teal
     '#e6e6fa', // Light lavender
     '#fce4ec', // Light pinkish
     '#cfd8dc', // Light blue-grey
@@ -106,7 +105,7 @@ const colors = Array(5).fill([
     '#ffecb3', // Light yellow-orange
     '#fff3e0', // Light peach
     '#e1f5fe', // Light azure
-    '#f0f4c3', // Light yellow green
+    '#f0f4c3', // Light yellow
     '#dcedc8', // Light lime
     '#c8e6c9', // Light green
 ]).flatMap(x => x);
