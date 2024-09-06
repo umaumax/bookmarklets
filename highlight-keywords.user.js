@@ -109,21 +109,26 @@ const colors = Array(1).fill([
     '#dcedc8', // Light lime
     '#c8e6c9', // Light green
 ]).flatMap(x => x);
+let color_list = []
 let color_index_stack = []
 for (let i = 0; i < colors.length; i++) {
     color_index_stack.push(i);
 }
 const custom_css_content = colors.map((hex_color, i) => {
     const c = hexToRGB(hex_color);
+    color_list.push(c);
     return `
 ::highlight(c${i}) {
+    color: rgb(0 0 0 / 1.0);
     text-decoration: underline overline;
-    text-decoration-color: rgb(${c.r} ${c.g} ${c.b} / 1.0);
-    background-color: rgb(${c.r*0.9} ${c.g*0.9} ${c.b*0.9} / 0.9);
+    text-decoration-color: rgb(${c.r*0.7} ${c.g*0.7} ${c.b*0.7} / 1.0);
+    background-color: rgb(${c.r*1.0} ${c.g*1.0} ${c.b*1.0} / 1.0);
+    -webkit-text-stroke-color: #ffffff; */
 }
 `
 }).join('\n');
 const highlight_map = new Map();
+let prev_selected_color = null;
 
 (function() {
     'use strict';
@@ -140,7 +145,7 @@ const highlight_map = new Map();
         });
     }
 
-    function highlightText(text) {
+    function highlightText(text, background_color = null) {
         console.log("🟨🖊highlightText", text);
 
         const h = new Highlight();
@@ -152,7 +157,16 @@ const highlight_map = new Map();
             console.error("There is no color left to hightlight!");
             return;
         }
-        let color_index = color_index_stack.pop();
+        let color_index = null;
+        if (background_color) {
+            let base_colors = [background_color];
+            if (prev_selected_color) base_colors.push(prev_selected_color);
+            let ret = getFurthestColor(base_colors, color_index_stack.map((x) => color_list[x]));
+            color_index = color_index_stack.splice(ret.index, 1)[0];
+            prev_selected_color = color_list[color_index];
+        } else {
+            color_index = color_index_stack.pop();
+        }
         CSS.highlights.set(`c${color_index}`, h);
         highlight_map.set(text, [h, color_index])
     }
@@ -178,14 +192,84 @@ const highlight_map = new Map();
         })
     }
 
-    function toggleHighlight() {
+    function parse_css_rgb_text(css_rgb_text) {
+        const rgbRegex = /^rgba?\((\d+),\s*(\d+),\s*(\d+)(,\s*([0-9.]+))?\)$/;
+        const match = css_rgb_text.match(rgbRegex);
+        if (!match) {
+            return null;
+        }
+        const r = parseInt(match[1], 10);
+        const g = parseInt(match[2], 10);
+        const b = parseInt(match[3], 10);
+        const a = match[5] ? parseFloat(match[5]) : 255;
+        return {
+            r,
+            g,
+            b,
+            a
+        };
+    }
+
+    function calculateDistance(color1, color2) {
+        return Math.sqrt(
+            Math.pow(color1.r - color2.r, 2) +
+            Math.pow(color1.g - color2.g, 2) +
+            Math.pow(color1.b - color2.b, 2)
+        );
+    }
+
+    function getFurthestColor(targetColors, colorArray) {
+        let maxValue = -1;
+        let furthestColor = null;
+        let index = -1;
+        let i = 0;
+
+        for (const color of colorArray) {
+            let v = 0.0;
+            for (const targetColor of targetColors) {
+                let distance = calculateDistance(targetColor, color);
+                v += distance * distance;
+            }
+            if (v > maxValue) {
+                maxValue = v;
+                furthestColor = color;
+                index = i;
+            }
+            i += 1;
+        }
+
+        return {
+            index: index,
+            value: furthestColor
+        };
+    }
+
+    function toggleHighlight(event) {
         const selectedText = window.getSelection().toString().trim();
         if (selectedText) {
             let isHighlighted = highlight_map.has(selectedText);
             if (isHighlighted) {
                 unhighlightText(selectedText);
             } else {
-                highlightText(selectedText);
+                let element = event.target;
+                const ancestors = [element]; // with a self element
+                while (element.parentNode) {
+                    element = element.parentNode;
+                    ancestors.push(element);
+                }
+
+                let background_color = null;
+                for (let i = 0; i < ancestors.length; i++) {
+                    let e = ancestors[i];
+                    let background_color_text = window.getComputedStyle(e, null).getPropertyValue('background-color');
+                    let c = parse_css_rgb_text(background_color_text);
+                    if (c.a != 0) {
+                        background_color = c;
+                        break;
+                    }
+                }
+
+                highlightText(selectedText, background_color);
             }
         } else {
             console.log("🟨🖊🔁 rerunHighLighting")
