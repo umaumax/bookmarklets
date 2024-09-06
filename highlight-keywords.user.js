@@ -253,7 +253,7 @@ let prev_selected_color = null;
             } else {
                 let element = event.target;
                 const ancestors = [element]; // with a self element
-                while (element.parentNode) {
+                while (element.parentNode && element.parentNode != document) {
                     element = element.parentNode;
                     ancestors.push(element);
                 }
