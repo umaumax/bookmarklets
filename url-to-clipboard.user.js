@@ -80,7 +80,7 @@ function showToast(message, options = {}) {
 
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.textContent = message;
+    toast.innerHTML = message;
     toast.style.backgroundColor = bgColor;
     toast.style.color = textColor;
     toast.style.width = width;
@@ -155,7 +155,7 @@ function url_to_clipboard() {
     var title = get_selection_text() || document.title || url;
     // var encoded_title = title.replaceAll(/([\[\]<>])/g, '\\$1');
     var encoded_title = title.replaceAll('[', '(').replaceAll(']', ')').replaceAll(/([\[\]<>])/g, '\\$1');
-    var content = `[${encoded_title}]( ${url} )`;
+    var content = `[📗: COPY URL TO CLIPBOARD]<br>[${encoded_title}]( ${url} )`;
     GM_setClipboard(content);
 
     showToast(content, {
