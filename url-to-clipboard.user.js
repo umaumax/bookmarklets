@@ -31,7 +31,7 @@ const custom_css_content = `
 }
 
 .toast {
-    position: relative;
+    position: static;
     padding: 15px 20px;
     margin-bottom: 10px;
     border-radius: 5px;
