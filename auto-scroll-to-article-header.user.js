@@ -5,6 +5,7 @@
 // @description  try to take over the world!
 // @author       You
 // @match        *://*/*
+// @exclude      https://b.hatena.ne.jp/*
 // @grant        none
 // ==/UserScript==
 
