@@ -54,4 +54,32 @@ function check_ad_video() {
     'use strict';
     let check_ad_video_interval = 100;
     setInterval(check_ad_video, check_ad_video_interval);
+
+    // NOTE: toggle video play by space key
+    document.addEventListener('keydown', function(event) {
+        if (event.code === 'Space') {
+            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                return;
+            }
+            const video = document.querySelector('video');
+            if (!video) {
+                return;
+            }
+            // NOTE: This will only fire once per each keypress.
+            if (event.repeat) {
+                event.preventDefault();
+                return;
+            }
+            // NOTE: default controller
+            if (document.activeElement.className.includes('controller_container')) {
+                return;
+            }
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+            event.preventDefault();
+        }
+    });
 })();
