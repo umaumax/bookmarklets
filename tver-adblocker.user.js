@@ -16,7 +16,7 @@ function is_video_playing(video) {
 function is_ad_video(video) {
     let video_src = video.currentSrc;
     let video_duration = video.duration;
-    if (String(video_src).startsWith("blob:https://tver.jp/")) {
+    if (String(video_src).startsWith('blob:https://tver.jp/')) {
         return false;
     }
     const ad_video_duration_th = 60 * 2;
@@ -34,7 +34,7 @@ function skip_ad_video(video) {
 
 function find_ad_videos(video) {
     let videos = document.getElementsByTagName("video");
-    return Array.prototype.slice.call(videos).filter((video) => is_ad_video(video));
+    return Array.prototype.slice.call(videos).filter(video => is_ad_video(video));
 }
 
 function check_ad_video() {
@@ -42,18 +42,16 @@ function check_ad_video() {
     if (!videos) {
         return;
     }
-    videos.forEach(
-        (video) => {
-            if (is_video_playing(video)) {
-                skip_ad_video(video);
-                console.log("[AdVideoBlocker] skip ad video: ", video);
-            }
-        },
-    );
+    videos.forEach(video => {
+        if (is_video_playing(video)) {
+            skip_ad_video(video);
+            console.log('[AdVideoBlocker] skip ad video: ', video);
+        }
+    });
 }
 
-(function () {
-    "use strict";
+(function() {
+    'use strict';
     let check_ad_video_interval = 100;
     setInterval(check_ad_video, check_ad_video_interval);
 })();
