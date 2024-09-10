@@ -11,14 +11,14 @@
 // ==/UserScript==
 
 function GitHubPRLineExpander() {
-    var fileboxes = $(".file-actions");
-    fileboxes.prepend('<div class=""><a class="ex_file_expand_btn btn btn-sm">💡Expand lines!</a></div>');
+    var fileboxes = $(".file-actions > div > div");
+    fileboxes.before('<div class="d-flex" style="margin-left: 8px; padding: 8px;"><a class="ex_file_expand_btn btn btn-sm" style="background-color: #ffbf8b">💡Expand lines!</a></div>');
     $('.ex_file_expand_btn').on('click', function() {
         expandExpand($(this).closest('[data-details-container-group="file"]'))
     });
 
     var box = $(".pr-review-tools").first();
-    box.prepend('<div class="js-reviews-container diffbar-item mr-3"><a id="_ex_expand_btn" class="btn btn-sm">💡Expand All lines!</a></div>');
+    box.prepend('<div class="js-reviews-container diffbar-item mr-3"><a id="_ex_expand_btn" class="btn btn-sm" style="background-color: #ffbf8b">💡Expand All lines!</a></div>');
     $('#_ex_expand_btn').on('click', function() {
         expandExpand($('body'))
     });
