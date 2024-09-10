@@ -11,8 +11,6 @@
 // ==/UserScript==
 
 function GitHubPRLineExpander() {
-    console.log('Started to exapnd lines!');
-
     var fileboxes = $(".file-actions");
     fileboxes.prepend('<div class=""><a class="ex_file_expand_btn btn btn-sm">💡Expand lines!</a></div>');
     $('.ex_file_expand_btn').on('click', function() {
@@ -27,23 +25,22 @@ function GitHubPRLineExpander() {
 
     function expandExpand(top_element) {
         var loadMore = $(top_element).find('.js-expandable-line a');
-        if (loadMore.length !== 0) {
-            console.log('Clicking all these "Load more": ' + loadMore.length);
-            loadMore.each(function(index) {
-                this.click();
-                console.log(index, $(this))
-            });
-            setTimeout(function() {
-                expandExpand(top_element)
-            }, 500);
+        if (loadMore.length == 0) {
             return;
         }
-
-        console.log('Completed to exapnad lines!');
+        console.log('[INFO] Clicking all these "Load more": ' + loadMore.length);
+        loadMore.each(function(index) {
+            this.click();
+            console.log(index, $(this))
+        });
+        setTimeout(function() {
+            expandExpand(top_element)
+        }, 500);
     }
 }
 
 function GitHubPRDiffLinkGenerator() {
+    // github pull request main page
     var commit_hash_hrefs = document.querySelectorAll('code > a.Link--secondary');
     if (commit_hash_hrefs.length == 0) {
         console.error("[clipboard copy button generater] This extension can not find git hash href elements.")
@@ -57,20 +54,30 @@ function GitHubPRDiffLinkGenerator() {
 
         var diff_url = null;
         if (prev_elem == null) {
-            var url = elem.href;
-            diff_url = url.replace(/\/commits\/.*/, '/files/')
+            diff_url = elem.href.replace(/\/commits\/.*/, '/files/')
         } else {
-            var url = prev_elem.href;
-            diff_url = url.replace(/\/commits\//, '/files/') + '..HEAD'
+            diff_url = prev_elem.href.replace(/\/commits\//, '/files/') + '..HEAD'
         }
         prev_elem = elem
         $(elem).parent().append('<a href="' + diff_url + '"class="link-gray">' + '🎯DIFF' + '</a>');
     }
 }
 
+function run(url) {
+    GitHubPRLineExpander()
+    GitHubPRDiffLinkGenerator()
+}
+
 (function() {
     'use strict';
 
-    GitHubPRLineExpander()
-    GitHubPRDiffLinkGenerator()
+    const originalPushState = history.pushState;
+    history.pushState = function() {
+        originalPushState.apply(this, arguments);
+        // NOTE: wait loading a new page
+        setTimeout(() => {
+            run(location.href);
+        }, 2500);
+    };
+    run(location.href);
 })();
