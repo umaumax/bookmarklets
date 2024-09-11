@@ -10,6 +10,145 @@
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // ==/UserScript==
 
+function add_css(datas) {
+    var head = document.getElementsByTagName('head')[0];
+
+    datas.forEach(function(data) {
+        var style;
+        if (data.startsWith('http')) {
+            style = document.createElement('link');
+            var url = data;
+            style.href = url;
+            style.rel = 'stylesheet';
+        } else {
+            style = document.createElement('style');
+            var raw_text = data;
+            style.insertAdjacentHTML('beforeend', raw_text);
+        }
+        style.type = 'text/css';
+        head.append(style);
+    });
+}
+
+function highlightText(highlight, css_selector, regex, css_style_name) {
+    let elements = document.querySelectorAll(css_selector);
+
+    elements.forEach((element) => {
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+        const nodes = [];
+
+        while (walker.nextNode()) {
+            nodes.push(walker.currentNode);
+        }
+
+        const nodes_offset_infos = [];
+        let offset = 0;
+        nodes.forEach((node) => {
+            nodes_offset_infos.push({
+                start: offset,
+                end: offset + node.length,
+                node: node
+            });
+            offset += node.length;
+        });
+
+        // reset global variable
+        regex.lastIndex = 0;
+        let match;
+        while ((match = regex.exec(element.textContent)) !== null) {
+            const startOffset = match.index;
+            const endOffset = startOffset + match[0].length;
+
+            const start_node_info = nodes_offset_infos.find((x) => x.start <= startOffset && startOffset < x.end);
+            const end_node_info = nodes_offset_infos.find((x) => x.start < endOffset && endOffset <= x.end);
+
+            const range = document.createRange();
+            range.setStart(start_node_info.node, startOffset - start_node_info.start);
+            range.setEnd(end_node_info.node, endOffset - end_node_info.start);
+            highlight.add(range);
+        }
+    });
+}
+
+function GitHubPRSyntaxHighLight() {
+    // WARN: Please add the g flag, because regex.exec() while loop is used.
+    // NOTE: もとからあるコードはspan.blob-code-innerであるが、expandしたらtd.blob-code-innerとして生成される模様
+    const highlight_settings = [{
+            name: "cpp-namespace",
+            rules: [
+                ['div.file-header[data-file-type=".hpp"] + * .blob-code-inner', /[a-zA-Z0-9_]*(::[a-zA-Z0-9_]*)+(?![\(0-9a-zA-Z:])/g],
+                ['div.file-header[data-file-type=".cpp"] + * .blob-code-inner', /[a-zA-Z0-9_]*(::[a-zA-Z0-9_]*)+(?![\(0-9a-zA-Z:])/g],
+            ]
+        },
+        {
+            name: "number",
+            rules: [
+                ['.blob-code-inner', /\b[0-9]+(.[0-9]+)?\b/g],
+            ],
+        },
+        {
+            name: "const",
+            rules: [
+                ['.blob-code-inner', /\b[A-Z_][A-Z0-9_]+\b/g],
+            ],
+        },
+        {
+            name: "sign",
+            rules: [
+                ['.blob-code-inner', /[#\[\]!=()<>{},.:;+*\-\/|&]/g],
+            ],
+        },
+        {
+            name: "quote",
+            rules: [
+                ['.blob-code-inner', /['"]/g],
+            ],
+        },
+    ];
+    highlight_settings.forEach((x) => {
+        const highlight = new Highlight();
+        x.rules.forEach((rule) => {
+            const css_selector = rule[0];
+            const regex_rule = rule[1];
+            highlightText(highlight, css_selector, regex_rule);
+        });
+        CSS.highlights.set(x.name, highlight);
+    });
+}
+
+function GitHubPRSyntaxHighLighter() {
+    GitHubPRSyntaxHighLight();
+
+    var box = $(".pr-review-tools").first();
+    box.prepend(`<div class="diffbar-item mr-3"><a id="_ex_reload_highlight_btn" class="btn btn-sm" style="color: #e6db74">♻🖍️Reload Syntax Hightlight</a></div>`);
+    $('#_ex_reload_highlight_btn').on('click', function() {
+        GitHubPRSyntaxHighLight()
+    });
+
+    // NOTE: You can also use Stylus. (You can see the colors in real time.)
+    add_css([`
+::highlight(cpp-namespace) {
+    color: #f470a0;
+}
+
+.pl-s, ::highlight(quote) {
+    color: #e6db74;
+}
+
+::highlight(const) {
+    color: #BED754;
+}
+
+::highlight(number) {
+    color: #a6e22e;
+}
+
+::highlight(sign) {
+    color: #999999;
+}
+    `]);
+}
+
 function GitHubPRLineExpander() {
     const isDarkMode = document.documentElement.hasAttribute('data-dark-theme');
     let button_style = isDarkMode ? "color: #eee; background-color: #E48B63;" : "background-color: #ffbf8b;";
@@ -69,6 +208,7 @@ function GitHubPRDiffLinkGenerator() {
 function run(url) {
     GitHubPRLineExpander()
     GitHubPRDiffLinkGenerator()
+    GitHubPRSyntaxHighLighter()
 }
 
 (function() {
