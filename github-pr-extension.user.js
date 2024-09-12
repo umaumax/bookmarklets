@@ -87,6 +87,12 @@ function GitHubPRSyntaxHighLight() {
             ],
         },
         {
+            name: "sh-command",
+            rules: [
+                ['div.file-header[data-file-type=".sh"] + * .blob-code-inner', /\b(curl|wget|kubectl|sleep|sed|awk|grep|mkdir|chmod|cp)\b/g],
+            ]
+        },
+        {
             name: "const",
             rules: [
                 ['.blob-code-inner', /\b[A-Z_][A-Z0-9_]+\b/g],
@@ -95,7 +101,7 @@ function GitHubPRSyntaxHighLight() {
         {
             name: "sign",
             rules: [
-                ['.blob-code-inner', /[#\[\]!=()<>{},.:;+*\-\/|&]/g],
+                ['.blob-code-inner', /[#\[\]!=()<>{},.:;+*\-\/|&$%\\@]/g],
             ],
         },
         {
@@ -104,7 +110,27 @@ function GitHubPRSyntaxHighLight() {
                 ['.blob-code-inner', /['"]/g],
             ],
         },
+        {
+            name: "keyword",
+            rules: [
+                ['.blob-code-inner', /\b(public|private|nil|null)\b|(@[a-zA-Z_0-9]+(?!\\.))/g],
+            ]
+        },
+        {
+            name: "cpp-macro",
+            rules: [
+                ['div.file-header[data-file-type=".hpp"] + * .blob-code-inner', /#[a-zA-Z0-9_]+/g],
+                ['div.file-header[data-file-type=".cpp"] + * .blob-code-inner', /#[a-zA-Z0-9_]+/g],
+            ]
+        },
+        {
+            name: "sh-var",
+            rules: [
+                ['div.file-header[data-file-type=".sh"] + * .blob-code-inner', /(\$[a-zA-Z0-9_]+)|(\${[a-zA-Z0-9_]+})/g],
+            ]
+        },
     ];
+
     highlight_settings.forEach((x) => {
         const highlight = new Highlight();
         x.rules.forEach((rule) => {
@@ -117,7 +143,16 @@ function GitHubPRSyntaxHighLight() {
 }
 
 function GitHubPRSyntaxHighLighter() {
-    GitHubPRSyntaxHighLight();
+    // NOTE: wait until code syntax highlighting has completed
+    let intervalId = null;
+    intervalId = setInterval(function() {
+        if (document.querySelector('deferred-diff-lines.awaiting-highlight')) {
+            return;
+        }
+        clearInterval(intervalId);
+        intervalId = null;
+        GitHubPRSyntaxHighLight();
+    }, 500);
 
     var box = $(".pr-review-tools").first();
     box.prepend(`<div class="diffbar-item mr-3"><a id="_ex_reload_highlight_btn" class="btn btn-sm" style="color: #e6db74">♻🖍️Reload Syntax Hightlight</a></div>`);
@@ -131,8 +166,24 @@ function GitHubPRSyntaxHighLighter() {
     color: #f470a0;
 }
 
+::highlight(cpp-macro) {
+    color: #f47067;
+}
+
+::highlight(keyword) {
+    color: #f47067;
+}
+
 .pl-s, ::highlight(quote) {
     color: #e6db74;
+}
+
+::highlight(sh-command) {
+    color: #ad6cff;
+}
+
+::highlight(sh-var) {
+    color: #BED754;
 }
 
 ::highlight(const) {
