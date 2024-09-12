@@ -89,7 +89,7 @@ function GitHubPRSyntaxHighLight() {
         {
             name: "sh-command",
             rules: [
-                ['div.file-header[data-file-type=".sh"] + * .blob-code-inner', /\b(curl|wget|kubectl|sleep|sed|awk|grep|mkdir|chmod|cp)\b/g],
+                ['div.file-header[data-file-type=".sh"] + * .blob-code-inner', /\b(curl|wget|kubectl|git|sleep|sed|tr|perl|awk|grep|mkdir|chmod|cp)\b/g],
             ]
         },
         {
@@ -114,6 +114,8 @@ function GitHubPRSyntaxHighLight() {
             name: "keyword",
             rules: [
                 ['.blob-code-inner', /\b(public|private|nil|null)\b|(@[a-zA-Z_0-9]+(?!\\.))/g],
+                ['div.file-header[data-file-type=".c"] + * .blob-code-inner', /int|char|void|short|long|float|double|size_t/g],
+                ['div.file-header[data-file-type=".h"] + * .blob-code-inner', /int|char|void|short|long|float|double|size_t/g],
             ]
         },
         {
@@ -121,6 +123,12 @@ function GitHubPRSyntaxHighLight() {
             rules: [
                 ['div.file-header[data-file-type=".hpp"] + * .blob-code-inner', /#[a-zA-Z0-9_]+/g],
                 ['div.file-header[data-file-type=".cpp"] + * .blob-code-inner', /#[a-zA-Z0-9_]+/g],
+            ]
+        },
+        {
+            name: "filepath",
+            rules: [
+                ['.blob-code-inner', new RegExp(`\\.*/[a-zA-Z0-9_.~/-]+|(([a-zA-Z0-9_.~-]+)/)+([a-zA-Z0-9_.~-]+)?`, 'g')],
             ]
         },
         {
@@ -195,7 +203,11 @@ function GitHubPRSyntaxHighLighter() {
 }
 
 ::highlight(sign) {
-    color: #999999;
+    color: #aaaaaa;
+}
+
+::highlight(filepath) {
+    color: #BC9DFB;
 }
     `]);
 }
