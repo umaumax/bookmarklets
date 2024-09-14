@@ -6,6 +6,7 @@
 // @author
 // @license      MIT
 // @match        https://github.com/*/*/pull/*
+// @match        https://github.com/*/*/commit/*
 // @grant        none
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // ==/UserScript==
@@ -76,8 +77,8 @@ function GitHubPRSyntaxHighLight() {
     const highlight_settings = [{
             name: "cpp-namespace",
             rules: [
-                ['div.file-header[data-file-type=".hpp"] + * .blob-code-inner', /[a-zA-Z0-9_]*(::[a-zA-Z0-9_]*)+(?![\(0-9a-zA-Z:])/g],
-                ['div.file-header[data-file-type=".cpp"] + * .blob-code-inner', /[a-zA-Z0-9_]*(::[a-zA-Z0-9_]*)+(?![\(0-9a-zA-Z:])/g],
+                ['div.file-header[data-file-type=".hpp"] + * .blob-code-inner', /[a-zA-Z0-9_]*(::[a-zA-Z0-9_]*)+(?![\(0-9a-zA-Z:_])/g],
+                ['div.file-header[data-file-type=".cpp"] + * .blob-code-inner', /[a-zA-Z0-9_]*(::[a-zA-Z0-9_]*)+(?![\(0-9a-zA-Z:_])/g],
             ]
         },
         {
@@ -90,6 +91,13 @@ function GitHubPRSyntaxHighLight() {
             name: "sh-command",
             rules: [
                 ['div.file-header[data-file-type=".sh"] + * .blob-code-inner', /\b(curl|wget|kubectl|git|sleep|sed|tr|perl|awk|grep|mkdir|chmod|cp)\b/g],
+            ]
+        },
+        {
+            name: "func",
+            rules: [
+                ['div.file-header[data-file-type=".swift"] + * .blob-code-inner', /[a-zA-Z0-9_]+(?=\()/g],
+                ['div.file-header[data-file-type=".kt"] + * .blob-code-inner', /[a-zA-Z0-9_]+(?=\()/g],
             ]
         },
         {
@@ -148,7 +156,7 @@ function GitHubPRSyntaxHighLight() {
         {
             name: "comment",
             rules: [
-                ['.blob-code-inner', new RegExp(`//|/\\*|\\*/`, 'g')],
+                ['.blob-code-inner', new RegExp(`//|/\\*+|\\*+/`, 'g')],
             ]
         },
     ];
@@ -207,6 +215,10 @@ function GitHubPRSyntaxHighLighter() {
 
 ::highlight(sh-var) {
     color: #BED754;
+}
+
+::highlight(func) {
+    color: #DCBDFB;
 }
 
 ::highlight(const) {
