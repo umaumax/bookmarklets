@@ -167,7 +167,9 @@ body { counter-reset: number 1; }
     base_node.style.position = 'fixed';
     base_node.style.top = '192px';
     base_node.style.left = '10px';
-    base_node.style['padding-right'] = '100px';
+    base_node.style['padding-right'] = '10px';
+    base_node.style.border = 'dashed';
+    base_node.style['border-width'] = '1px';
     base_node.id = 'google-search-feature-enhancer';
     document.body.appendChild(base_node);
     inputs.forEach(v => {
@@ -177,7 +179,7 @@ body { counter-reset: number 1; }
         var outer_node = document.createElement("div");
         outer_node.style.height = '30px';
         outer_node.style.margin = '4px 0';
-        outer_node.style.padding = '0 8px';
+        outer_node.style.padding = '0 32px';
         outer_node.style['align-items'] = 'center';
         outer_node.style.display = 'flex';
         outer_node.style.background = '#f7f7ff';
@@ -189,8 +191,8 @@ body { counter-reset: number 1; }
     });
 
     var content = '';
-    content += '#google-search-feature-enhancer { transform: translate(-50%, 0px); transition: all 0.2s; }';
-    content += '#google-search-feature-enhancer:hover { transform: translate(0%, 0px); transition: all 0.2s; }';
+    content += '#google-search-feature-enhancer { transform: translate(-90%, 0px); transition: all 0.2s; }';
+    content += '#google-search-feature-enhancer:hover { transform: translate(-10%, 0px); transition: all 0.2s; }';
 
     var style = document.createElement('style');
     style.type = 'text/css';
