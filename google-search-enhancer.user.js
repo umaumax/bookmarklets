@@ -67,11 +67,17 @@ g-section-with-header,
 
 /* page counter */
 body { counter-reset: number 1; }
-#botstuff ~ #res[role="main"] { counter-increment: number 1; border-top: solid ${window.getComputedStyle( document.querySelector('#top_nav > div') ).getPropertyValue('border-bottom-color')} 1px; }
-#botstuff ~ #res[role="main"]:before {content: counter(number);
-font-size: 14px; position: absolute; right: 0; margin-top: -10px; padding-right: 8px; padding-left: 12px;
-color: ${window.getComputedStyle( document.querySelector('#result-stats') ).getPropertyValue('color')};
-background-color: ${window.getComputedStyle( document.body ).getPropertyValue('background-color')}}`
+#botstuff ~ #res[role="main"] {
+  counter-increment: number 1; border-top: solid ${window.getComputedStyle( document.querySelector('#top_nav > div') ).getPropertyValue('border-bottom-color')} 1px;
+  padding-top: 20px;
+}
+#botstuff ~ #res[role="main"]:before {
+  content: counter(number);
+  font-size: 14px; position: absolute; right: 0; margin-top: -20px; padding-right: 8px; padding-left: 12px;
+  color: ${window.getComputedStyle( document.querySelector('#result-stats') ).getPropertyValue('color')};
+  background-color: ${window.getComputedStyle( document.body ).getPropertyValue('background-color')}
+}
+`
 
     // let removeNavNumbs = document.createElement('style')
     // removeNavNumbs.innerText = `#botstuff [role="navigation"] {visibility: hidden; height: 0;}`
