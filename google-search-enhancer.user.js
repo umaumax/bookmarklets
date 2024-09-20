@@ -57,21 +57,23 @@ function findCommonAncestor(elements) {
     return commonAncestor;
 }
 
+function error(message) {
+    document.body.style.background = '#fff7f7';
+    console.error('🔥 google search feature enhancer:', message);
+}
+
 function infinite_scroll() {
     const currentSearchTab = document.querySelector('[aria-current]')
     const checkAllResultsPage = document.getElementById('result-stats')
     let pageCounter = document.createElement('style')
     pageCounter.innerText = `
-g-section-with-header,
-#botstuff ~ #res[role="main"] video-voyager{display: none!important;}
-
 /* page counter */
 body { counter-reset: number 1; }
-#botstuff ~ #res[role="main"] {
+[role="main"]:nth-child(n+2) {
   counter-increment: number 1; border-top: solid ${window.getComputedStyle( document.querySelector('#top_nav > div') ).getPropertyValue('border-bottom-color')} 1px;
   padding-top: 20px;
 }
-#botstuff ~ #res[role="main"]:before {
+[role="main"]:nth-child(n+2):before {
   content: counter(number);
   font-size: 14px; position: absolute; right: 0; margin-top: -20px; padding-right: 8px; padding-left: 12px;
   color: ${window.getComputedStyle( document.querySelector('#result-stats') ).getPropertyValue('color')};
@@ -79,66 +81,51 @@ body { counter-reset: number 1; }
 }
 `
 
-    // let removeNavNumbs = document.createElement('style')
-    // removeNavNumbs.innerText = `#botstuff [role="navigation"] {visibility: hidden; height: 0;}`
-    // document.head.appendChild(removeNavNumbs)
+    if (!checkAllResultsPage) {
+        error('There is no "#result-stats" element.');
+        return;
+    }
 
-    if (checkAllResultsPage) {
-        // create favicons
-        function createFavicons(target) {
-            for (let i = 0; i < target.querySelectorAll('cite').length; ++i) {
-                let lnk = target.querySelector('#center_col>[role="main"]').querySelectorAll('cite')[i],
-                    txt = lnk.textContent,
-                    url = txt.match(/\./g) ? (txt.match(/\/\//g) ? txt.match(/(?<=\/\/)[^\s]*/g) : txt.match(/^[^\s]*/g)) : false,
-                    fav = url ? '/s2/favicons?domain=' + url : '';
-                if (url) {
-                    let img = target.createElement('div');
-                    img.style.cssText = `background-image:url("${fav}"); width:16px; height:16px; display:inline-block; margin-right:6px`;
-                    lnk.prepend(img)
-                    lnk.style.cssText = 'display:inline-block'
-                };
-            };
-        };
+    // load pages when it's bottom
+    let pageNumber = 0
+    let loaded_flag = true;
+    let loadNewResults = _ => {
+        let nextURL = new URL((document.querySelector('[role="navigation"]>[role="presentation"] a:first-child').href).replace(/(?<=start=)(.*?)(?=\&)/g, pageNumber * 10));
+        fetch(nextURL.href)
+            .then(response => response.text())
+            .then(text => {
+                let newDocument = (new DOMParser()).parseFromString(text, 'text/html')
+                let newResults = newDocument.documentElement.querySelector('[role="main"]')
+                if (!newResults) {
+                    error('There is no "[role="main"]" element at a new page.');
+                    return;
+                }
+                let checkMoreResults = newDocument.querySelector('#topstuff p > span > em') == null
+                if (!checkMoreResults) {
+                    error('There is no "#topstuff p > span > em" element at a current page.');
+                    return;
+                }
+                let bottomElement = document.querySelector('[role="main"]').parentElement;
+                if (!bottomElement) {
+                    error('There is no "[role="main"]" element at a current page.');
+                    return;
+                }
+                bottomElement.appendChild(newResults);
+                loaded_flag = true;
+            });
 
-        if (!document.querySelector('a > h3 + div > span > div > img')) {
-            createFavicons(document);
+        if (pageNumber == 1) {
+            document.head.appendChild(pageCounter);
         }
-
-        // load pages when it's bottom + create favicons
-        let pageNumber = 0
-        let loaded_flag = true;
-        let loadNewResults = _ => {
-            let nextURL = new URL((document.querySelector('[role="navigation"]>[role="presentation"] a:first-child').href).replace(/(?<=start=)(.*?)(?=\&)/g, pageNumber * 10));
-            fetch(nextURL.href)
-                .then(response => response.text())
-                .then(text => {
-                    let newDocument = (new DOMParser()).parseFromString(text, 'text/html')
-                    let newResults = newDocument.documentElement.querySelector('#center_col > [role="main"]')
-                    if (!document.querySelector('a > h3 + div > span > div > img')) {
-                        createFavicons(newDocument);
-                    }
-
-                    let checkMoreResults = newDocument.querySelector('#topstuff p > span > em') == null
-                    if (checkMoreResults) {
-                        document.createElement('div').appendChild(newResults)
-                        document.querySelector('#center_col > [role="main"]').parentElement.appendChild(newResults)
-                    };
-                    loaded_flag = true;
-                });
-
-            if (pageNumber == 1) {
-                document.head.appendChild(pageCounter)
-            };
-        };
-
-        document.addEventListener('scroll', _ => {
-            if (loaded_flag && window.innerHeight + window.pageYOffset >= document.body.scrollHeight * (1.0 - 1.0 / (pageNumber + 1) / 2)) {
-                pageNumber = pageNumber + 1
-                loaded_flag = false;
-                loadNewResults();
-            };
-        });
     };
+
+    document.addEventListener('scroll', _ => {
+        if (loaded_flag && window.innerHeight + window.pageYOffset >= document.body.scrollHeight * (1.0 - 1.0 / (pageNumber + 1) / 2)) {
+            pageNumber = pageNumber + 1
+            loaded_flag = false;
+            loadNewResults();
+        };
+    });
 }
 
 (function() {
