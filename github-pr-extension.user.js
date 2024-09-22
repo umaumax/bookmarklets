@@ -128,6 +128,7 @@ function GitHubPRSyntaxHighLight() {
             name: "keyword",
             rules: [
                 ['.blob-code-inner', /\b(public|private|nil|null|false|true)\b|(?<=[^a-zA-Z0-9_.-])(@[a-zA-Z_0-9]+(?!\\.))/g],
+                ['div.file-header[data-file-type=".swift"] + * .blob-code-inner', /\b(Int|Bool|String|NSString|guard|self)\b/g],
                 ['div.file-header[data-file-type=".c"] + * .blob-code-inner', /int|char|void|short|unsigned|long|float|double|size_t|bool/g],
                 ['div.file-header[data-file-type=".h"] + * .blob-code-inner', /int|char|void|short|unsigned|long|float|double|size_t|bool/g],
             ]
@@ -159,7 +160,22 @@ function GitHubPRSyntaxHighLight() {
                 ['.blob-code-inner', new RegExp(`//|/\\*+|\\*+/`, 'g')],
             ]
         },
-    ];
+        {
+            name: "warning",
+            rules: [
+                ['div.file-header[data-file-type=".swift"] + * .blob-code-inner', /\?\./g],
+                ['div.file-header[data-file-type=".kt"] + * .blob-code-inner', /\?\./g],
+            ]
+        },
+        {
+            name: "danger",
+            rules: [
+                ['div.file-header[data-file-type=".swift"] + * .blob-code-inner', /[a-zA-Z0-9_]+!|\(\)!/g],
+                ['div.file-header[data-file-type=".kt"] + * .blob-code-inner', /!!/g],
+                ['div.file-header[data-file-type=".rs"] + * .blob-code-inner', /unwrap\(\)/g],
+            ]
+        },
+];
 
     highlight_settings.forEach((x) => {
         const highlight = new Highlight();
@@ -244,6 +260,15 @@ function GitHubPRSyntaxHighLighter() {
 
 ::highlight(filepath) {
     color: #BC9DFB;
+}
+
+::highlight(warning) {
+    text-decoration: underline wavy #FF204E;
+}
+
+::highlight(danger) {
+    background-color: #FF204E;
+    color: #EEE4B1;
 }
     `]);
 }
