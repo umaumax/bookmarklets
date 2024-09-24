@@ -21,6 +21,7 @@ function get_article_header() {
         'div#info-header',
         'section#report',
         'h1.article_title',
+        'div.mainEntryBlock',
     ].join(', ');
     let article_header = document.querySelector(article_header_selector);
     if (article_header) return article_header;
