@@ -23,6 +23,15 @@ function moveCursorToStart(element) {
 }
 
 function add_wiki_events() {
+    document.addEventListener('paste', function(event) {
+        const clipboardData = event.clipboardData || window.clipboardData;
+        // console.log(clipboardData.getData("text/plain"));
+        // NOTE: command + shift + V or command + v(plain mode)
+        if (clipboardData.items.length == 1 && clipboardData.items[0].type=='text/plain') {
+            event.stopPropagation();
+        }
+    }, true);
+
     document.addEventListener('keydown', function(event) {
         if (!is_gitlab_wiki) return;
 
