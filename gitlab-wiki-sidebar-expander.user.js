@@ -27,11 +27,33 @@ function add_wiki_events() {
         if (!is_gitlab_wiki) return;
 
         if (event.key === '`') {
-            const selectedText = window.getSelection().toString();
+            let codeBlockButtonFlag = false;
+            let selectedText = window.getSelection().toString();
             if (selectedText) {
+                codeBlockButtonFlag = true;
+            } else {
+                const selection = window.getSelection();
+                const preText = selection.anchorNode.textContent.substring(0, selection.anchorOffset);
+                const blockStartOffset = preText.indexOf("`");
+                if (blockStartOffset != -1) {
+                    const textNode = selection.anchorNode;
+                    const range = document.createRange();
+                    range.setStart(textNode, blockStartOffset);
+                    range.setEnd(textNode, blockStartOffset + 1); // remove "`"
+                    range.deleteContents()
+                    range.setStart(textNode, blockStartOffset);
+                    range.setEnd(textNode, selection.anchorOffset); // NOTE: この値は選択範囲が削除された後の最新の値が自動的に適用される
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    codeBlockButtonFlag = true;
+                }
+            }
+            if (codeBlockButtonFlag) {
                 const button = document.querySelector('button[aria-label="Code"][title="Code"][data-testid="code"]');
                 if (button) {
-                    button.click();
+                    setTimeout(() => { // NOTE: 直前にjavascript上で選択範囲を再設定した場合にdelayを入れないと反応しないため
+                        button.click();
+                    }, 100);
                     event.preventDefault();
                     return;
                 }
