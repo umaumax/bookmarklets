@@ -23,11 +23,34 @@ function moveCursorToStart(element) {
 }
 
 function add_wiki_events() {
+    let isCommandPressed = false;
+    let isShiftPressed = false;
+
+    document.addEventListener('keydown', function(event) {
+        if (event.metaKey) {
+            isCommandPressed = true;
+        }
+        if (event.shiftKey) {
+            isShiftPressed = true;
+        }
+    });
+
+    document.addEventListener('keyup', function(event) {
+        if (!event.metaKey) {
+            isCommandPressed = false;
+        }
+        if (!event.shiftKey) {
+            isShiftPressed = false;
+        }
+    });
+
     document.addEventListener('paste', function(event) {
         const clipboardData = event.clipboardData || window.clipboardData;
         // console.log(clipboardData.getData("text/plain"));
-        // NOTE: command + shift + V or command + v(plain mode)
-        if (clipboardData.items.length == 1 && clipboardData.items[0].type=='text/plain') {
+        // NOTE: command + shift + V
+        if (isCommandPressed && isShiftPressed) {
+            // NOTE: command + shift + V or command + v(plain mode)
+            // if (clipboardData.items.length == 1 && clipboardData.items[0].type=='text/plain') {
             event.stopPropagation();
         }
     }, true);
