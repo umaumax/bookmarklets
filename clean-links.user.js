@@ -10,6 +10,7 @@
 // @match        https://tver.jp/tags/*
 // @match        https://setusoku.com/*
 // @match        https://www.enjoytokyo.jp/event/list/*
+// @match        https://www.walkerplus.com/event_list/*
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
@@ -59,6 +60,7 @@ function add_css(datas) {
         new RegExp('^https://setusoku\.com/page/.*$'),
         new RegExp('^https://www.enjoytokyo.jp/event/list/ranking/.*$'),
         new RegExp('^https://www.enjoytokyo.jp/event/list/its.*$'),
+        new RegExp('^https://www.walkerplus.com/event_list/[0-9]+/.*$'),
     ];
 
     // Function to mark all links as visited
@@ -118,6 +120,13 @@ function add_css(datas) {
                 // e.remove();
             }
         });
+        // for www.walkerplus.com
+        document.querySelectorAll('li.m-mainlist__item').forEach(e => {
+            if (!e.querySelector('a:not([style*="display: none"])')) {
+                e.style.display = 'none';
+                // e.remove();
+            }
+        });
         // for zenn.com
         const emptyDivs = Array.from(document.querySelectorAll('div:not([style*="display: none"])')).filter(div => {
             const children = Array.from(div.children);
@@ -156,6 +165,13 @@ function add_css(datas) {
     window.addEventListener('load', cleanVisitedLinks);
 
     if ((new RegExp('^https://tver.jp/.*')).test(window.location.href)) {
+        setInterval(() => {
+            applyVisitedStyle();
+            cleanVisitedLinks();
+        }, 500);
+    }
+
+    if ((new RegExp('^https://www.walkerplus.com/event_list/.*')).test(window.location.href)) {
         setInterval(() => {
             applyVisitedStyle();
             cleanVisitedLinks();
