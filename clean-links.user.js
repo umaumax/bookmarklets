@@ -9,6 +9,7 @@
 // @match        https://2chmm.com/*
 // @match        https://tver.jp/tags/*
 // @match        https://setusoku.com/*
+// @match        https://www.enjoytokyo.jp/event/list/*
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
@@ -56,6 +57,8 @@ function add_css(datas) {
         /^https:\/\/tver\.jp\/(?!episodes\/).*$/,
         new RegExp('^https://setusoku\.com/[^/]$'),
         new RegExp('^https://setusoku\.com/page/.*$'),
+        new RegExp('^https://www.enjoytokyo.jp/event/list/ranking/.*$'),
+        new RegExp('^https://www.enjoytokyo.jp/event/list/its.*$'),
     ];
 
     // Function to mark all links as visited
@@ -103,6 +106,13 @@ function add_css(datas) {
         });
         // for tver.jp
         document.querySelectorAll('div[class^="result-list_content__"]').forEach(e => {
+            if (!e.querySelector('a:not([style*="display: none"])')) {
+                e.style.display = 'none';
+                // e.remove();
+            }
+        });
+        // for www.enjoytokyo.jp
+        document.querySelectorAll('li.article-list_vertical-item.separator').forEach(e => {
             if (!e.querySelector('a:not([style*="display: none"])')) {
                 e.style.display = 'none';
                 // e.remove();
@@ -170,7 +180,7 @@ function add_css(datas) {
 
     // Add menu commands to trigger the functions
     GM_registerMenuCommand("🔗✅: Mark All Links as Visited", markLinksVisited);
-    GM_registerMenuCommand("🔗🗑️🧹: Clean Visited Links", cleanVisitedLinks);
+    GM_registerMenuCommand("🔗🗑️🧹: Clean Visited Links", function() { applyVisitedStyle(); cleanVisitedLinks(); });
 
     function appendButton() {
         var button = document.createElement("button");
