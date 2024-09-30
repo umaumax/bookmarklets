@@ -57,6 +57,9 @@ This skips ads of TVer site.
 * インクリメンタルに検索ができる
 * 直接、各トピックへジャンプできる
 
+## [image-link-checker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/image-link-checker.user.js )
+画像のリンク切れをトーストで知らせる
+
 ## 🔧[disable-google-account-popup.user.js]( https://github.com/umaumax/bookmarklets/raw/master/disable-google-account-popup.user.js )
 redditのgoogle account loginのpopupを抑制する
 
