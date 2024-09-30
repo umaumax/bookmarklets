@@ -27,7 +27,7 @@ function add_wiki_events() {
     let isShiftPressed = false;
 
     document.addEventListener('keydown', function(event) {
-        if (event.metaKey) {
+        if (event.metaKey) { // MacのCommandキー（WindowsではCtrlキー）
             isCommandPressed = true;
         }
         if (event.shiftKey) {
@@ -55,6 +55,29 @@ function add_wiki_events() {
         }
     }, true);
 
+    let codeBlockProcessTimeoutId = null;
+
+    function codeBlockProcess(blockStartOffset) {
+        const selection = window.getSelection();
+        const textNode = selection.anchorNode;
+        const range = document.createRange();
+        range.setStart(textNode, selection.anchorOffset - 1);
+        range.setEnd(textNode, selection.anchorOffset);
+        range.deleteContents() // remove end "`"
+        range.setStart(textNode, blockStartOffset);
+        range.setEnd(textNode, blockStartOffset + 1);
+        range.deleteContents() // remove start "`"
+        range.setStart(textNode, blockStartOffset);
+        range.setEnd(textNode, selection.anchorOffset); // NOTE: この値は選択範囲が削除された後の最新の値が自動的に適用される
+        selection.removeAllRanges();
+        selection.addRange(range);
+        const button = document.querySelector('button[aria-label="Code"][title="Code"][data-testid="code"]');
+        if (button) {
+            setTimeout(() => { // NOTE: 直前にjavascript上で選択範囲を再設定した場合にdelayを入れないと反応しないため
+                button.click();
+            }, 100);
+        }
+    }
     document.addEventListener('keydown', function(event) {
         if (!is_gitlab_wiki) return;
 
@@ -64,28 +87,19 @@ function add_wiki_events() {
             if (selectedText) {
                 codeBlockButtonFlag = true;
             } else {
+                if (codeBlockProcessTimeoutId) clearTimeout(codeBlockProcessTimeoutId);
                 const selection = window.getSelection();
                 const preText = selection.anchorNode.textContent.substring(0, selection.anchorOffset);
                 const blockStartOffset = preText.indexOf("`");
-                if (blockStartOffset != -1) {
-                    const textNode = selection.anchorNode;
-                    const range = document.createRange();
-                    range.setStart(textNode, blockStartOffset);
-                    range.setEnd(textNode, blockStartOffset + 1); // remove "`"
-                    range.deleteContents()
-                    range.setStart(textNode, blockStartOffset);
-                    range.setEnd(textNode, selection.anchorOffset); // NOTE: この値は選択範囲が削除された後の最新の値が自動的に適用される
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                    codeBlockButtonFlag = true;
+                // ```を連続で入力するケースを考慮して遅延判定している
+                if (!preText.endsWith("``") && blockStartOffset != -1) {
+                    codeBlockProcessTimeoutId = setTimeout(() => codeBlockProcess(blockStartOffset), 250);
                 }
             }
             if (codeBlockButtonFlag) {
                 const button = document.querySelector('button[aria-label="Code"][title="Code"][data-testid="code"]');
                 if (button) {
-                    setTimeout(() => { // NOTE: 直前にjavascript上で選択範囲を再設定した場合にdelayを入れないと反応しないため
-                        button.click();
-                    }, 100);
+                    button.click();
                     event.preventDefault();
                     return;
                 }
