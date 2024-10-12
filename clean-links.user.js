@@ -49,7 +49,15 @@ function add_css(datas) {
 
     // Function to save visited links to localStorage
     function saveVisitedLinks(links) {
-        localStorage.setItem(VISITED_LINKS_KEY, JSON.stringify(links));
+        try {
+            localStorage.setItem(VISITED_LINKS_KEY, JSON.stringify(links));
+        } catch (e) {
+            if (e.code === DOMException.QUOTA_EXCEEDED_ERR) {
+                console.error('Storage limit exceeded');
+                const recentLinksNum = 1000;
+                localStorage.setItem(VISITED_LINKS_KEY, JSON.stringify(links.slice(-recentLinksNum)));
+            }
+        }
     }
 
     const whitelistPatterns = [
