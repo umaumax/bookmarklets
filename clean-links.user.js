@@ -196,7 +196,10 @@ function add_css(datas) {
 
     // Add menu commands to trigger the functions
     GM_registerMenuCommand("🔗✅: Mark All Links as Visited", markLinksVisited);
-    GM_registerMenuCommand("🔗🗑️🧹: Clean Visited Links", function() { applyVisitedStyle(); cleanVisitedLinks(); });
+    GM_registerMenuCommand("🔗🗑️🧹: Clean Visited Links", function() {
+        applyVisitedStyle();
+        cleanVisitedLinks();
+    });
 
     function appendButton() {
         var button = document.createElement("button");
