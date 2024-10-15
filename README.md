@@ -37,6 +37,8 @@ This adopts google `code-prettify.js` with `linenums` option and `desert` style 
 ## ⭐[auto-scroll-to-article-header.user.js]( https://github.com/umaumax/bookmarklets/raw/master/auto-scroll-to-article-header.user.js )
 Webページのタイトルだと思われる要素まで自動的にスクロールする
 
+## [picuki.user.js]( https://github.com/umaumax/bookmarklets/raw/master/picuki.user.js )
+
 ## [code-prettify.user.js ]( https://github.com/umaumax/bookmarklets/raw/master/code-prettify.user.js )
 
 ## 🔧[niconico-adblocker.user.js]( https://github.com/umaumax/bookmarklets/raw/master/niconico-adblocker.user.js )
