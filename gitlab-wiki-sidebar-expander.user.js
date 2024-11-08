@@ -158,8 +158,16 @@ function add_wiki_events() {
         })
     }, 100);
 
+    const rich_text_switch_flag = new Map();
     setInterval(() => {
         if (!is_gitlab_wiki) return;
+
+        // NOTE: デフォルトでplain textモードであるので、rich textモードへ遷移する
+        let rich_text_switch_button = $('button#switch-to-rich-text-editor');
+        if (rich_text_switch_button && !rich_text_switch_flag.get(window.location.href)) {
+            rich_text_switch_button.click();
+            rich_text_switch_flag.set(window.location.href, true);
+        }
 
         function applyDetails(targets, text) {
             const target = targets[0];
