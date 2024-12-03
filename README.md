@@ -2,6 +2,9 @@
 
 `*.user.js` files are for [Tampermonkey • Userscript Sources]( https://www.tampermonkey.net/scripts.php ).
 
+## ⭐[texts-auto-complete.user.js]( https://github.com/umaumax/bookmarklets/raw/master/texts-auto-complete.user.js )
+enhance `<input type="text">` and `<textarea>` by adding auto complete feature
+
 ## ⭐[url-to-clipboard.user.js]( https://github.com/umaumax/bookmarklets/raw/master/url-to-clipboard.user.js )
 This copies url to clibpboard as markdown style with toast notification.
 
