@@ -5,6 +5,9 @@
 ## ⭐[texts-auto-complete.user.js]( https://github.com/umaumax/bookmarklets/raw/master/texts-auto-complete.user.js )
 enhance `<input type="text">` and `<textarea>` by adding auto complete feature
 
+## ⭐[image-to-base64.user.js]( https://github.com/umaumax/bookmarklets/raw/master/image-to-base64.user.js )
+Image to Base64 Copy via Context Menu
+
 ## ⭐[url-to-clipboard.user.js]( https://github.com/umaumax/bookmarklets/raw/master/url-to-clipboard.user.js )
 This copies url to clibpboard as markdown style with toast notification.
 
