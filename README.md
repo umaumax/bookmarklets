@@ -139,8 +139,6 @@ FYI: [Markdownを「Marked\.js」を使ってHTMLに変換する方法 \- suzu6]
 javascript: document.querySelectorAll("gr-message").forEach(e => e.click()); void(0);
 ```
 
-## NOTE
-
 ## How to add bookmarklets
 * mac: `cmd-D`->`More`->`URL`(paste here)
 
