@@ -33,16 +33,16 @@ function extractPhrases(str) {
 }
 
 function findSpaceIndices(str) {
-  let indices = [];
-  let pre_char = ' ';
-  for (let i = 0; i < str.length; i++) {
-    let char = str[i];
-    if (pre_char == ' ' && char != ' ') {
-      indices.push(i);
+    let indices = [];
+    let pre_char = ' ';
+    for (let i = 0; i < str.length; i++) {
+        let char = str[i];
+        if (pre_char == ' ' && char != ' ') {
+            indices.push(i);
+        }
+        pre_char = char;
     }
-    pre_char = char;
-  }
-  return indices;
+    return indices;
 }
 
 // "hello wor" "world" => "hello world"
@@ -62,59 +62,35 @@ function mergeText(baseString, inputString) {
 }
 
 function applyAutoComplete(targetTextarea, data_src) {
-    targetTextarea.addEventListener("keydown", function(event) {
-        console.log('keydown', event.key, event.target.dataset.autoComplete_status);
-        if (event.target.dataset.autoComplete_status && event.target.dataset.autoComplete_status == "open") {
-            if (event.key == "Tab") {
-                let enterEvent = new KeyboardEvent("keydown", {
-                    key: "ArrowDown",
-                    code: "ArrowDown",
-                    keyCode: 40,
-                    which: 40,
-                    bubbles: true,
-                });
-                if (event.shiftKey) {
-                    enterEvent = new KeyboardEvent("keydown", {
-                        key: "ArrowUp",
-                        code: "ArrowUp",
-                        keyCode: 38,
-                        which: 38,
-                        bubbles: true,
-                    });
-
-                }
-                event.target.dispatchEvent(enterEvent);
-                event.preventDefault();
-            }
-            return;
-        }
-        if (event.key == "ArrowDown" || event.key == "ArrowUp" || event.key == "Enter") {
-            event.stopImmediatePropagation();
-        }
-    });
-
     let autoCompleteJS;
-      function navigate(event, ctx) {
-    switch (event.keyCode) {
-      case 40:
-      case 38:
-        event.preventDefault();
-        event.keyCode === 40 ? ctx.next() : ctx.previous();
-        break;
-      case 13:
-        if (!ctx.submit) event.preventDefault();
-        if (ctx.cursor >= 0) ctx.select(event);
-        break;
-      case 9:
-        if (ctx.resultsList.tabSelect && ctx.cursor >= 0) ctx.select(event);
-        break;
-      case 27: // Esc
-        // ctx.input.value = "";
-        // eventEmitter('clear', ctx);
-        ctx.close();
-        break;
-    }
-  };
+
+    function navigate(event, ctx) {
+        switch (event.key) {
+            case "ArrowDown":
+                event.preventDefault();
+                ctx.next();
+                break;
+            case "ArrowUp":
+                event.preventDefault();
+                ctx.previous();
+                break;
+            case "Enter":
+                if (!ctx.submit) event.preventDefault();
+                if (ctx.cursor >= 0) ctx.select(event);
+                break;
+            case "Tab":
+                event.preventDefault();
+                if (event.shiftKey) {
+                    ctx.previous();
+                } else {
+                    ctx.next();
+                }
+                break;
+            case "Escape":
+                ctx.close();
+                break;
+        }
+    };
 
     autoCompleteJS = new autoComplete({
         name: "autoComplete",
@@ -164,8 +140,6 @@ function applyAutoComplete(targetTextarea, data_src) {
         query: (input) => {
             let beforeCursorWord = targetTextarea.dataset.autoComplete_beforeCursorWord;
             return beforeCursorWord;
-            // console.log('query', input)
-            // return input.replace(/ /g, "").replace("lamen", "ラーメン");
         },
         placeHolder: "Please input search query...",
         threshold: 1,
@@ -178,14 +152,13 @@ function applyAutoComplete(targetTextarea, data_src) {
         submit: false,
         events: {
             input: {
-                      keydown(event) {
-                          console.log("💡 input > keydown", event);
-                          if (event.target.dataset.autoComplete_status == "open") {
-                              let ctx = autoCompleteJS;
-                              navigate(event, ctx);
-                              //ctx.navigate(event);
-                          }
-      },
+                keydown(event) {
+                    let ctx = autoCompleteJS;
+                    console.log("💡 input > keydown", event);
+                    if (ctx.isOpen) {
+                        navigate(event, ctx);
+                    }
+                },
                 focus: (event) => {
                     // console.log("Input Field in focus!");
                 },
@@ -291,6 +264,9 @@ function main() {
             // e.target.hasAttribute("contenteditable")
         ) {
             if (!e.target.dataset.listenerApplied) {
+                if (e.target.ariaReadOnly) {
+                    return;
+                }
                 console.log("Focus event for the first time on:", e.target);
                 e.target.dataset.listenerApplied = "true";
                 applyAutoComplete(e.target, data_src);
