@@ -5,6 +5,9 @@
 ## ⭐[texts-auto-complete.user.js]( https://github.com/umaumax/bookmarklets/raw/master/texts-auto-complete.user.js )
 enhance `<input type="text">` and `<textarea>` by adding auto complete feature
 
+## ⭐[visit-logger.user.js]( https://github.com/umaumax/bookmarklets/raw/master/visit-logger.user.js )
+enhance a tags
+
 ## ⭐[image-to-base64.user.js]( https://github.com/umaumax/bookmarklets/raw/master/image-to-base64.user.js )
 Image to Base64 Copy via Context Menu
 
