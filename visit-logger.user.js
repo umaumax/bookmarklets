@@ -100,18 +100,19 @@ function enableDragAndDrop(counter) {
 
     a[data-history_count]::before {
         content: "";
+        width: fit-content;
         position: absolute;
         top: 0px;
         left: -8px;
         background-color: #000;
         color: white;
-        font-size: 10px;
+        /* font-size: 10px; */
         padding: 1px 4px;
         border-radius: 2px;
         white-space: nowrap;
         animation: pulse 2s infinite;
     }
-    a[data-history_count]::before { content: attr(data-history_count); background: #ff634799; }
+    a[data-history_count]::before { content: attr(data-history_count); background: #cc6347; }
 
     a[data-history_count] {
         position: relative;
@@ -199,10 +200,6 @@ function enableDragAndDrop(counter) {
     restorePosition(counter_element);
     enableDragAndDrop(counter_element);
 
-    // TODO: どこかに訪問回数をバッジ的に表示したい
-    // TODO: a要素のリンクに表示したい
-
-    // WARN: 遅延ロードされる要素には未対応
     function check_link(link_element) {
         const url = link_element.href;
         const count = search_history_count(url);
