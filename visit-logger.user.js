@@ -93,26 +93,29 @@ function enableDragAndDrop(counter) {
     let content = '';
     content += `
     @keyframes pulse {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.5); opacity: 0.75; }
-        100% { transform: scale(1); opacity: 1; }
+        0% { transform: scale(1); opacity: 1.0; }
+        50% { transform: scale(1.25); opacity: 0.5; }
+        100% { transform: scale(1); opacity: 1.0; }
     }
 
     a[data-history_count]::before {
         content: "";
         width: fit-content;
         position: absolute;
-        top: 0px;
-        left: -8px;
+        top: -1px;
+        left: -1rem;
         background-color: #000;
         color: white;
-        /* font-size: 10px; */
-        padding: 1px 4px;
+        font-size: 10px;
+        padding: 2px 4px;
         border-radius: 2px;
         white-space: nowrap;
-        animation: pulse 2s infinite;
+        animation-name: pulse;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
     }
-    a[data-history_count]::before { content: attr(data-history_count); background: #cc6347; }
+    a[data-history_count]::before { content: attr(data-history_count) !important; background: #cc634766 !important; }
+    a[data-history_count]:hover::before { content: attr(data-history_count) !important; background: #cc6347cc !important; }
 
     a[data-history_count] {
         position: relative;
