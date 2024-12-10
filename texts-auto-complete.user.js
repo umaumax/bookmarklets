@@ -4,7 +4,6 @@
 // @version      0.1
 // @description  auto complete for input and textarea
 // @author       You
-// @match        http://*/*
 // @match        https://github.com/*
 // @exclude      https://*google.com/*
 // @exclude      https://*instagram.com/*
@@ -141,7 +140,7 @@ function applyAutoComplete(targetTextarea, data_src) {
     function addEventListener(element) {
         element.nextSibling.querySelectorAll('ul button[data-onclick_status="false"]').forEach((button) => {
             console.log('💡:', button);
-            button.dataset.onclick_status="true";
+            button.dataset.onclick_status = "true";
             button.addEventListener("click", function(event) {
                 const match_text = event.target.dataset.match_text;
                 const key = event.target.dataset.key;
@@ -215,7 +214,9 @@ function applyAutoComplete(targetTextarea, data_src) {
                             // NOTE: 単語ごとに区切って候補を表示する
                             // preferential_data_src =
                             for (const item of extractPhrases(data)) {
-                                preferential_data_src.add({'auto_generated': item});
+                                preferential_data_src.add({
+                                    'auto_generated': item
+                                });
                             }
                             // console.log(data, preferential_data_src);
                         }
@@ -230,10 +231,10 @@ function applyAutoComplete(targetTextarea, data_src) {
             keys: keys,
             filter: (list) => {
                 console.log('🔥', list);
-                 const filteredResults = list.filter((item) => {
-                     if ('key' in item && item.key in item.value) return true;
-                     return false;
-                 });
+                const filteredResults = list.filter((item) => {
+                    if ('key' in item && item.key in item.value) return true;
+                    return false;
+                });
                 return filteredResults;
             }
         },
@@ -255,15 +256,15 @@ function applyAutoComplete(targetTextarea, data_src) {
         resultsList: {
             element: (list, data) => {
                 // NOTE: chatgptのdisplay:noneなtextareaに反応してしまったため
-                if (targetTextarea.style.display=='none') {
+                if (targetTextarea.style.display == 'none') {
                     autoCompleteJS.close();
                     return;
                 }
 
                 const info = document.createElement("div");
-                info.style.display="flex";
-                info.style['justify-content']="space-between";
-                info.style.margin='4px 12px';
+                info.style.display = "flex";
+                info.style['justify-content'] = "space-between";
+                info.style.margin = '4px 12px';
                 let match_text = targetTextarea.value;
                 if (data.results.length > 0) {
                     info.innerHTML = `<p style='margin:4px 12px 4px 0px;'>💡 Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results</p>`;
@@ -275,7 +276,9 @@ function applyAutoComplete(targetTextarea, data_src) {
                 }
 
                 list.prepend(info);
-                setTimeout(() => { addEventListener(targetTextarea); }, 50);
+                setTimeout(() => {
+                    addEventListener(targetTextarea);
+                }, 50);
             },
             noResults: true,
             maxResults: 15,
@@ -393,7 +396,7 @@ function applyAutoComplete(targetTextarea, data_src) {
     targetTextarea.addEventListener("blur", function(event) {
         console.log('🔥blur', event);
         autoCompleteJS.close();
-//        autoCompleteJS.unInit();
+        //        autoCompleteJS.unInit();
     });
 
     targetTextarea.addEventListener("input", function(event) {
@@ -451,7 +454,9 @@ function main() {
     ];
     let default_data_src = [];
     for (let text of default_dataset) {
-        default_data_src.push({ 'default': `${text[0]} [${text[1]}]` });
+        default_data_src.push({
+            'default': `${text[0]} [${text[1]}]`
+        });
     }
     // let targetTextarea = document.querySelector("#autoComplete");
     // applyAutoComplete(targetTextarea, data_src);
@@ -460,37 +465,37 @@ function main() {
     document.addEventListener("focus", function(e) {
         // NOTE: 要素が生成された後にstyleでdisplay:noneが適用される場合があるので、イベント設定の適用までに遅延を発生させるようにした
         setTimeout(() => {
-                    if (
-            // NOTE: temporary disabled
-            e.target instanceof HTMLInputElement && e.target.type === "text" ||
-            e.target instanceof HTMLTextAreaElement
-            // e.target.hasAttribute("contenteditable")
-        ) {
-            if (!e.target.dataset.listenerApplied) {
-                if (e.target.ariaReadOnly) {
-                    return;
+            if (
+                // NOTE: temporary disabled
+                e.target instanceof HTMLInputElement && e.target.type === "text" ||
+                e.target instanceof HTMLTextAreaElement
+                // e.target.hasAttribute("contenteditable")
+            ) {
+                if (!e.target.dataset.listenerApplied) {
+                    if (e.target.ariaReadOnly) {
+                        return;
+                    }
+                    if (e.target.style.display == 'none') {
+                        return;
+                    }
+                    console.log("Focus event for the first time on:", e.target);
+                    e.target.dataset.listenerApplied = "true";
+                    let data_src = default_data_src;
+                    if (e.target instanceof HTMLInputElement) {
+                        data_src = [{
+                                "default": "default text",
+                            },
+                            {
+                                "default": "hogehoge",
+                            },
+                            {
+                                "default": "fugafuga",
+                            },
+                        ];
+                    }
+                    applyAutoComplete(e.target, data_src);
                 }
-                if (e.target.style.display=='none') {
-                    return;
-                }
-                console.log("Focus event for the first time on:", e.target);
-                e.target.dataset.listenerApplied = "true";
-                let data_src = default_data_src;
-                if (e.target instanceof HTMLInputElement) {
-                    data_src = [{
-        "default": "default text",
-    },
-    {
-        "default": "hogehoge",
-    },
-    {
-        "default": "fugafuga",
-    },
-                                ];
-                }
-                applyAutoComplete(e.target, data_src);
             }
-        }
 
         }, 50);
     }, true);
