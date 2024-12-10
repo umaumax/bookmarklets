@@ -92,7 +92,7 @@ function enableDragAndDrop(counter) {
 
     let content = '';
     content += `
-    @keyframes pulse {
+    @keyframes visit-logger-pulse {
         0% { transform: scale(1); opacity: 1.0; }
         50% { transform: scale(1.25); opacity: 0.5; }
         100% { transform: scale(1); opacity: 1.0; }
@@ -110,8 +110,8 @@ function enableDragAndDrop(counter) {
         padding: 2px 4px;
         border-radius: 2px;
         white-space: nowrap;
-        animation-name: pulse;
-        animation-duration: 10s;
+        animation-name: visit-logger-pulse;
+        animation-duration: 4s;
         animation-iteration-count: infinite;
     }
     a[data-history_count]::before { content: attr(data-history_count) !important; background: #cc634766 !important; }
