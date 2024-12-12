@@ -103,7 +103,7 @@ function enableDragAndDrop(counter) {
         width: fit-content;
         position: absolute;
         top: -1px;
-        left: -1rem;
+        left: -0.5rem;
         background-color: #000;
         color: white;
         font-size: 10px;
@@ -114,7 +114,7 @@ function enableDragAndDrop(counter) {
         animation-duration: 4s;
         animation-iteration-count: infinite;
     }
-    a[data-history_count]::before { content: attr(data-history_count) !important; background: #cc634766 !important; }
+    a[data-history_count]::before { content: attr(data-history_count) !important; background: #cc634755 !important; }
     a[data-history_count]:hover::before { content: attr(data-history_count) !important; background: #cc6347cc !important; }
 
     a[data-history_count] {
