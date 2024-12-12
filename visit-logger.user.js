@@ -94,18 +94,19 @@ function enableDragAndDrop(counter) {
     content += `
     @keyframes visit-logger-pulse {
         0% { transform: scale(1); opacity: 1.0; }
-        50% { transform: scale(1.25); opacity: 0.5; }
+        50% { transform: scale(1.25); opacity: 0.75; }
         100% { transform: scale(1); opacity: 1.0; }
     }
 
     a[data-history_count]::before {
         content: "";
         width: fit-content;
+        height: 12px;
         position: absolute;
         top: -1px;
-        left: -0.5rem;
+        left: -0.25rem;
         background-color: #000;
-        color: white;
+        color: #ffffff55;
         font-size: 10px;
         padding: 2px 4px;
         border-radius: 2px;
@@ -114,21 +115,21 @@ function enableDragAndDrop(counter) {
         animation-duration: 4s;
         animation-iteration-count: infinite;
     }
-    a[data-history_count]::before { content: attr(data-history_count) !important; background: #cc634755 !important; }
-    a[data-history_count]:hover::before { content: attr(data-history_count) !important; background: #cc6347cc !important; }
+    a[data-history_count]::before {
+        content: attr(data-history_count) !important;
+        background: #cc634733 !important;
+        transition-duration: 0.5s;
+    }
+    a[data-history_count]:hover::before {
+        content: attr(data-history_count) !important;
+        color: #ffffffee;
+        background: #cc6347ee !important;
+        left: -1.5rem;
+    }
 
     a[data-history_count] {
         position: relative;
     }
-
-    /*
-    h1::before { content: "H1"; background: #ff6347; }
-    h2::before { content: "H2"; background: #1e90ff; }
-    h3::before { content: "H3"; background: #228b22; }
-    h4::before { content: "H4"; background: #c71585; }
-    h5::before { content: "H5"; background: #8a2be2; }
-    h6::before { content: "H6"; background: #666666; }
-    */
 
     #rankingDialog {
     background: rgba(0, 0, 0, 0.7);
@@ -140,18 +141,18 @@ function enableDragAndDrop(counter) {
         color: #ff0;
         padding: 0px 24px;
         border-bottom: 1px solid #888;
-    span.title {
-        color: orange;
-        list-style: none;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    span.timestamp {
-        color: pink;
-        list-style: none;
-        overflow: hidden;
-        white-space: nowrap;
-    }
+        span.title {
+            color: orange;
+            list-style: none;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        span.timestamp {
+            color: pink;
+            list-style: none;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     }
 `
 
