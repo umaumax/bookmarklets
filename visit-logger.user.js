@@ -90,6 +90,11 @@ function enableDragAndDrop(counter) {
 (function() {
     'use strict';
 
+    // return immediately in iframe
+    if (window.self !== window.top) {
+        return;
+    }
+
     let content = '';
     content += `
     @keyframes visit-logger-pulse {
@@ -101,14 +106,14 @@ function enableDragAndDrop(counter) {
     a[data-history_count]::before {
         content: "";
         width: fit-content;
-        height: 12px;
+        height: 14px;
         position: absolute;
         top: -1px;
         left: -0.25rem;
         background-color: #000;
         color: #ffffff55;
         font-size: 10px;
-        padding: 2px 4px;
+        padding: 0px 2px;
         border-radius: 2px;
         white-space: nowrap;
         animation-name: visit-logger-pulse;
@@ -132,26 +137,107 @@ function enableDragAndDrop(counter) {
     }
 
     #rankingDialog {
-    background: rgba(0, 0, 0, 0.7);
-
-    a {
-        display: flex;
-        padding: 0px 10px;
-        justify-content:space-between;
-        color: #ff0;
-        padding: 0px 24px;
-        border-bottom: 1px solid #888;
-        span.title {
-            color: orange;
-            list-style: none;
-            overflow: hidden;
-            white-space: nowrap;
+        position: relative;
+        width: 90%;
+        padding: 0px;
+        div {
+            padding: 20px 40px;
         }
-        span.timestamp {
-            color: pink;
-            list-style: none;
-            overflow: hidden;
-            white-space: nowrap;
+
+        border: none;
+        border-radius: 8px;
+        background: #111111cc;
+
+        a {
+            display: flex;
+            gap: 8px;
+            padding: 0px 10px;
+            justify-content:space-between;
+            border-bottom: 1px solid #888;
+
+            span {
+                transition-duration: 1.0s;
+            }
+            span.link {
+                flex: 1.0;
+                color: #dddd22cc;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            span.title {
+                flex: 3.0;
+                color: #7ae633cc;
+                list-style: none;
+                text-align: left;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            span.timestamp {
+                flex: 0.5;
+                color: #e0ba4ecc;
+                list-style: none;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            span.title:hover {
+                flex: 10.0;
+                width: max-content;
+            }
+            span.link:hover {
+                flex: 10.0;
+                width: max-content;
+            }
+            button {
+                border: none;
+                transition: all 0.3s ease;
+            }
+            button.plus {
+                background: rgba(0, 40, 255, 0.6);
+            }
+            button.minus {
+                background: rgba(255, 0, 0, 0.4);
+            }
+            button:not(.enabled) {
+                filter: brightness(40%);
+            }
+            button.enabled {
+                filter: brightness(100%);
+            }
+            button:hover {
+                transform: scale(1.3, 1.3);
+                cursor: pointer;
+            }
+            button.plus:hover {
+                background: rgba(0, 40, 255, 0.9);
+            }
+            button.minus:hover {
+                background: rgba(255, 0, 0, 0.8);
+            }
+}
+
+        #closeModalButton {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #333333cc;
+        }
+
+        .button {
+            background-color: #fff;
+            border: solid 2px #909090;
+            color: #707070;
+            border-radius: 20px;
+            padding: 3px 10px;
+            text-decoration: none;
+            font-size: 10px;
+            box-shadow: 0 3px 0 #707070;
+            display: inline-block;
+            transition: .3s;
+        }
+        .button:hover {
+            color: #707070;
+            transform: translateY(3px);
+            box-shadow: 0 0 0 #707070;
         }
     }
 `
@@ -168,22 +254,38 @@ function enableDragAndDrop(counter) {
     const url = window.location.href;
     const domainKey = get_domain_key(url);
 
-    function add_history_count(domainHistory, url, title) {
+    function add_history_count(domainHistory, url, title, mark = "") {
         const timestamp = new Date().toISOString();
         if (!(url in domainHistory)) {
             domainHistory[url] = {
                 title,
+                mark,
                 timestamps: [],
             }
         }
         domainHistory[url].title = title;
+        domainHistory[url].mark = mark;
         domainHistory[url].timestamps.push(timestamp);
+    }
+
+    function update_history(domainHistory, url, mark) {
+        if (!(url in domainHistory)) {
+            domainHistory[url] = {
+                title,
+                mark,
+                timestamps: [],
+            }
+        }
+        domainHistory[url].mark = mark;
     }
 
     let domainHistory = GM_getValue(domainKey, {});
     add_history_count(domainHistory, url, document.title);
 
-    GM_setValue(domainKey, domainHistory);
+    function save_history(domainHistory) {
+        GM_setValue(domainKey, domainHistory);
+    }
+    save_history(domainHistory);
 
     function search_history_count(url) {
         const domainKey = get_domain_key(url);
@@ -206,13 +308,14 @@ function enableDragAndDrop(counter) {
 
     function check_link(link_element) {
         const url = link_element.href;
+        if (!url) return -1;
         const count = search_history_count(url);
         if (count > 0) {
             if (!("history_count" in link_element.dataset)) {
                 link_element.dataset.history_count = count;
             }
-            // console.log('⭐️', url, count);
         }
+        return count;
     }
 
     const observer = new MutationObserver((mutations) => {
@@ -221,7 +324,6 @@ function enableDragAndDrop(counter) {
                 if (!(node instanceof HTMLElement)) return;
                 let link_elements = node.querySelectorAll("a");
                 link_elements.forEach((link_element) => {
-                    // console.log('🔥', link_element);
                     check_link(link_element);
                 });
             });
@@ -235,7 +337,6 @@ function enableDragAndDrop(counter) {
 
     let link_elements = document.querySelectorAll("a");
     link_elements.forEach((link_element) => {
-        console.log('🔥', link_element);
         check_link(link_element);
     });
 
@@ -260,44 +361,109 @@ function enableDragAndDrop(counter) {
 
     function ranking(domainHistory) {
         const modalHTML = `
-        <dialog id="rankingDialog" style="position: relative; width: 90%; padding: 20px; border: none; border-radius: 8px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);">
-            <button id="closeModalButton" style="position: absolute; top: 12px; right: 12px;">❌️</button>
-            <h2 style="color: #fff; text-align: center;">History</h2>
-            <ul id="rankingList"></ul>
+        <dialog id="rankingDialog">
+            <div id="rankingDialogContent">
+                <h2 style="color: #eee; text-align: center;">History</h2>
+                <ul id="rankingList"></ul>
+                <button id="closeModalButton" class="button circle_btn">❌️</button>
+            </div>
         </dialog>
     `;
 
         document.body.insertAdjacentHTML('beforeend', modalHTML);
 
         const rankingDialog = document.getElementById('rankingDialog');
+        const rankingDialogContent = document.getElementById('rankingDialogContent');
         const showRankingButton = document.getElementById('visit-counter');
         const closeModalButton = document.getElementById('closeModalButton');
         const rankingList = document.getElementById('rankingList');
 
         function populateRankingList() {
             rankingList.innerHTML = '';
-            for (const [key, value] of Object.entries(domainHistory).slice().reverse()) {
+
+            const markOrder = {
+                "star": 0,
+                "": 1,
+                "trash": 2
+            };
+            let domainHistory_list = Object.entries(domainHistory).slice();
+            domainHistory_list.sort((a, b) => {
+                console.log(a, b);
+                const markComparison = markOrder[a[1].mark || ""] - markOrder[b[1].mark || ""];
+                if (markComparison !== 0) {
+                    return markComparison;
+                }
+
+                return b[1].timestamps.length - a[1].timestamps.length;
+            });
+
+            for (const [key, value] of domainHistory_list) {
                 const li = document.createElement("li");
                 const span = document.createElement("span");
 
                 const url = document.createElement("a");
                 url.href = key;
                 url.classList.add("url");
-                url.textContent = key;
-                // url.dataset.history_count="";
+                url.textContent = "";
 
                 const title = document.createElement("span");
                 title.classList.add("title");
                 title.textContent = value.title;
+
+                const link = document.createElement("span");
+                link.classList.add("link");
+                link.textContent = key;
 
                 let time_text = timeAgo(new Date(value.timestamps[0]));
                 const timestamp = document.createElement("span");
                 timestamp.classList.add("timestamp");
                 timestamp.textContent = time_text;
 
-                // span.appendChild(url);
-                url.appendChild(title);
-                url.appendChild(timestamp);
+                const plus_button = document.createElement("button");
+                plus_button.classList.add("plus");
+                plus_button.textContent = "⭐️";
+
+                const minus_button = document.createElement("button");
+                minus_button.classList.add("minus");
+                minus_button.textContent = "🗑️";
+
+                function update_button(mark) {
+                    if (mark == "") {
+                        plus_button.classList.remove("enabled");
+                        minus_button.classList.remove("enabled");
+                    }
+                    if (mark == "star") {
+                        plus_button.classList.add("enabled");
+                        minus_button.classList.remove("enabled");
+                    }
+                    if (mark == "trash") {
+                        plus_button.classList.remove("enabled");
+                        minus_button.classList.add("enabled");
+                    }
+                }
+                let mark = value.mark;
+                update_button(mark);
+
+                plus_button.addEventListener('click', (event) => {
+                    mark = mark != "star" ? "star" : "";
+                    update_history(domainHistory, key, mark);
+                    save_history(domainHistory);
+                    update_button(mark);
+                    event.preventDefault();
+                });
+                minus_button.addEventListener('click', (event) => {
+                    mark = mark != "trash" ? "trash" : "";
+                    update_history(domainHistory, key, mark);
+                    save_history(domainHistory);
+                    update_button(mark);
+                    event.preventDefault();
+                });
+
+                url.prepend(minus_button);
+                url.prepend(plus_button);
+                url.prepend(link);
+                url.prepend(title);
+                url.prepend(timestamp);
                 li.appendChild(url);
                 rankingList.appendChild(li);
             }
@@ -310,6 +476,17 @@ function enableDragAndDrop(counter) {
             isDragging = false;
         });
 
+        function closeDialog() {
+            rankingDialog.close();
+            document.removeEventListener('click', handleOutsideClick);
+        }
+
+        function handleOutsideClick(event) {
+            if (!rankingDialogContent.contains(event.target)) {
+                closeDialog();
+            }
+        }
+
         showRankingButton.addEventListener('mouseup', () => {
             const elapsedTime = Date.now() - startTime;
             if (elapsedTime > 200) {
@@ -319,10 +496,14 @@ function enableDragAndDrop(counter) {
 
             populateRankingList();
             rankingDialog.showModal();
+
+            setTimeout(() => {
+                document.addEventListener('click', handleOutsideClick);
+            }, 0);
         });
 
         closeModalButton.addEventListener('click', () => {
-            rankingDialog.close();
+            closeDialog();
         });
     }
     ranking(domainHistory);
