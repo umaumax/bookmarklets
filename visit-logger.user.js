@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Visit Logger
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Log visits
 // @author       Your Name
 // @match        *://*/*
@@ -27,7 +27,7 @@ function createCounter(count_value) {
     counter.style.fontSize = '14px';
     counter.style.zIndex = '1000';
     counter.style.cursor = 'move';
-    counter.textContent = `🏆 ${count_value} visits`;
+    counter.textContent = `${count_value} visits`;
     document.body.appendChild(counter);
     return counter;
 }
@@ -152,28 +152,35 @@ function enableDragAndDrop(counter) {
             display: flex;
             gap: 8px;
             padding: 0px 10px;
-            justify-content:space-between;
+            justify-content: center;
             border-bottom: 1px solid #888;
 
             span {
                 transition-duration: 1.0s;
+                display: grid;
+                place-items: center;
             }
             span.link {
-                flex: 1.0;
+                flex: 2.0;
                 color: #dddd22cc;
                 overflow: hidden;
                 white-space: nowrap;
+                border-right: 1px solid #777777;
             }
             span.title {
-                flex: 3.0;
+                flex: 5.0;
+                font-size: 14px;
                 color: #7ae633cc;
                 list-style: none;
                 text-align: left;
                 overflow: hidden;
                 white-space: nowrap;
+                border-left: 1px solid #777777;
+                border-right: 1px solid #777777;
             }
             span.timestamp {
                 flex: 0.5;
+                font-size: 10px;
                 color: #e0ba4ecc;
                 list-style: none;
                 overflow: hidden;
@@ -213,7 +220,22 @@ function enableDragAndDrop(counter) {
             button.minus:hover {
                 background: rgba(255, 0, 0, 0.8);
             }
-}
+        }
+        li:nth-child(1) span.title {
+            font-size: 24px;
+        }
+        li:nth-child(2) span.title {
+            font-size: 22px;
+        }
+        li:nth-child(3) span.title {
+            font-size: 20px;
+        }
+        li:nth-child(4) span.title {
+            font-size: 18px;
+        }
+        li:nth-child(5) span.title {
+            font-size: 16px;
+        }
 
         #closeModalButton {
             position: absolute;
