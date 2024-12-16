@@ -10,7 +10,7 @@
 // @exclude      https://web-ace.jp/youngaceup/*
 // @exclude      https://www.yodobashi.com/*
 // @grant        none
-// @require http://code.jquery.com/jquery-3.6.0.min.js
+// @require      http://code.jquery.com/jquery-3.6.0.min.js
 // ==/UserScript==
 
 var done_flag = false;
@@ -68,7 +68,7 @@ function auto_scroll_to_link_tag_id() {
         $(window).scrollTop(target.offset().top - target.outerHeight());
         done_flag = true;
     } catch (error) {
-        console.error(error);
+        console.error(link_tag_id, error);
     }
 }
 
