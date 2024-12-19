@@ -164,9 +164,16 @@ function add_wiki_events() {
 
         // NOTE: デフォルトでplain textモードであるので、rich textモードへ遷移する
         let rich_text_switch_button = $('button#switch-to-rich-text-editor');
-        if (rich_text_switch_button && !rich_text_switch_flag.get(window.location.href)) {
-            rich_text_switch_button.click();
+        if (rich_text_switch_button && rich_text_switch_button.length > 0 && !rich_text_switch_flag.get(window.location.href)) {
             rich_text_switch_flag.set(window.location.href, true);
+            rich_text_switch_button.get(0).click();
+            setTimeout(() => {
+                let text = rich_text_switch_button.get(0).textContent;
+                if (text.search("Switch to rich text editing") == -1) {
+                    // reset flag
+                    rich_text_switch_flag.set(window.location.href, false);
+                }
+            }, 1000);
         }
 
         function applyDetails(targets, text) {
