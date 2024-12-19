@@ -347,7 +347,7 @@ async function updateCodeBlockLanguage(language) {
     document.addEventListener('keydown', function(e) {
         // 70: f
         // 191: ?/
-        if ((e.ctrlKey || e.metaKey) || (e.keyCode == 70 && (e.ctrlKey || e.metaKey)) || (e.keyCode == 191)) {
+        if ((e.ctrlKey || e.metaKey) || (e.key === 'f' && (e.ctrlKey || e.metaKey)) || (e.key === '/' && e.shiftKey)) {
             if (is_gitlab_wiki()) {
                 return;
             }
