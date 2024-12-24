@@ -224,10 +224,14 @@ function applyAutoComplete(targetTextarea, data_src) {
                             // NOTE: 単語ごとに区切って候補を表示する
                             // preferential_data_src =
                             for (const item of extractPhrases(data)) {
-                                preferential_data_src.add({'auto_generated': item});
+                                preferential_data_src.add({
+                                    'auto_generated': item
+                                });
                             }
                             if (beforeCursorLine != beforeCursorWord) {
-                                preferential_data_src.add({'default': data});
+                                preferential_data_src.add({
+                                    'default': data
+                                });
                             }
                             // console.log(data, preferential_data_src);
                         }
