@@ -315,13 +315,13 @@ function applyAutoComplete(targetTextarea, data_src) {
                 if (data.key) key = `[${data.key}]`;
                 // TODO: avoid dom injection
                 item.innerHTML = `
-      <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
-        ${data.match}
-      </span>
-      <span style="display: flex; align-items: center; text-transform: uppercase;">
-        ${key}
-      </span>
-      `;
+                  <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                    ${data.match}
+                  </span>
+                  <span style="display: flex; align-items: center; text-transform: uppercase;">
+                    ${key}
+                  </span>
+                  `;
                 if (key == 'user_defined') {
                     item.innerHTML += `<button data-match_text="${data.match}" data-key="${key}" data-action="delete" data-onclick_status="false">❌️</button>`;
                 }
