@@ -465,13 +465,24 @@ function main() {
         ["To be exact,", "厳密に言うと、"],
         ["Exactly speaking,", "厳密に言うと、"],
         ["As to |,", "~に関して、"],
-        ["As to |,", "~に関して、"],
+        ["Regarding |,", "~に関して、"],
+        ["With respect to |,", "~に関して、"],
         ["I approve this as an implementation of the feature itself.", "機能としては承認するが...(留意点がある)"],
         ["I will move this ticket to the backlog.", "チケットをバックログへ"],
         ["Thanks for sharing the information.", "感謝"],
         ["Could you gather the detail logs and create a ticket for it?", "チケット"],
+        ["In terms of |,", "~の観点から言うと、"],
+        ["Based on |,", "~に基づけば、"],
+        ["In according to |,", "~に従うと、"],
+        ["Despite |,", "~にも関わらず"],
+        ["In comparison with |,", "~と比較すると、"],
+        ["What is important is that", "重要なポイントは"],
+        ["What I mean is that", "言いたいことは"],
+        ["I would like to make sure that", "確かめたい"],
+        ["My understanding is that", "理解を確認したい"],
         // for dummy test
         ["interesting", ""],
+        ["failure", ""],
     ];
     let default_data_src = [];
     for (let text of default_dataset) {
