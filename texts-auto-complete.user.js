@@ -62,6 +62,14 @@ function mergeText(baseString, inputString) {
     return baseString + inputString.slice(overlap.length);
 }
 
+function extractBeforeBracketPattern(input) {
+    const match = input.match(/^(.*?)( \[.*?\])$/);
+    if (match) {
+        return match[1];
+    }
+    return input;
+}
+
 function elementToKey(element) {
     if (element instanceof HTMLInputElement) {
         if (element.id) {
@@ -207,7 +215,7 @@ function applyAutoComplete(targetTextarea, data_src) {
                 let preferential_data_src = new Set();
                 data_src.forEach((item) => {
                     Object.keys(item).forEach((key) => {
-                        let data = item[key];
+                        let data = extractBeforeBracketPattern(item[key]);
                         if (data.startsWith(beforeCursorLine)) {
                             // NOTE: 現在のカーソル位置に合わせて候補を表示する
                             // preferential_data_src.push(partialTextComplete(data, beforeCursorLine));
@@ -216,18 +224,23 @@ function applyAutoComplete(targetTextarea, data_src) {
                             // NOTE: 単語ごとに区切って候補を表示する
                             // preferential_data_src =
                             for (const item of extractPhrases(data)) {
-                                preferential_data_src.add({
-                                    'auto_generated': item
-                                });
+                                preferential_data_src.add({'auto_generated': item});
+                            }
+                            if (beforeCursorLine != beforeCursorWord) {
+                                preferential_data_src.add({'default': data});
                             }
                             // console.log(data, preferential_data_src);
                         }
                     })
                 })
-                if (preferential_data_src.size > 0) {
-                    return Array.from(preferential_data_src).concat(data_src);
+
+                if (beforeCursorLine == beforeCursorWord) {
+                    if (preferential_data_src.size > 0) {
+                        return Array.from(preferential_data_src).concat(data_src);
+                    }
+                    return data_src;
                 }
-                return data_src;
+                return preferential_data_src;
             },
             cache: false,
             keys: keys,
@@ -257,6 +270,8 @@ function applyAutoComplete(targetTextarea, data_src) {
         diacritics: true,
         resultsList: {
             element: (list, data) => {
+                return
+
                 // NOTE: chatgptのdisplay:noneなtextareaに反応してしまったため
                 if (targetTextarea.style.display == 'none') {
                     autoCompleteJS.close();
@@ -271,7 +286,8 @@ function applyAutoComplete(targetTextarea, data_src) {
                 if (data.results.length > 0) {
                     info.innerHTML = `<p style='margin:4px 12px 4px 0px;'>💡 Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results</p>`;
                 } else {
-                    info.innerHTML = `<p style='margin:4px 12px 4px 0px;'>❌️ Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong></p>`;
+                    // info.innerHTML = `<p style='margin:4px 12px 4px 0px;'>❌️ Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong></p>`;
+                    return;
                 }
                 if (match_text) {
                     info.innerHTML += `<button data-match_text="${match_text}" data-key="user_defined" data-action="add" data-onclick_status="false" style="color:#4caf50;font-weight:900;">＋</button>`
@@ -334,13 +350,6 @@ function applyAutoComplete(targetTextarea, data_src) {
                     }
                     console.log('✅️[selection]', event.detail.selection);
 
-                    function extractBeforeBracketPattern(input) {
-                        const match = input.match(/^(.*?)( \[.+?\])$/);
-                        if (match) {
-                            return match[1];
-                        }
-                        return input;
-                    }
                     selection = extractBeforeBracketPattern(selection);
                     let selectionCursorPosition = selection.indexOf("|");
                     selection = selection.replace("|", "");
@@ -360,6 +369,7 @@ function applyAutoComplete(targetTextarea, data_src) {
                         return str.substr(0, str.length - length);
                     }
                     let mergedText = mergeText(beforeCursor, selection);
+                    // console.log('⭐️[selection][DEBUG]', { mergedText, beforeCursor, selection });
                     if (mergedText == beforeCursor + selection) {
                         beforeCursor = rtrim(beforeCursor, beforeCursorWord.length) + selection;
                     } else {
@@ -451,6 +461,11 @@ function main() {
         ["To be exact,", "厳密に言うと、"],
         ["Exactly speaking,", "厳密に言うと、"],
         ["As to |,", "~に関して、"],
+        ["As to |,", "~に関して、"],
+        ["I approve this as an implementation of the feature itself.", "機能としては承認するが...(留意点がある)"],
+        ["I will move this ticket to the backlog.", "チケットをバックログへ"],
+        ["Thanks for sharing the information.", "感謝"],
+        ["Could you gather the detail logs and create a ticket for it?", "チケット"],
         // for dummy test
         ["interesting", ""],
     ];
@@ -528,6 +543,10 @@ function add_css(datas) {
 const custom_css_content = `
 :root {
     --autoComplete_wrapper-input-background-color: #fff;
+}
+
+body {
+  overflow-y: hidden; /* 入力補完がページ下に表示されたときの画面表示がガタガタとなる現象を防ぐ */
 }
 
 /*
