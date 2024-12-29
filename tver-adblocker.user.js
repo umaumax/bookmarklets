@@ -52,10 +52,10 @@ function check_ad_video() {
 
 function addPiPButton() {
     const button = document.createElement('button');
-    button.textContent = 'PiP';
+    button.textContent = '🖼️PiP';
     button.style.position = 'fixed';
-    button.style.bottom = '10px';
-    button.style.right = '150px';
+    button.style.top = '10px';
+    button.style.left = '150px';
     button.style.zIndex = '1000';
     button.addEventListener('click', () => {
         const video = document.querySelector('video');
