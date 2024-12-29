@@ -32,7 +32,7 @@ function skip_ad_video(video) {
     }
 }
 
-function find_ad_videos(video) {
+function find_ad_videos() {
     let videos = document.getElementsByTagName("video");
     return Array.prototype.slice.call(videos).filter(video => is_ad_video(video));
 }
@@ -48,6 +48,35 @@ function check_ad_video() {
             console.log('[AdVideoBlocker] skip ad video: ', video);
         }
     });
+}
+
+function addPiPButton() {
+    const button = document.createElement('button');
+    button.textContent = 'PiP';
+    button.style.position = 'fixed';
+    button.style.bottom = '10px';
+    button.style.right = '150px';
+    button.style.zIndex = '1000';
+    button.addEventListener('click', () => {
+        const video = document.querySelector('video');
+        if (video) {
+            if (document.pictureInPictureElement == video) {
+                document.exitPictureInPicture()
+                    .then(() => {
+                        console.log("Succeed to exit PiP mode");
+                    })
+                    .catch((error) => {
+                        console.error("Failed to exit PiP mode:", error);
+                    });
+            } else {
+                video.requestPictureInPicture().catch(error => {
+                    console.error('Failed to enter PiP mode:', error);
+                });
+
+            }
+        }
+    });
+    document.body.appendChild(button);
 }
 
 (function() {
@@ -82,4 +111,6 @@ function check_ad_video() {
             event.preventDefault();
         }
     });
+
+    addPiPButton();
 })();
