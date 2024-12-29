@@ -7,6 +7,7 @@
 // @match        https://tver.jp/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tver.jp
 // @grant        none
+// @noframes
 // ==/UserScript==
 
 function is_video_playing(video) {
