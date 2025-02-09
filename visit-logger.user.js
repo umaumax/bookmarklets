@@ -104,7 +104,7 @@ function enableDragAndDrop(counter) {
         100% { transform: scale(1); opacity: 1.0; }
     }
 
-    a[data-history_count]::before {
+    a[data-history_count]::after {
         content: "";
         width: fit-content;
         height: 14px;
@@ -121,12 +121,12 @@ function enableDragAndDrop(counter) {
         animation-duration: 4s;
         animation-iteration-count: infinite;
     }
-    a[data-history_count]::before {
+    a[data-history_count]::after {
         content: attr(data-history_count) !important;
         background: #cc634733 !important;
         transition-duration: 0.5s;
     }
-    a[data-history_count]:hover::before {
+    a[data-history_count]:hover::after {
         content: attr(data-history_count) !important;
         color: #ffffffee;
         background: #cc6347ee !important;
@@ -330,12 +330,27 @@ function enableDragAndDrop(counter) {
     restorePosition(counter_element);
     enableDragAndDrop(counter_element);
 
+    function hasBefore(element) {
+        const before = getComputedStyle(element, "::before");
+        return before.content !== "none" && before.content !== "";
+    }
+
+    function hasAfter(element) {
+        const after = getComputedStyle(element, "::after");
+        return after.content !== "none" && after.content !== "";
+    }
+
     function check_link(link_element) {
         const url = link_element.href;
         if (!url) return -1;
         const count = search_history_count(url);
         if (count > 0) {
             if (!("history_count" in link_element.dataset)) {
+                if (getComputedStyle(link_element).position == "absolute") {
+                    console.log("position == absolute", link_element);
+                    return -count;
+                }
+                // TODO: check hasAfter
                 link_element.dataset.history_count = count;
             }
         }
