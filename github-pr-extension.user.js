@@ -9,6 +9,7 @@
 // @match        https://github.com/*/*/commit/*
 // @grant        none
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
+// @noframes
 // ==/UserScript==
 
 function add_css(datas) {
@@ -74,7 +75,8 @@ function highlightText(highlight, css_selector, regex, css_style_name) {
 function GitHubPRSyntaxHighLight() {
     // WARN: Please add the g flag, because regex.exec() while loop is used.
     // NOTE: もとからあるコードはspan.blob-code-innerであるが、expandしたらtd.blob-code-innerとして生成される模様
-    const highlight_settings = [{
+    const highlight_settings = [ //
+        {
             name: "cpp-namespace",
             rules: [
                 ['div.file-header[data-file-type=".hpp"] + * .blob-code-inner', /[a-zA-Z0-9_]*(::[a-zA-Z0-9_]*)+(?![\(0-9a-zA-Z:_])/g],
@@ -109,7 +111,7 @@ function GitHubPRSyntaxHighLight() {
         {
             name: "sign_dark",
             rules: [
-                ['.blob-code-inner', /[#\[\](){},.;&$%\\@?]/g],
+                ['.blob-code-inner', /[#\[\](){},.;&$%\\@]/g],
             ],
         },
         {
@@ -175,9 +177,11 @@ function GitHubPRSyntaxHighLight() {
                 ['div.file-header[data-file-type=".rs"] + * .blob-code-inner', /unwrap\(\)/g],
             ]
         },
-];
+    ];
 
+    const all_start = performance.now();
     highlight_settings.forEach((x) => {
+        const start = performance.now();
         const highlight = new Highlight();
         x.rules.forEach((rule) => {
             const css_selector = rule[0];
@@ -185,7 +189,9 @@ function GitHubPRSyntaxHighLight() {
             highlightText(highlight, css_selector, regex_rule);
         });
         CSS.highlights.set(x.name, highlight);
+        console.log(`[⌛️]highlight_setting[${x.name}] elapsed time(ms):`, (performance.now() - start));
     });
+    console.log("[⌛️]highlight_settings elapsed time(ms):", (performance.now() - all_start));
 }
 
 function GitHubPRSyntaxHighLighter() {
@@ -275,7 +281,7 @@ function GitHubPRSyntaxHighLighter() {
 
 function GitHubPRLineExpander() {
     const isDarkMode = document.documentElement.hasAttribute('data-dark-theme');
-    let button_style = isDarkMode ? "color: #eee; background-color: #E48B63;" : "background-color: #ffbf8b;";
+    let button_style = isDarkMode ? "color: #eee; background-color: #B36F4E; border-color: var(--button-default-borderColor-rest, var(--color-btn-border));" : "background-color: #ffbf8b;";
 
     var fileboxes = $(".file-actions > div > div");
     fileboxes.before(`<div class="d-flex" style="margin-left: 8px; padding: 8px;"><a class="ex_file_expand_btn btn btn-sm" style="${button_style}">💡Expand lines!</a></div>`);
