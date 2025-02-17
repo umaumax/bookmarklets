@@ -111,7 +111,7 @@ function GitHubPRSyntaxHighLight() {
         {
             name: "sign_dark",
             rules: [
-                ['.blob-code-inner', /[#\[\](){},.;&$%\\@]/g],
+                ['.blob-code-inner', /[#\[\](){},.;&$%\\@?]/g],
             ],
         },
         {
