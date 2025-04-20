@@ -8,6 +8,10 @@ enhance `<input type="text">` and `<textarea>` by adding auto complete feature
 ## ⭐[visit-logger.user.js]( https://github.com/umaumax/bookmarklets/raw/master/visit-logger.user.js )
 enhance a tags
 
+## ⭐[clipboard-text-html-converter.user.js]( https://github.com/umaumax/bookmarklets/raw/master/clipboard-text-html-converter.user.js )
+* Add text/html Clipboard Converter
+  * Add a shortcut key (command + ctrl + v)
+
 ## ⭐[image-to-base64.user.js]( https://github.com/umaumax/bookmarklets/raw/master/image-to-base64.user.js )
 Image to Base64 Copy via Context Menu
 
