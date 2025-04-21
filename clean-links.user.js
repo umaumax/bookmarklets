@@ -11,7 +11,9 @@
 // @match        https://setusoku.com/*
 // @match        https://www.enjoytokyo.jp/event/list/*
 // @match        https://www.walkerplus.com/event_list/*
+// @match        http://www.kensyo-life.com/closed/food.html
 // @grant        GM_registerMenuCommand
+// @noframes
 // ==/UserScript==
 
 function add_css(datas) {
@@ -139,6 +141,13 @@ function add_css(datas) {
         const emptyDivs = Array.from(document.querySelectorAll('div:not([style*="display: none"])')).filter(div => {
             const children = Array.from(div.children);
             return children.length > 0 && children.every(child => window.getComputedStyle(child).display === 'none');
+        });
+        // for www.kensyo-life.com
+        document.querySelectorAll('div.cf:not(#container)').forEach(e => {
+            if (!e.querySelector('a:not([style*="display: none"])')) {
+                e.style.display = 'none';
+                // e.remove();
+            }
         });
         // const emptyDivs = document.querySelectorAll('div:empty');
         emptyDivs.forEach(div => {
