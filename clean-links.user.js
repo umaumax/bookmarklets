@@ -144,6 +144,9 @@ function add_css(datas) {
         });
         // for www.kensyo-life.com
         document.querySelectorAll('div.cf:not(#container)').forEach(e => {
+            if (e.nextElementSibling ? .matches("div.ichiran-line.empty")) {
+                e.nextElementSibling.style.display = 'none';
+            }
             if (!e.querySelector('a:not([style*="display: none"])')) {
                 e.style.display = 'none';
                 // e.remove();
