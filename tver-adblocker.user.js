@@ -89,29 +89,36 @@ function addPiPButton() {
     document.addEventListener('keydown', function(event) {
         if (event.code === 'Space') {
             if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                // console.log("return due to input or textarea");
                 return;
             }
             const video = document.querySelector('video');
             if (!video) {
+                // console.log("return due to no video");
                 return;
             }
             // NOTE: This will only fire once per each keypress.
             if (event.repeat) {
+                // console.log("return due to event.repeat");
                 event.preventDefault();
                 return;
             }
             // NOTE: default controller
             if (document.activeElement.className.includes('controller_container')) {
+                // console.log("return due to controller_container");
                 return;
             }
             if (video.paused) {
+                // console.log("video.play()");
                 video.play();
             } else {
+                // console.log("video.pause()");
                 video.pause();
             }
             event.preventDefault();
+            event.stopPropagation(); // for when the focus is on the video player
         }
-    });
+    }, true); // for when the focus is on the video player
 
     addPiPButton();
 })();
