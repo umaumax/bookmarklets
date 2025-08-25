@@ -5,6 +5,7 @@
 // @description  Highlight and unhighlight selected text using the Custom Highlight API
 // @author       Your Name
 // @match        *://*/*
+// @exclude      *://localhost:*/*
 // @grant        none
 // ==/UserScript==
 

@@ -6,6 +6,8 @@
 // @author       You
 // @match        *://*/*
 // @exclude      https://b.hatena.ne.jp/*
+// @exclude      https://gihyo.jp/*
+// @exclude      *://localhost:*/*
 // @grant        none
 // ==/UserScript==
 
